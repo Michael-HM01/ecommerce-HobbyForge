@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hobby Shop | Home</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<header class="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-brand">HobbyShop</a>
+
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Shop</a></li>
+      <li><a href="#about" class="js-scroll-link">About</a></li>
+      <li><a href="#contact" class="js-scroll-link">Contact</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <button class="cart-btn js-open-cart" aria-label="Open cart">
+        Cart <span class="cart-count js-cart-count">0</span>
+      </button>
+      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="container">
+    <p class="hero-brand">HobbyShop</p>
+    <h1>Your one-stop shop for cards, kits, and collectibles</h1>
+    <p>Trading cards, building sets, die-cast cars, model kits, and more — all in one place. Placeholder headline and copy for phase 1.</p>
+    <a href="products.html" class="btn btn-primary">Shop Now</a>
+  </div>
+</section>
+
+<!-- ================= FEATURED PRODUCTS ================= -->
+<section class="featured-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Featured Products</h2>
+      <p>A quick look at some items from our catalog</p>
+    </div>
+    <div class="product-grid" id="featured-products">
+      <!-- Rendered dynamically by products.js from js/data.js -->
+    </div>
+  </div>
+</section>
+
+<!-- ================= CATEGORIES ================= -->
+<section class="categories-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Shop by Category</h2>
+      <p>Browse our hobby categories</p>
+    </div>
+    <div class="category-grid">
+      <div class="category-card js-category-card" data-category="Trading Cards">Trading Cards</div>
+      <div class="category-card js-category-card" data-category="Building Sets">Building Sets</div>
+      <div class="category-card js-category-card" data-category="Die-Cast">Die-Cast</div>
+      <div class="category-card js-category-card" data-category="Model Kits">Model Kits</div>
+      <div class="category-card js-category-card" data-category="Collectibles">Collectibles</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="section-header">
+      <h2>About Us</h2>
+    </div>
+    <div class="about-content">
+      <p>HobbyShop is a fictional multi-brand hobby store built for this school project. Placeholder text describing the brand story, mission, and values goes here. This section can be expanded in later phases with real content and imagery.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="section-header">
+      <h2>Contact Us</h2>
+      <p>Send us a message — we'll get back to you</p>
+    </div>
+    <form class="contact-form" id="contact-form" novalidate>
+      <input type="text" id="contact-name" placeholder="Your Name" required>
+      <input type="email" id="contact-email" placeholder="Your Email" required>
+      <input type="text" id="contact-subject" placeholder="Subject" required>
+      <textarea id="contact-message" placeholder="Your Message" required></textarea>
+      <div class="form-message" id="contact-success"></div>
+      <button type="submit" class="btn btn-primary">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>HobbyShop</h4>
+        <p>A placeholder footer description for the multi-brand hobby store.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Shop</a></li>
+          <li><a href="#about" class="js-scroll-link">About</a></li>
+          <li><a href="#contact" class="js-scroll-link">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Follow Us</h4>
+        <ul class="footer-links">
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Twitter / X</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 HobbyShop. All rights reserved. (Placeholder footer)
+    </div>
+  </div>
+</footer>
+
+<!-- ================= PRODUCT DETAILS MODAL (shared) ================= -->
+<div class="modal" id="product-modal">
+  <button class="modal-close-btn" id="modal-close-btn">&times;</button>
+  <div class="modal-body">
+    <img src="" alt="" class="modal-img" id="modal-img">
+    <div class="modal-details">
+      <p class="product-category" id="modal-category"></p>
+      <h3 id="modal-name"></h3>
+      <p class="product-price" id="modal-price"></p>
+      <p class="stock-status" id="modal-stock"></p>
+      <p id="modal-description"></p>
+      <div class="modal-qty-controls">
+        <button class="qty-btn" id="modal-qty-decrease">-</button>
+        <span id="modal-qty-value">1</span>
+        <button class="qty-btn" id="modal-qty-increase">+</button>
+      </div>
+      <button class="btn btn-primary btn-full" id="modal-add-to-cart">Add to Cart</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-overlay"></div>
+
+<!-- ================= CART DRAWER (shared) ================= -->
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-drawer-header">
+    <h3>Your Cart</h3>
+    <button class="modal-close-btn" id="cart-close-btn" style="position:static;">&times;</button>
+  </div>
+  <div class="cart-items" id="cart-items">
+    <p class="cart-empty" id="cart-empty">Your cart is empty.</p>
+  </div>
+  <div class="cart-drawer-footer">
+    <div class="cart-total-row">
+      <span>Total</span>
+      <span id="cart-total">$0.00</span>
+    </div>
+    <button class="btn btn-primary btn-full" id="checkout-btn">Checkout</button>
+  </div>
+</div>
+<div class="cart-overlay" id="cart-overlay"></div>
+
+<script src="js/data.js"></script>
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

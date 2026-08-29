@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hobby Shop | Admin</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<header class="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-brand">HobbyShop <span style="color:#888; font-weight:400; font-size:14px;">Admin</span></a>
+
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">View Store</a></li>
+      <li><a href="admin.html">Dashboard</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= ADMIN HEADER ================= -->
+<section class="admin-header">
+  <div class="container">
+    <h1 style="font-size:26px; margin-bottom:4px;">Admin Dashboard</h1>
+    <p style="color:#6b6b6b; margin:0;">Foundation only — no authentication implemented yet.</p>
+  </div>
+</section>
+
+<!-- ================= STATS ================= -->
+<section class="admin-section">
+  <div class="container">
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value" id="stat-total-products">0</div>
+        <div class="stat-label">Total Products</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-low-stock">0</div>
+        <div class="stat-label">Low Stock Products</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-out-of-stock">0</div>
+        <div class="stat-label">Out of Stock Products</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-cart-items">0</div>
+        <div class="stat-label">Items Currently in Cart</div>
+      </div>
+    </div>
+
+    <!-- ================= PRODUCT TABLE ================= -->
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="admin-product-table-body">
+          <!-- Rendered dynamically by admin.js -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ================= ADD PRODUCT (optional) ================= -->
+    <h3 style="margin-top:36px;">Add Product</h3>
+    <form class="add-product-form" id="add-product-form">
+      <input type="text" id="new-product-name" placeholder="Product Name" required>
+      <input type="text" id="new-product-category" placeholder="Category" required>
+      <input type="number" id="new-product-price" placeholder="Price" step="0.01" min="0" required>
+      <input type="number" id="new-product-stock" placeholder="Stock" min="0" required>
+      <button type="submit" class="btn btn-primary">Add Product</button>
+    </form>
+
+  </div>
+</section>
+
+<!-- ================= EDIT PRODUCT MODAL ================= -->
+<div class="modal" id="edit-product-modal">
+  <button class="modal-close-btn" id="edit-modal-close-btn">&times;</button>
+  <h3 id="edit-product-name">Edit Product</h3>
+  <div class="form-group">
+    <label for="edit-price-input">Price</label>
+    <input type="number" id="edit-price-input" step="0.01" min="0">
+  </div>
+  <div class="form-group">
+    <label for="edit-stock-input">Stock</label>
+    <input type="number" id="edit-stock-input" min="0">
+  </div>
+  <button class="btn btn-primary btn-full" id="edit-modal-save-btn">Save Changes</button>
+</div>
+<div class="modal-overlay" id="edit-modal-overlay"></div>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
