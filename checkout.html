@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -20,488 +21,407 @@
     rel="stylesheet"
     href="css/responsive.css"
   >
+
 </head>
 
 
 <body>
 
 
-<!-- ============================================================
-     NAVBAR
-============================================================ -->
+  <!-- ================= NAVBAR ================= -->
 
-<header class="navbar">
+  <header class="navbar">
 
-  <div class="container">
+    <div class="container">
+
+      <a
+        href="index.html"
+        class="nav-brand"
+      >
+        HobbyForge
+      </a>
 
 
-    <a
-      href="index.html"
-      class="checkout-brand"
-      aria-label="HobbyForge Home"
-    >
-
-      <img
-        src="assets/images/Logo.png"
-        alt="HobbyForge"
-        class="checkout-brand-logo"
+      <ul
+        class="nav-links"
+        id="nav-links"
       >
 
-      <div class="checkout-brand-text">
+        <li>
+          <a href="index.html">
+            Home
+          </a>
+        </li>
 
-        <span class="checkout-brand-name">
-          HobbyForge
-        </span>
+        <li>
+          <a href="products.html">
+            Shop
+          </a>
+        </li>
 
-        <span class="checkout-brand-tagline">
-          Craft • Build • Optimize • Enhance
-        </span>
+      </ul>
+
+
+      <div class="nav-right">
+
+        <button
+          class="cart-btn js-open-cart"
+          aria-label="Open cart"
+        >
+
+          Cart
+
+          <span
+            class="cart-count js-cart-count"
+          >
+            0
+          </span>
+
+        </button>
+
+
+        <button
+          class="mobile-menu-toggle"
+          id="mobile-menu-toggle"
+          aria-label="Toggle menu"
+        >
+
+          <span></span>
+          <span></span>
+          <span></span>
+
+        </button>
 
       </div>
 
-    </a>
-
-
-    <div class="checkout-nav-actions">
-
-      <a
-        href="products.html"
-        class="btn btn-outline btn-small"
-      >
-        Continue Shopping
-      </a>
-
-
-      <button
-        class="cart-btn js-open-cart"
-        aria-label="Open cart"
-      >
-
-        Cart
-
-        <span class="cart-count js-cart-count">
-          0
-        </span>
-
-      </button>
-
     </div>
 
-
-  </div>
-
-</header>
+  </header>
 
 
-<!-- ============================================================
-     CHECKOUT HEADER
-============================================================ -->
+  <!-- ================= CHECKOUT HEADER ================= -->
 
-<section class="checkout-hero">
+  <section
+    class="hero"
+    style="padding:40px 0;"
+  >
 
-  <div class="container">
+    <div class="container">
 
-    <div class="checkout-hero-content">
-
-      <p class="checkout-eyebrow">
-        SECURE CHECKOUT
-      </p>
-
-      <h1>
-        Complete Your Order
+      <h1
+        style="font-size:28px;"
+      >
+        Checkout
       </h1>
 
       <p>
-        Review your order and provide your information
-        to complete your purchase.
+        Review your order and provide your information.
       </p>
 
     </div>
 
-  </div>
-
-</section>
+  </section>
 
 
-<!-- ============================================================
-     CHECKOUT CONTENT
-============================================================ -->
+  <!-- ================= CHECKOUT ================= -->
 
-<main class="checkout-section">
+  <section>
 
-  <div class="container">
+    <div class="container">
 
 
-    <!-- Empty checkout message -->
+      <!-- EMPTY CART -->
 
-    <div
-      class="checkout-empty"
-      id="checkout-empty"
-    >
-
-      <h2>
-        Your cart is empty
-      </h2>
-
-      <p>
-        Add some products before proceeding to checkout.
-      </p>
-
-      <a
-        href="products.html"
-        class="btn btn-primary"
+      <div
+        id="checkout-empty"
+        style="display:none; text-align:center;"
       >
-        Browse Products
-      </a>
 
-    </div>
+        <h2>
+          Your cart is empty
+        </h2>
+
+        <p>
+          Add products before proceeding to checkout.
+        </p>
+
+        <a
+          href="products.html"
+          class="btn btn-primary"
+        >
+          Continue Shopping
+        </a>
+
+      </div>
 
 
-    <!-- Main checkout layout -->
+      <!-- CHECKOUT CONTENT -->
 
-    <div
-      class="checkout-layout"
-      id="checkout-layout"
-    >
+      <div
+        id="checkout-layout"
+      >
 
 
-      <!-- ======================================================
-           CUSTOMER INFORMATION
-      ======================================================= -->
+        <!-- CUSTOMER FORM -->
 
-      <section class="checkout-card checkout-customer-card">
+        <div
+          class="checkout-customer-section"
+        >
 
-        <div class="checkout-card-header">
+          <h2>
+            Customer Information
+          </h2>
 
-          <div>
 
-            <p class="checkout-step">
-              STEP 1
-            </p>
+          <form
+            id="checkout-form"
+            novalidate
+          >
 
-            <h2>
-              Customer Information
-            </h2>
+            <div class="form-group">
 
-          </div>
+              <label
+                for="checkout-name"
+              >
+                Full Name
+              </label>
+
+              <input
+                type="text"
+                id="checkout-name"
+                required
+              >
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label
+                for="checkout-email"
+              >
+                Email Address
+              </label>
+
+              <input
+                type="email"
+                id="checkout-email"
+                required
+              >
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label
+                for="checkout-phone"
+              >
+                Phone Number
+              </label>
+
+              <input
+                type="tel"
+                id="checkout-phone"
+                required
+              >
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label
+                for="checkout-address"
+              >
+                Delivery Address
+              </label>
+
+              <textarea
+                id="checkout-address"
+                required
+              ></textarea>
+
+            </div>
+
+
+            <div
+              id="checkout-form-message"
+              class="checkout-form-message"
+            ></div>
+
+
+            <button
+              type="submit"
+              class="btn btn-primary btn-full"
+            >
+              Continue
+            </button>
+
+          </form>
 
         </div>
 
 
-        <form
-          id="checkout-form"
-          novalidate
+        <!-- ORDER SUMMARY -->
+
+        <div
+          class="checkout-summary"
         >
 
-
-          <!-- Full name -->
-
-          <div class="form-group">
-
-            <label for="checkout-name">
-              Full Name
-            </label>
-
-            <input
-              type="text"
-              id="checkout-name"
-              name="name"
-              placeholder="Enter your full name"
-              autocomplete="name"
-            >
-
-          </div>
-
-
-          <!-- Email -->
-
-          <div class="form-group">
-
-            <label for="checkout-email">
-              Email Address
-            </label>
-
-            <input
-              type="email"
-              id="checkout-email"
-              name="email"
-              placeholder="Enter your email address"
-              autocomplete="email"
-            >
-
-          </div>
-
-
-          <!-- Phone -->
-
-          <div class="form-group">
-
-            <label for="checkout-phone">
-              Phone Number
-            </label>
-
-            <input
-              type="tel"
-              id="checkout-phone"
-              name="phone"
-              placeholder="Enter your phone number"
-              autocomplete="tel"
-            >
-
-          </div>
-
-
-          <!-- Address -->
-
-          <div class="form-group">
-
-            <label for="checkout-address">
-              Delivery Address
-            </label>
-
-            <textarea
-              id="checkout-address"
-              name="address"
-              placeholder="Enter your complete delivery address"
-              autocomplete="street-address"
-            ></textarea>
-
-          </div>
-
-
           <div
-            class="checkout-form-message"
-            id="checkout-form-message"
-          ></div>
-
-
-          <!-- Button intentionally UI-only in Step 7.2 -->
-
-          <button
-            type="submit"
-            class="btn btn-primary btn-full checkout-submit-btn"
-            id="place-order-btn"
+            class="checkout-summary-header"
           >
-
-            Continue to Review
-
-          </button>
-
-
-        </form>
-
-      </section>
-
-
-      <!-- ======================================================
-           ORDER SUMMARY
-      ======================================================= -->
-
-      <aside class="checkout-card checkout-summary-card">
-
-
-        <div class="checkout-card-header">
-
-          <div>
-
-            <p class="checkout-step">
-              STEP 2
-            </p>
 
             <h2>
               Order Summary
             </h2>
 
+            <span
+              id="checkout-item-count"
+            >
+              0 Items
+            </span>
+
           </div>
 
-          <span
-            class="checkout-item-count"
-            id="checkout-item-count"
+
+          <div
+            id="checkout-items"
+          ></div>
+
+
+          <div
+            class="checkout-totals"
           >
-            0 Items
-          </span>
 
-        </div>
+            <div>
 
+              <span>
+                Subtotal
+              </span>
 
-        <!-- Order items -->
+              <span
+                id="checkout-subtotal"
+              >
+                $0.00
+              </span>
 
-        <div
-          class="checkout-items"
-          id="checkout-items"
-        >
-        </div>
-
-
-        <!-- Summary totals -->
-
-        <div class="checkout-summary-totals">
+            </div>
 
 
-          <div class="checkout-summary-row">
+            <div
+              class="checkout-total-row"
+            >
 
-            <span>
-              Subtotal
-            </span>
+              <strong>
+                Total
+              </strong>
 
-            <span id="checkout-subtotal">
-              $0.00
-            </span>
+              <strong
+                id="checkout-total"
+              >
+                $0.00
+              </strong>
 
-          </div>
-
-
-          <div class="checkout-summary-row checkout-summary-total">
-
-            <span>
-              Total
-            </span>
-
-            <span id="checkout-total">
-              $0.00
-            </span>
+            </div>
 
           </div>
 
-
         </div>
 
 
-        <p class="checkout-summary-note">
-
-          Final order confirmation will be completed
-          in the next checkout step.
-
-        </p>
-
-
-      </aside>
+      </div>
 
 
     </div>
 
-
-  </div>
-
-</main>
+  </section>
 
 
-<!-- ============================================================
-     FOOTER
-============================================================ -->
+  <!-- ================= CART DRAWER ================= -->
 
-<footer class="footer">
+  <div
+    class="cart-drawer"
+    id="cart-drawer"
+  >
 
-  <div class="container">
-
-    <div class="footer-bottom">
-
-      &copy; 2026 HobbyForge. All rights reserved.
-
-      <br>
-
-      MH-Millares | BSIE-41M1 | Information Systems
-
-    </div>
-
-  </div>
-
-</footer>
-
-
-<!-- ============================================================
-     CART DRAWER
-============================================================ -->
-
-<div
-  class="cart-drawer"
-  id="cart-drawer"
->
-
-
-  <div class="cart-drawer-header">
-
-    <h3>
-      Your Cart
-    </h3>
-
-
-    <button
-      class="modal-close-btn"
-      id="cart-close-btn"
-      style="position:static;"
+    <div
+      class="cart-drawer-header"
     >
 
-      &times;
+      <h3>
+        Your Cart
+      </h3>
 
-    </button>
 
+      <button
+        class="modal-close-btn"
+        id="cart-close-btn"
+        style="position:static;"
+      >
+        &times;
+      </button>
+
+    </div>
+
+
+    <div
+      class="cart-items"
+      id="cart-items"
+    ></div>
+
+
+    <div
+      class="cart-drawer-footer"
+    >
+
+      <div
+        class="cart-total-row"
+      >
+
+        <span>
+          Total
+        </span>
+
+        <span
+          id="cart-total"
+        >
+          $0.00
+        </span>
+
+      </div>
+
+
+      <button
+        class="btn btn-primary btn-full"
+        id="checkout-btn"
+      >
+        Checkout
+      </button>
+
+    </div>
 
   </div>
 
 
   <div
-    class="cart-items"
-    id="cart-items"
-  >
-
-    <p
-      class="cart-empty"
-      id="cart-empty"
-    >
-      Your cart is empty.
-    </p>
-
-  </div>
+    class="cart-overlay"
+    id="cart-overlay"
+  ></div>
 
 
-  <div class="cart-drawer-footer">
+  <!-- ================= SCRIPTS ================= -->
 
+  <script src="js/data.js"></script>
 
-    <div class="cart-total-row">
+  <script src="js/cart.js"></script>
 
-      <span>
-        Total
-      </span>
+  <script src="js/Orders.js"></script>
 
-      <span id="cart-total">
-        $0.00
-      </span>
+  <script src="js/checkout.js"></script>
 
-    </div>
-
-
-    <button
-      class="btn btn-primary btn-full"
-      id="checkout-btn"
-    >
-      Checkout
-    </button>
-
-
-  </div>
-
-
-</div>
-
-
-<div
-  class="cart-overlay"
-  id="cart-overlay"
-></div>
-
-
-<!-- ============================================================
-     SCRIPTS
-============================================================ -->
-
-<script src="js/data.js"></script>
-
-<script src="js/cart.js"></script>
-
-<script src="js/orders.js"></script>
-
-<script src="js/checkout.js"></script>
+  <script src="js/app.js"></script>
 
 
 </body>
