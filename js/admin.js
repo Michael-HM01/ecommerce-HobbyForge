@@ -164,6 +164,15 @@ document.addEventListener(
 
         initStorage();
 
+        if (
+            typeof reconcileCart ===
+            "function"
+        ) {
+
+            reconcileCart();
+
+        }
+
         renderAdmin();
 
         initializeAdminEvents();
@@ -190,66 +199,106 @@ function renderAdmin() {
 
 function renderAdminStatistics() {
 
-    const products = getProducts();
-
-    const cart = getFromStorage(
-        STORAGE_KEYS.CART,
-        []
-    );
+    const products =
+        getProducts();
 
 
-    /* ---------- Total Products ---------- */
-
-    statTotalProducts.textContent =
-        products.length;
+    let cart = [];
 
 
-    /* ---------- Low Stock ---------- */
+    if (
+        typeof getCart ===
+        "function"
+    ) {
 
-    const lowStockProducts =
-        products.filter(function (product) {
+        cart =
+            getCart();
 
-            return (
-                product.stock > 0 &&
-                product.stock <= 5
+    } else {
+
+        cart =
+            getFromStorage(
+                STORAGE_KEYS.CART,
+                []
             );
 
-        });
-
-    statLowStock.textContent =
-        lowStockProducts.length;
+    }
 
 
-    /* ---------- Out Of Stock ---------- */
+    if (statTotalProducts) {
+
+        statTotalProducts.textContent =
+            products.length;
+
+    }
+
+
+    const lowStockProducts =
+        products.filter(
+            function (product) {
+
+                return (
+                    product.stock > 0 &&
+                    product.stock <= 5
+                );
+
+            }
+        );
+
+
+    if (statLowStock) {
+
+        statLowStock.textContent =
+            lowStockProducts.length;
+
+    }
+
 
     const outOfStockProducts =
-        products.filter(function (product) {
+        products.filter(
+            function (product) {
 
-            return product.stock <= 0;
+                return (
+                    product.stock <= 0
+                );
 
-        });
-
-    statOutOfStock.textContent =
-        outOfStockProducts.length;
+            }
+        );
 
 
-    /* ---------- Cart Items ---------- */
+    if (statOutOfStock) {
+
+        statOutOfStock.textContent =
+            outOfStockProducts.length;
+
+    }
+
 
     const cartItemCount =
         cart.reduce(
-            function (total, item) {
+            function (
+                total,
+                item
+            ) {
 
                 return (
                     total +
-                    Number(item.quantity || 0)
+                    Number(
+                        item.quantity || 0
+                    )
                 );
 
             },
             0
         );
 
-    statCartItems.textContent =
-        cartItemCount;
+
+    if (statCartItems) {
+
+        statCartItems.textContent =
+            cartItemCount;
+
+    }
 }
 
 
@@ -259,19 +308,25 @@ function renderAdminStatistics() {
 
 function renderAdminProductTable() {
 
-    if (!adminProductTableBody) {
+    if (
+        !adminProductTableBody
+    ) {
+
         return;
+
     }
 
 
-    const products = getProducts();
+    const products =
+        getProducts();
 
 
-    /* ---------- Empty State ---------- */
+    if (
+        products.length === 0
+    ) {
 
-    if (products.length === 0) {
-
-        adminProductTableBody.innerHTML = `
+        adminProductTableBody.innerHTML =
+            `
             <tr>
                 <td
                     colspan="8"
@@ -283,32 +338,50 @@ function renderAdminProductTable() {
                     No products found.
                 </td>
             </tr>
-        `;
+            `;
 
         return;
+
     }
 
 
     adminProductTableBody.innerHTML =
         products
-            .map(function (product) {
+            .map(
+                function (
+                    product
+                ) {
 
-                const isDiscounted =
-                    hasValidDiscount(product);
+                    const isDiscounted =
+                        hasValidDiscount(
+                            product
+                        );
 
 
-                const displayPrice =
-                    isDiscounted
-                        ? `
+                    let displayPrice;
+
+
+                    if (
+                        isDiscounted
+                    ) {
+
+                        displayPrice =
+                            `
                             <div>
+
                                 <span
                                     style="
-                                        text-decoration:line-through;
+                                        text-decoration:
+                                        line-through;
+
                                         color:#888;
+
                                         font-size:13px;
                                     "
                                 >
-                                    ${formatPrice(product.price)}
+                                    ${formatPrice(
+                                        product.price
+                                    )}
                                 </span>
 
                                 <br>
@@ -318,159 +391,225 @@ function renderAdminProductTable() {
                                         product.discountPrice
                                     )}
                                 </strong>
+
                             </div>
-                        `
-                        : formatPrice(
-                            product.price
-                        );
+                            `;
+
+                    } else {
+
+                        displayPrice =
+                            formatPrice(
+                                product.price
+                            );
+
+                    }
 
 
-                const badgeDisplay =
-                    product.badge
-                        ? product.badge
-                        : "—";
+                    const badgeDisplay =
+                        product.badge
+                            ? product.badge
+                            : "—";
 
 
-                const discountButton =
-                    isDiscounted
-                        ? `
-                            <button
-                                class="btn btn-secondary admin-remove-discount-btn"
-                                data-product-id="${product.id}"
-                            >
-                                Remove Discount
-                            </button>
-                        `
-                        : `
-                            <button
-                                class="btn btn-secondary admin-discount-btn"
-                                data-product-id="${product.id}"
-                            >
-                                Discount
-                            </button>
-                        `;
+                    const discountButton =
+                        isDiscounted
+                            ? `
+                                <button
+                                    type="button"
+                                    class="
+                                        btn
+                                        btn-secondary
+                                        admin-remove-discount-btn
+                                    "
+                                    data-product-id="${escapeAttribute(
+                                        product.id
+                                    )}"
+                                >
+                                    Remove Discount
+                                </button>
+                            `
+                            : `
+                                <button
+                                    type="button"
+                                    class="
+                                        btn
+                                        btn-secondary
+                                        admin-discount-btn
+                                    "
+                                    data-product-id="${escapeAttribute(
+                                        product.id
+                                    )}"
+                                >
+                                    Discount
+                                </button>
+                            `;
 
 
-                return `
+                    return `
+                        <tr>
 
-                    <tr>
-
-                        <!-- ID -->
-
-                        <td>
-                            ${escapeHTML(product.id)}
-                        </td>
+                            <td>
+                                ${escapeHTML(
+                                    product.id
+                                )}
+                            </td>
 
 
-                        <!-- IMAGE -->
+                            <td>
 
-                        <td>
+                                <img
+                                    src="${escapeAttribute(
+                                        product.image
+                                    )}"
+                                    alt="${escapeAttribute(
+                                        product.name
+                                    )}"
+                                    class="admin-product-image"
+                                    data-fallback="true"
+                                    style="
+                                        width:55px;
+                                        height:55px;
+                                        object-fit:cover;
+                                        border-radius:6px;
+                                    "
+                                >
 
-                            <img
-                                src="${escapeAttribute(
-                                    product.image
-                                )}"
-                                alt="${escapeAttribute(
+                            </td>
+
+
+                            <td>
+                                ${escapeHTML(
                                     product.name
-                                )}"
-                                style="
-                                    width:55px;
-                                    height:55px;
-                                    object-fit:cover;
-                                    border-radius:6px;
-                                "
-                                onerror="
-                                    this.src='assets/images/placeholder.png'
-                                "
-                            >
-
-                        </td>
+                                )}
+                            </td>
 
 
-                        <!-- PRODUCT -->
-
-                        <td>
-                            ${escapeHTML(
-                                product.name
-                            )}
-                        </td>
+                            <td>
+                                ${escapeHTML(
+                                    product.category
+                                )}
+                            </td>
 
 
-                        <!-- CATEGORY -->
-
-                        <td>
-                            ${escapeHTML(
-                                product.category
-                            )}
-                        </td>
+                            <td>
+                                ${displayPrice}
+                            </td>
 
 
-                        <!-- PRICE -->
-
-                        <td>
-                            ${displayPrice}
-                        </td>
+                            <td>
+                                ${product.stock}
+                            </td>
 
 
-                        <!-- STOCK -->
-
-                        <td>
-                            ${product.stock}
-                        </td>
-
-
-                        <!-- BADGE -->
-
-                        <td>
-                            ${escapeHTML(
-                                badgeDisplay
-                            )}
-                        </td>
+                            <td>
+                                ${escapeHTML(
+                                    badgeDisplay
+                                )}
+                            </td>
 
 
-                        <!-- ACTIONS -->
+                            <td>
 
-                        <td>
-
-                            <div
-                                style="
-                                    display:flex;
-                                    flex-wrap:wrap;
-                                    gap:6px;
-                                "
-                            >
-
-                                <button
-                                    class="btn btn-primary admin-edit-btn"
-                                    data-product-id="${product.id}"
+                                <div
+                                    style="
+                                        display:flex;
+                                        flex-wrap:wrap;
+                                        gap:6px;
+                                    "
                                 >
-                                    Edit
-                                </button>
+
+                                    <button
+                                        type="button"
+                                        class="
+                                            btn
+                                            btn-primary
+                                            admin-edit-btn
+                                        "
+                                        data-product-id="${escapeAttribute(
+                                            product.id
+                                        )}"
+                                    >
+                                        Edit
+                                    </button>
 
 
-                                ${discountButton}
+                                    ${discountButton}
 
 
-                                <button
-                                    class="btn btn-danger admin-delete-btn"
-                                    data-product-id="${product.id}"
-                                >
-                                    Delete
-                                </button>
+                                    <button
+                                        type="button"
+                                        class="
+                                            btn
+                                            btn-danger
+                                            admin-delete-btn
+                                        "
+                                        data-product-id="${escapeAttribute(
+                                            product.id
+                                        )}"
+                                    >
+                                        Delete
+                                    </button>
 
-                            </div>
+                                </div>
 
-                        </td>
+                            </td>
 
-                    </tr>
+                        </tr>
+                    `;
 
-                `;
-
-            })
+                }
+            )
             .join("");
 
 
+    initializeTableImages();
+
     bindProductTableEvents();
+}
+
+
+/* ============================================================
+   SAFE IMAGE FALLBACK
+============================================================ */
+
+function initializeTableImages() {
+
+    document
+        .querySelectorAll(
+            ".admin-product-image"
+        )
+        .forEach(
+            function (
+                image
+            ) {
+
+                image.addEventListener(
+                    "error",
+                    function () {
+
+                        /*
+                           Remove the handler first.
+
+                           This prevents an endless
+                           fallback loop if the
+                           placeholder itself is missing.
+                        */
+
+                        this.onerror =
+                            null;
+
+
+                        this.src =
+                            "assets/images/placeholder.png";
+
+                    },
+                    {
+                        once: true
+                    }
+                );
+
+            }
+        );
 }
 
 
@@ -480,92 +619,105 @@ function renderAdminProductTable() {
 
 function bindProductTableEvents() {
 
-    /* ---------- Edit ---------- */
 
     document
         .querySelectorAll(
             ".admin-edit-btn"
         )
-        .forEach(function (button) {
+        .forEach(
+            function (
+                button
+            ) {
 
-            button.addEventListener(
-                "click",
-                function () {
+                button.addEventListener(
+                    "click",
+                    function () {
 
-                    openEditModal(
-                        this.dataset.productId
-                    );
+                        openEditModal(
+                            this.dataset
+                                .productId
+                        );
 
-                }
-            );
+                    }
+                );
 
-        });
+            }
+        );
 
-
-    /* ---------- Apply Discount ---------- */
 
     document
         .querySelectorAll(
             ".admin-discount-btn"
         )
-        .forEach(function (button) {
+        .forEach(
+            function (
+                button
+            ) {
 
-            button.addEventListener(
-                "click",
-                function () {
+                button.addEventListener(
+                    "click",
+                    function () {
 
-                    openDiscountModal(
-                        this.dataset.productId
-                    );
+                        openDiscountModal(
+                            this.dataset
+                                .productId
+                        );
 
-                }
-            );
+                    }
+                );
 
-        });
+            }
+        );
 
-
-    /* ---------- Remove Discount ---------- */
 
     document
         .querySelectorAll(
             ".admin-remove-discount-btn"
         )
-        .forEach(function (button) {
+        .forEach(
+            function (
+                button
+            ) {
 
-            button.addEventListener(
-                "click",
-                function () {
+                button.addEventListener(
+                    "click",
+                    function () {
 
-                    removeDiscount(
-                        this.dataset.productId
-                    );
+                        removeDiscount(
+                            this.dataset
+                                .productId
+                        );
 
-                }
-            );
+                    }
+                );
 
-        });
+            }
+        );
 
-
-    /* ---------- Delete ---------- */
 
     document
         .querySelectorAll(
             ".admin-delete-btn"
         )
-        .forEach(function (button) {
+        .forEach(
+            function (
+                button
+            ) {
 
-            button.addEventListener(
-                "click",
-                function () {
+                button.addEventListener(
+                    "click",
+                    function () {
 
-                    deleteProduct(
-                        this.dataset.productId
-                    );
+                        deleteProduct(
+                            this.dataset
+                                .productId
+                        );
 
-                }
-            );
+                    }
+                );
 
-        });
+            }
+        );
 }
 
 
@@ -573,38 +725,56 @@ function bindProductTableEvents() {
    ADD PRODUCT
 ============================================================ */
 
-function handleAddProduct(event) {
+function handleAddProduct(
+    event
+) {
 
     event.preventDefault();
 
 
     const name =
-        newProductName.value.trim();
+        newProductName
+            .value
+            .trim();
+
 
     const category =
-        newProductCategory.value.trim();
+        newProductCategory
+            .value
+            .trim();
+
 
     const description =
-        newProductDescription.value.trim();
+        newProductDescription
+            .value
+            .trim();
+
 
     const price =
         Number(
-            newProductPrice.value
+            newProductPrice
+                .value
         );
+
 
     const stock =
         Number(
-            newProductStock.value
+            newProductStock
+                .value
         );
 
+
     const badge =
-        newProductBadge.value.trim();
+        newProductBadge
+            .value
+            .trim();
+
 
     const image =
-        newProductImage.value.trim();
+        newProductImage
+            .value
+            .trim();
 
-
-    /* ---------- Validation ---------- */
 
     if (
         !name ||
@@ -618,11 +788,14 @@ function handleAddProduct(event) {
         );
 
         return;
+
     }
 
 
     if (
-        !Number.isFinite(price) ||
+        !Number.isFinite(
+            price
+        ) ||
         price < 0
     ) {
 
@@ -631,11 +804,14 @@ function handleAddProduct(event) {
         );
 
         return;
+
     }
 
 
     if (
-        !Number.isFinite(stock) ||
+        !Number.isFinite(
+            stock
+        ) ||
         stock < 0
     ) {
 
@@ -644,10 +820,9 @@ function handleAddProduct(event) {
         );
 
         return;
+
     }
 
-
-    /* ---------- Create Product ---------- */
 
     const newProduct = {
 
@@ -670,7 +845,9 @@ function handleAddProduct(event) {
             null,
 
         stock:
-            Math.floor(stock),
+            Math.floor(
+                stock
+            ),
 
         badge:
             badge,
@@ -680,29 +857,36 @@ function handleAddProduct(event) {
 
         image:
             image
+
     };
 
-
-    /* ---------- Save ---------- */
 
     const products =
         getProducts();
 
+
     products.push(
         newProduct
     );
+
 
     saveProducts(
         products
     );
 
 
-    /* ---------- Reset Form ---------- */
+    if (
+        typeof reconcileCart ===
+        "function"
+    ) {
+
+        reconcileCart();
+
+    }
+
 
     addProductForm.reset();
 
-
-    /* ---------- Refresh ---------- */
 
     renderAdmin();
 
@@ -717,29 +901,28 @@ function handleAddProduct(event) {
    EDIT PRODUCT MODAL
 ============================================================ */
 
-function openEditModal(productId) {
+function openEditModal(
+    productId
+) {
 
     const product =
-        getProductById(productId);
+        getProductById(
+            productId
+        );
 
 
-    if (!product) {
+    if (
+        !product
+    ) {
 
         alert(
             "Product could not be found."
         );
 
         return;
+
     }
 
-
-    /*
-       IMPORTANT:
-       Explicitly overwrite EVERY field.
-
-       This prevents stale data from
-       a previously edited product.
-    */
 
     editingProductId =
         product.id;
@@ -794,38 +977,58 @@ function openEditModal(productId) {
 
 function saveEditedProduct() {
 
-    if (!editingProductId) {
+    if (
+        !editingProductId
+    ) {
+
         return;
+
     }
 
 
     const name =
-        editNameInput.value.trim();
+        editNameInput
+            .value
+            .trim();
+
 
     const category =
-        editCategoryInput.value.trim();
+        editCategoryInput
+            .value
+            .trim();
+
 
     const description =
-        editDescriptionInput.value.trim();
+        editDescriptionInput
+            .value
+            .trim();
+
 
     const price =
         Number(
-            editPriceInput.value
+            editPriceInput
+                .value
         );
+
 
     const stock =
         Number(
-            editStockInput.value
+            editStockInput
+                .value
         );
 
+
     const badge =
-        editBadgeInput.value.trim();
+        editBadgeInput
+            .value
+            .trim();
+
 
     const image =
-        editImageInput.value.trim();
+        editImageInput
+            .value
+            .trim();
 
-
-    /* ---------- Validation ---------- */
 
     if (
         !name ||
@@ -839,11 +1042,14 @@ function saveEditedProduct() {
         );
 
         return;
+
     }
 
 
     if (
-        !Number.isFinite(price) ||
+        !Number.isFinite(
+            price
+        ) ||
         price < 0
     ) {
 
@@ -852,11 +1058,14 @@ function saveEditedProduct() {
         );
 
         return;
+
     }
 
 
     if (
-        !Number.isFinite(stock) ||
+        !Number.isFinite(
+            stock
+        ) ||
         stock < 0
     ) {
 
@@ -865,10 +1074,9 @@ function saveEditedProduct() {
         );
 
         return;
+
     }
 
-
-    /* ---------- Update Product ---------- */
 
     const products =
         getProducts();
@@ -876,7 +1084,9 @@ function saveEditedProduct() {
 
     const productIndex =
         products.findIndex(
-            function (product) {
+            function (
+                product
+            ) {
 
                 return (
                     product.id ===
@@ -887,7 +1097,9 @@ function saveEditedProduct() {
         );
 
 
-    if (productIndex === -1) {
+    if (
+        productIndex === -1
+    ) {
 
         alert(
             "Product could not be found."
@@ -896,22 +1108,19 @@ function saveEditedProduct() {
         closeEditModal();
 
         return;
+
     }
 
 
     const currentProduct =
-        products[productIndex];
+        products[
+            productIndex
+        ];
 
 
-    /*
-       Preserve discount state.
-
-       Editing the regular price should
-       not automatically remove a valid
-       existing discount.
-    */
-
-    products[productIndex] = {
+    products[
+        productIndex
+    ] = {
 
         ...currentProduct,
 
@@ -928,67 +1137,95 @@ function saveEditedProduct() {
             price,
 
         stock:
-            Math.floor(stock),
+            Math.floor(
+                stock
+            ),
 
         badge:
             badge,
 
         image:
             image
+
     };
 
 
     /*
-       If a discounted product is edited
-       and the new regular price is now
-       lower than or equal to the discount,
-       remove the invalid discount safely.
+       If editing the regular price
+       makes the discount invalid,
+       safely remove it.
     */
 
     if (
         !hasValidDiscount(
-            products[productIndex]
+            products[
+                productIndex
+            ]
         )
     ) {
 
         if (
-            products[productIndex]
-                .discountPrice !== null
+            products[
+                productIndex
+            ]
+                .discountPrice !==
+            null
         ) {
 
-            products[productIndex]
-                .discountPrice = null;
+            products[
+                productIndex
+            ]
+                .discountPrice =
+                null;
+
 
             if (
-                products[productIndex]
-                    .badge === "Discount"
+                products[
+                    productIndex
+                ]
+                    .badge ===
+                "Discount"
             ) {
 
-                products[productIndex]
+                products[
+                    productIndex
+                ]
                     .badge =
-                    products[productIndex]
+                    products[
+                        productIndex
+                    ]
                         .previousBadge || "";
 
-                products[productIndex]
-                    .previousBadge = "";
+
+                products[
+                    productIndex
+                ]
+                    .previousBadge =
+                    "";
+
             }
+
         }
+
     }
 
-
-    /* ---------- Save ---------- */
 
     saveProducts(
         products
     );
 
 
-    /* ---------- Close ---------- */
+    if (
+        typeof reconcileCart ===
+        "function"
+    ) {
+
+        reconcileCart();
+
+    }
+
 
     closeEditModal();
-
-
-    /* ---------- Refresh ---------- */
 
     renderAdmin();
 
@@ -1003,14 +1240,22 @@ function saveEditedProduct() {
    DELETE PRODUCT
 ============================================================ */
 
-function deleteProduct(productId) {
+function deleteProduct(
+    productId
+) {
 
     const product =
-        getProductById(productId);
+        getProductById(
+            productId
+        );
 
 
-    if (!product) {
+    if (
+        !product
+    ) {
+
         return;
+
     }
 
 
@@ -1020,8 +1265,12 @@ function deleteProduct(productId) {
         );
 
 
-    if (!confirmed) {
+    if (
+        !confirmed
+    ) {
+
         return;
+
     }
 
 
@@ -1031,10 +1280,13 @@ function deleteProduct(productId) {
 
     const updatedProducts =
         products.filter(
-            function (item) {
+            function (
+                item
+            ) {
 
                 return (
-                    item.id !== productId
+                    item.id !==
+                    productId
                 );
 
             }
@@ -1046,34 +1298,14 @@ function deleteProduct(productId) {
     );
 
 
-    /*
-       Remove deleted product
-       from cart if present.
-    */
+    if (
+        typeof reconcileCart ===
+        "function"
+    ) {
 
-    const cart =
-        getFromStorage(
-            STORAGE_KEYS.CART,
-            []
-        );
+        reconcileCart();
 
-
-    const updatedCart =
-        cart.filter(
-            function (item) {
-
-                return (
-                    item.productId !== productId
-                );
-
-            }
-        );
-
-
-    setToStorage(
-        STORAGE_KEYS.CART,
-        updatedCart
-    );
+    }
 
 
     renderAdmin();
@@ -1089,19 +1321,26 @@ function deleteProduct(productId) {
    DISCOUNT MODAL
 ============================================================ */
 
-function openDiscountModal(productId) {
+function openDiscountModal(
+    productId
+) {
 
     const product =
-        getProductById(productId);
+        getProductById(
+            productId
+        );
 
 
-    if (!product) {
+    if (
+        !product
+    ) {
 
         alert(
             "Product could not be found."
         );
 
         return;
+
     }
 
 
@@ -1118,11 +1357,6 @@ function openDiscountModal(productId) {
             product.price
         );
 
-
-    /*
-       Explicitly clear previous value.
-       Prevents stale discount input.
-    */
 
     discountPriceInput.value =
         "";
@@ -1141,14 +1375,19 @@ function openDiscountModal(productId) {
 
 function applyDiscount() {
 
-    if (!discountProductId) {
+    if (
+        !discountProductId
+    ) {
+
         return;
+
     }
 
 
     const discountedPrice =
         Number(
-            discountPriceInput.value
+            discountPriceInput
+                .value
         );
 
 
@@ -1158,7 +1397,9 @@ function applyDiscount() {
 
     const productIndex =
         products.findIndex(
-            function (product) {
+            function (
+                product
+            ) {
 
                 return (
                     product.id ===
@@ -1169,7 +1410,9 @@ function applyDiscount() {
         );
 
 
-    if (productIndex === -1) {
+    if (
+        productIndex === -1
+    ) {
 
         alert(
             "Product could not be found."
@@ -1178,14 +1421,15 @@ function applyDiscount() {
         closeDiscountModal();
 
         return;
+
     }
 
 
     const product =
-        products[productIndex];
+        products[
+            productIndex
+        ];
 
-
-    /* ---------- Validation ---------- */
 
     if (
         !Number.isFinite(
@@ -1199,12 +1443,15 @@ function applyDiscount() {
         );
 
         return;
+
     }
 
 
     if (
         discountedPrice >=
-        Number(product.price)
+        Number(
+            product.price
+        )
     ) {
 
         alert(
@@ -1212,24 +1459,24 @@ function applyDiscount() {
         );
 
         return;
+
     }
 
 
-    /* ---------- Preserve Badge ---------- */
-
     if (
-        product.badge !== "Discount"
+        product.badge !==
+        "Discount"
     ) {
 
         product.previousBadge =
             product.badge || "";
+
     }
 
 
-    /* ---------- Apply Discount ---------- */
-
     product.discountPrice =
         discountedPrice;
+
 
     product.badge =
         "Discount";
@@ -1255,14 +1502,22 @@ function applyDiscount() {
    REMOVE DISCOUNT
 ============================================================ */
 
-function removeDiscount(productId) {
+function removeDiscount(
+    productId
+) {
 
     const product =
-        getProductById(productId);
+        getProductById(
+            productId
+        );
 
 
-    if (!product) {
+    if (
+        !product
+    ) {
+
         return;
+
     }
 
 
@@ -1272,8 +1527,12 @@ function removeDiscount(productId) {
         );
 
 
-    if (!confirmed) {
+    if (
+        !confirmed
+    ) {
+
         return;
+
     }
 
 
@@ -1283,32 +1542,37 @@ function removeDiscount(productId) {
 
     const productIndex =
         products.findIndex(
-            function (item) {
+            function (
+                item
+            ) {
 
                 return (
-                    item.id === productId
+                    item.id ===
+                    productId
                 );
 
             }
         );
 
 
-    if (productIndex === -1) {
+    if (
+        productIndex === -1
+    ) {
+
         return;
+
     }
 
 
     const targetProduct =
-        products[productIndex];
+        products[
+            productIndex
+        ];
 
-
-    /* ---------- Remove Discount ---------- */
 
     targetProduct.discountPrice =
         null;
 
-
-    /* ---------- Restore Badge ---------- */
 
     if (
         targetProduct.badge ===
@@ -1316,7 +1580,9 @@ function removeDiscount(productId) {
     ) {
 
         targetProduct.badge =
-            targetProduct.previousBadge || "";
+            targetProduct.previousBadge ||
+            "";
+
     }
 
 
@@ -1344,8 +1610,19 @@ function removeDiscount(productId) {
 
 function updateEditImagePreview() {
 
+    if (
+        !editProductImagePreview
+    ) {
+
+        return;
+
+    }
+
+
     const imagePath =
-        editImageInput.value.trim();
+        editImageInput
+            .value
+            .trim();
 
 
     editProductImagePreview.src =
@@ -1356,6 +1633,10 @@ function updateEditImagePreview() {
 
 /* ============================================================
    MODAL HELPERS
+
+   IMPORTANT:
+   Existing CSS uses the "open"
+   class for modal visibility.
 ============================================================ */
 
 function openModal(
@@ -1363,13 +1644,24 @@ function openModal(
     overlay
 ) {
 
+    if (
+        !modal ||
+        !overlay
+    ) {
+
+        return;
+
+    }
+
+
     modal.classList.add(
-        "active"
+        "open"
     );
 
     overlay.classList.add(
-        "active"
+        "open"
     );
+
 
     document.body.style.overflow =
         "hidden";
@@ -1381,13 +1673,24 @@ function closeModal(
     overlay
 ) {
 
+    if (
+        !modal ||
+        !overlay
+    ) {
+
+        return;
+
+    }
+
+
     modal.classList.remove(
-        "active"
+        "open"
     );
 
     overlay.classList.remove(
-        "active"
+        "open"
     );
+
 
     document.body.style.overflow =
         "";
@@ -1405,10 +1708,6 @@ function closeEditModal() {
         editModalOverlay
     );
 
-
-    /*
-       Clear temporary editing state.
-    */
 
     editingProductId =
         null;
@@ -1439,6 +1738,7 @@ function closeEditModal() {
     editImageInput.value =
         "";
 
+
     editProductImagePreview.src =
         "assets/images/placeholder.png";
 }
@@ -1456,18 +1756,17 @@ function closeDiscountModal() {
     );
 
 
-    /*
-       Clear temporary discount state.
-    */
-
     discountProductId =
         null;
+
 
     discountProductName.textContent =
         "";
 
+
     discountOriginalPrice.textContent =
         "";
+
 
     discountPriceInput.value =
         "";
@@ -1481,9 +1780,9 @@ function closeDiscountModal() {
 function initializeAdminEvents() {
 
 
-    /* ---------- Add Product ---------- */
-
-    if (addProductForm) {
+    if (
+        addProductForm
+    ) {
 
         addProductForm.addEventListener(
             "submit",
@@ -1493,9 +1792,9 @@ function initializeAdminEvents() {
     }
 
 
-    /* ---------- Edit Save ---------- */
-
-    if (editModalSaveButton) {
+    if (
+        editModalSaveButton
+    ) {
 
         editModalSaveButton.addEventListener(
             "click",
@@ -1505,9 +1804,9 @@ function initializeAdminEvents() {
     }
 
 
-    /* ---------- Edit Close ---------- */
-
-    if (editModalCloseButton) {
+    if (
+        editModalCloseButton
+    ) {
 
         editModalCloseButton.addEventListener(
             "click",
@@ -1517,7 +1816,9 @@ function initializeAdminEvents() {
     }
 
 
-    if (editModalOverlay) {
+    if (
+        editModalOverlay
+    ) {
 
         editModalOverlay.addEventListener(
             "click",
@@ -1527,9 +1828,9 @@ function initializeAdminEvents() {
     }
 
 
-    /* ---------- Edit Image Preview ---------- */
-
-    if (editImageInput) {
+    if (
+        editImageInput
+    ) {
 
         editImageInput.addEventListener(
             "input",
@@ -1539,17 +1840,16 @@ function initializeAdminEvents() {
     }
 
 
-    /*
-       If an image path is invalid,
-       automatically return preview
-       to placeholder.
-    */
-
-    if (editProductImagePreview) {
+    if (
+        editProductImagePreview
+    ) {
 
         editProductImagePreview.addEventListener(
             "error",
             function () {
+
+                this.onerror =
+                    null;
 
                 this.src =
                     "assets/images/placeholder.png";
@@ -1560,9 +1860,9 @@ function initializeAdminEvents() {
     }
 
 
-    /* ---------- Discount Save ---------- */
-
-    if (discountModalSaveButton) {
+    if (
+        discountModalSaveButton
+    ) {
 
         discountModalSaveButton.addEventListener(
             "click",
@@ -1572,9 +1872,9 @@ function initializeAdminEvents() {
     }
 
 
-    /* ---------- Discount Close ---------- */
-
-    if (discountModalCloseButton) {
+    if (
+        discountModalCloseButton
+    ) {
 
         discountModalCloseButton.addEventListener(
             "click",
@@ -1584,7 +1884,9 @@ function initializeAdminEvents() {
     }
 
 
-    if (discountModalOverlay) {
+    if (
+        discountModalOverlay
+    ) {
 
         discountModalOverlay.addEventListener(
             "click",
@@ -1596,32 +1898,45 @@ function initializeAdminEvents() {
 
 
 /* ============================================================
-   SECURITY / HTML ESCAPING HELPERS
-
-   Admin-generated content should not
-   be inserted directly into innerHTML.
+   HTML ESCAPING HELPERS
 ============================================================ */
 
-function escapeHTML(value) {
+function escapeHTML(
+    value
+) {
 
     const div =
         document.createElement(
             "div"
         );
 
+
     div.textContent =
         value === null ||
         value === undefined
             ? ""
-            : String(value);
+            : String(
+                value
+            );
+
 
     return div.innerHTML;
 }
 
 
-function escapeAttribute(value) {
+function escapeAttribute(
+    value
+) {
 
-    return escapeHTML(value)
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    return escapeHTML(
+        value
+    )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 }
