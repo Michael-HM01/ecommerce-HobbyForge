@@ -2,590 +2,809 @@
    data.js
 
    Responsibility:
-   - Default product data (central product structure)
-   - localStorage keys
-   - Generic localStorage read/write helpers
-   - Storage initialization
-   - Product normalization / backward compatibility
-   - Shared product lookup helpers
+   - Official HobbyForge product catalog
+   - Product storage
+   - Product CRUD helpers
    - Product pricing helpers
-============================================================ */
+   - Category helpers
+   - Catalog recovery / initialization
+
+   IMPORTANT:
+   DEFAULT_PRODUCTS is the official starter catalog.
+
+   If localStorage is:
+   - missing
+   - invalid
+   - empty
+
+   the website automatically restores DEFAULT_PRODUCTS.
+
+   Admin changes are still local to each device because there is
+   currently no shared backend/database.
+   ============================================================ */
 
 
 /* ============================================================
-   LOCALSTORAGE KEYS
-============================================================ */
+   STORAGE KEYS
+   ============================================================ */
 
 const STORAGE_KEYS = {
-    PRODUCTS: "hobbyshop_products",
-    CART: "hobbyshop_cart",
-    ORDERS: "hobbyshop_orders"
+  PRODUCTS: "hobbyshop_products",
+  CART: "hobbyshop_cart",
+  CATALOG_VERSION: "hobbyshop_catalog_version"
 };
 
 
 /* ============================================================
-   DEFAULT PRODUCT DATA
-============================================================ */
+   CATALOG VERSION
+   ============================================================ */
+
+const CATALOG_VERSION = "2.0";
+
+
+/* ============================================================
+   OFFICIAL PRODUCT CATALOG
+   ============================================================ */
 
 const DEFAULT_PRODUCTS = [
-    {
-        id: "p1",
-        name: "Charizard Holo Card",
-        category: "Trading Cards",
-        price: 89.99,
-        discountPrice: null,
-        stock: 12,
-        image: "assets/images/placeholder.png",
-        description:
-            "A holographic collector's card featuring Charizard. A must-have for trading card enthusiasts.",
-        badge: "Rare",
-        previousBadge: ""
-    },
 
-    {
-        id: "p2",
-        name: "Pikachu VMAX Card",
-        category: "Trading Cards",
-        price: 45.50,
-        discountPrice: null,
-        stock: 3,
-        image: "assets/images/placeholder.png",
-        description:
-            "A powerful VMAX card featuring everyone's favorite electric mouse.",
-        badge: "Hot",
-        previousBadge: ""
-    },
+  /* ==========================================================
+     TRADING CARDS
+     ========================================================== */
 
-    {
-        id: "p3",
-        name: "Classic Castle Building Set",
-        category: "Building Sets",
-        price: 129.99,
-        discountPrice: null,
-        stock: 8,
-        image: "assets/images/placeholder.png",
-        description:
-            "A detailed medieval castle building set with over 900 pieces.",
-        badge: "",
-        previousBadge: ""
-    },
+  {
+    id: "p1",
+    name: "Charizard Holo Card",
+    category: "Trading Cards",
+    price: 89.99,
+    discountPrice: null,
+    stock: 12,
+    image: "assets/image/Charizard-HC.jpeg",
+    description:
+      "A holographic collector's card featuring Charizard. A must-have for trading card enthusiasts.",
+    badge: "Rare",
+    previousBadge: ""
+  },
 
-    {
-        id: "p4",
-        name: "LEGO Star Explorer Set",
-        category: "Building Sets",
-        price: 199.99,
-        discountPrice: null,
-        stock: 0,
-        image: "assets/images/placeholder.png",
-        description:
-            "A space-themed building set featuring an explorer ship and minifigures.",
-        badge: "Sold Out",
-        previousBadge: ""
-    },
+  {
+    id: "p2",
+    name: "Pikachu VMAX Card",
+    category: "Trading Cards",
+    price: 45.50,
+    discountPrice: null,
+    stock: 3,
+    image: "assets/image/Pikachu-Vmax.jpg",
+    description:
+      "A powerful VMAX card featuring everyone's favorite electric mouse.",
+    badge: "Hot",
+    previousBadge: ""
+  },
 
-    {
-        id: "p5",
-        name: "Hot Wheels Speed Racer Pack",
-        category: "Die-Cast",
-        price: 19.99,
-        discountPrice: null,
-        stock: 25,
-        image: "assets/images/placeholder.png",
-        description:
-            "A 5-pack of die-cast racing cars, perfect for track sets.",
-        badge: "",
-        previousBadge: ""
-    },
 
-    {
-        id: "p6",
-        name: "Classic Muscle Car Die-Cast 1:18",
-        category: "Die-Cast",
-        price: 34.99,
-        discountPrice: null,
-        stock: 4,
-        image: "assets/images/placeholder.png",
-        description:
-            "A highly detailed 1:18 scale die-cast muscle car replica.",
-        badge: "",
-        previousBadge: ""
-    },
+  /* ==========================================================
+     BUILDING SETS
+     ========================================================== */
 
-    {
-        id: "p7",
-        name: "Gundam RX-78-2 Model Kit",
-        category: "Model Kits",
-        price: 54.99,
-        discountPrice: null,
-        stock: 15,
-        image: "assets/images/placeholder.png",
-        description:
-            "A classic RX-78-2 Gundam plastic model kit with snap-fit assembly.",
-        badge: "New",
-        previousBadge: ""
-    },
+  {
+    id: "p3",
+    name: "Classic Castle Building Set",
+    category: "Building Sets",
+    price: 129.99,
+    discountPrice: null,
+    stock: 8,
+    image: "assets/image/Classic-Castle.jpg",
+    description:
+      "A detailed medieval castle building set with over 900 pieces.",
+    badge: "",
+    previousBadge: ""
+  },
 
-    {
-        id: "p8",
-        name: "Zaku II Model Kit",
-        category: "Model Kits",
-        price: 49.99,
-        discountPrice: null,
-        stock: 6,
-        image: "assets/images/placeholder.png",
-        description:
-            "A detailed Zaku II mobile suit model kit for hobbyist builders.",
-        badge: "",
-        previousBadge: ""
-    },
+  {
+    id: "p4",
+    name: "LEGO Star Explorer Set",
+    category: "Building Sets",
+    price: 199.99,
+    discountPrice: null,
+    stock: 0,
+    image: "assets/image/Lego-ex.jpeg",
+    description:
+      "A space-themed building set featuring an explorer ship and minifigures.",
+    badge: "",
+    previousBadge: ""
+  },
 
-    {
-        id: "p9",
-        name: "Limited Edition Collector Figure",
-        category: "Collectibles",
-        price: 74.99,
-        discountPrice: null,
-        stock: 2,
-        image: "assets/images/placeholder.png",
-        description:
-            "A limited run collectible figure with premium detailing.",
-        badge: "Limited",
-        previousBadge: ""
-    },
 
-    {
-        id: "p10",
-        name: "Vintage Comic Statue",
-        category: "Collectibles",
-        price: 149.99,
-        discountPrice: null,
-        stock: 10,
-        image: "assets/images/placeholder.png",
-        description:
-            "A hand-painted statue inspired by classic vintage comic art.",
-        badge: "",
-        previousBadge: ""
-    },
+  /* ==========================================================
+     DIE-CAST
+     ========================================================== */
 
-    {
-        id: "p11",
-        name: "Hobby Paint & Tool Set",
-        category: "Hobby Accessories",
-        price: 24.99,
-        discountPrice: null,
-        stock: 20,
-        image: "assets/images/placeholder.png",
-        description:
-            "A starter set of paints, brushes, and tools for model building.",
-        badge: "",
-        previousBadge: ""
-    },
+  {
+    id: "p5",
+    name: "Hot Wheels Speed Racer Pack",
+    category: "Die-Cast",
+    price: 19.99,
+    discountPrice: null,
+    stock: 25,
+    image: "assets/image/Hotwheels.webp",
+    description:
+      "A 5-pack of die-cast racing cars, perfect for track sets.",
+    badge: "",
+    previousBadge: ""
+  },
 
-    {
-        id: "p12",
-        name: "Display Case Stand",
-        category: "Hobby Accessories",
-        price: 15.99,
-        discountPrice: null,
-        stock: 30,
-        image: "assets/images/placeholder.png",
-        description:
-            "A clear acrylic display case to protect and showcase your collectibles.",
-        badge: "",
-        previousBadge: ""
-    }
+  {
+    id: "p6",
+    name: "Classic Muscle Car Die-Cast 1:18",
+    category: "Die-Cast",
+    price: 34.99,
+    discountPrice: null,
+    stock: 4,
+    image: "assets/image/Dodge-Charger.jpeg",
+    description:
+      "A highly detailed 1:18 scale die-cast muscle car replica.",
+    badge: "",
+    previousBadge: ""
+  },
+
+
+  /* ==========================================================
+     MODEL KITS
+     ========================================================== */
+
+  {
+    id: "p7",
+    name: "Gundam RX-78-2 Model Kit",
+    category: "Model Kits",
+    price: 54.99,
+    discountPrice: null,
+    stock: 15,
+    image: "assets/image/Rx-78.jpeg",
+    description:
+      "A classic RX-78-2 Gundam plastic model kit with snap-fit assembly.",
+    badge: "New",
+    previousBadge: ""
+  },
+
+  {
+    id: "p8",
+    name: "Zaku II Model Kit",
+    category: "Model Kits",
+    price: 49.99,
+    discountPrice: null,
+    stock: 6,
+    image: "assets/image/Zaku2.jpeg",
+    description:
+      "A detailed Zaku II mobile suit model kit for hobbyist builders.",
+    badge: "",
+    previousBadge: ""
+  },
+
+  {
+    id: "p1788076144320",
+    name: "RG Hi-Nu Gundam 1/144 Scale",
+    category: "Model Kits",
+    price: 60.99,
+    discountPrice: null,
+    stock: 2,
+    image: "assets/image/Hi-nu.jpg",
+    description:
+      "Real Grade Gundam Hi-nu 1/144 scale Bandai",
+    badge: "",
+    previousBadge: ""
+  },
+
+  {
+    id: "p1788076144322",
+    name: "HGGTO Rx-78-02 Gundam",
+    category: "Model Kits",
+    price: 31.00,
+    discountPrice: null,
+    stock: 4,
+    image: "assets/image/Rx-78.jpeg",
+    description:
+      "High Grade Gundam origins of the iconic Rx-78-02",
+    badge: "Hot",
+    previousBadge: ""
+  },
+
+
+  /* ==========================================================
+     COLLECTIBLES
+     ========================================================== */
+
+  {
+    id: "p9",
+    name: "Limited Edition Collector Figure",
+    category: "Collectibles",
+    price: 74.99,
+    discountPrice: null,
+    stock: 3,
+    image: "assets/image/Figure.jpeg",
+    description:
+      "A limited run collectible figure with premium detailing.",
+    badge: "Limited",
+    previousBadge: ""
+  },
+
+
+  /* ==========================================================
+     HOBBY ACCESSORIES
+     ========================================================== */
+
+  {
+    id: "p11",
+    name: "Warhammer Hobby Paint & Tool Set",
+    category: "Hobby Accessories",
+    price: 24.99,
+    discountPrice: null,
+    stock: 20,
+    image: "assets/image/Paint.jpeg",
+    description:
+      "A Warhammer set of paints, brushes, and tools for model building.",
+    badge: "",
+    previousBadge: ""
+  },
+
+  {
+    id: "p12",
+    name: "Display Case Stand",
+    category: "Hobby Accessories",
+    price: 15.99,
+    discountPrice: null,
+    stock: 30,
+    image: "assets/image/Case.jpeg",
+    description:
+      "A clear acrylic display case to protect and showcase your collectibles.",
+    badge: "",
+    previousBadge: ""
+  },
+
+
+  /* ==========================================================
+     SPECIAL
+     ========================================================== */
+
+  {
+    id: "p1788076107983",
+    name: "Pagmamahal",
+    category: "Life aspect",
+    price: 10000000,
+    discountPrice: null,
+    stock: 1,
+    image: "assets/image/Love.jpg",
+    description:
+      "No description provided yet.",
+    badge: "Rare",
+    previousBadge: ""
+  }
+
 ];
 
 
 /* ============================================================
-   PRODUCT NORMALIZATION
-
-   Ensures older products stored in localStorage remain compatible
-   with the current product structure.
-
-   This does NOT delete existing product data.
-============================================================ */
-
-function normalizeProduct(product) {
-
-    product = product || {};
-
-    return {
-        id: product.id || generateFallbackProductId(),
-
-        name:
-            typeof product.name === "string"
-                ? product.name
-                : "",
-
-        category:
-            typeof product.category === "string"
-                ? product.category
-                : "",
-
-        price:
-            Number.isFinite(Number(product.price))
-                ? Number(product.price)
-                : 0,
-
-        discountPrice:
-            product.discountPrice !== null &&
-            product.discountPrice !== undefined &&
-            product.discountPrice !== "" &&
-            Number.isFinite(Number(product.discountPrice))
-                ? Number(product.discountPrice)
-                : null,
-
-        stock:
-            Number.isFinite(Number(product.stock))
-                ? Math.max(0, Math.floor(Number(product.stock)))
-                : 0,
-
-        image:
-            typeof product.image === "string" &&
-            product.image.trim() !== ""
-                ? product.image.trim()
-                : "assets/images/placeholder.png",
-
-        description:
-            typeof product.description === "string"
-                ? product.description
-                : "",
-
-        badge:
-            typeof product.badge === "string"
-                ? product.badge
-                : "",
-
-        previousBadge:
-            typeof product.previousBadge === "string"
-                ? product.previousBadge
-                : ""
-    };
-}
-
-
-/* ============================================================
-   PRODUCT ARRAY NORMALIZATION
-============================================================ */
-
-function normalizeProducts(products) {
-
-    if (!Array.isArray(products)) {
-        return [];
-    }
-
-    return products.map(function (product) {
-        return normalizeProduct(product);
-    });
-}
-
-
-/* ============================================================
-   FALLBACK PRODUCT ID
-
-   Used only when an unexpected legacy product does not have an ID.
-============================================================ */
-
-function generateFallbackProductId() {
-
-    return (
-        "product_" +
-        Date.now() +
-        "_" +
-        Math.random().toString(36).substring(2, 8)
-    );
-}
-
-
-/* ============================================================
-   GENERIC LOCALSTORAGE HELPERS
-============================================================ */
+   STORAGE HELPERS
+   ============================================================ */
 
 function getFromStorage(key, fallbackValue) {
 
-    try {
+  try {
 
-        const raw = localStorage.getItem(key);
+    const storedValue =
+      localStorage.getItem(key);
 
-        if (raw === null) {
-            return fallbackValue;
-        }
-
-        return JSON.parse(raw);
-
-    } catch (err) {
-
-        console.error(
-            "Error reading storage key:",
-            key,
-            err
-        );
-
-        return fallbackValue;
+    if (
+      storedValue === null
+    ) {
+      return fallbackValue;
     }
+
+    return JSON.parse(
+      storedValue
+    );
+
+  } catch (error) {
+
+    console.warn(
+      "Could not read localStorage:",
+      key,
+      error
+    );
+
+    return fallbackValue;
+  }
+
 }
 
 
-function setToStorage(key, value) {
+function setToStorage(
+  key,
+  value
+) {
 
-    try {
+  try {
 
-        localStorage.setItem(
-            key,
-            JSON.stringify(value)
-        );
+    localStorage.setItem(
+      key,
+      JSON.stringify(value)
+    );
 
-    } catch (err) {
+  } catch (error) {
 
-        console.error(
-            "Error writing storage key:",
-            key,
-            err
-        );
+    console.warn(
+      "Could not save localStorage:",
+      key,
+      error
+    );
 
-        alert(
-            "Unable to save data. The browser storage may be full."
-        );
-    }
+  }
+
 }
 
 
 /* ============================================================
-   STORAGE INITIALIZATION
-============================================================ */
+   PRODUCT VALIDATION
+   ============================================================ */
+
+function isValidProductList(
+  products
+) {
+
+  if (
+    !Array.isArray(products)
+  ) {
+    return false;
+  }
+
+  if (
+    products.length === 0
+  ) {
+    return false;
+  }
+
+  return products.every(
+    function (product) {
+
+      return (
+        product &&
+        typeof product === "object" &&
+        typeof product.id === "string" &&
+        product.id !== "" &&
+        typeof product.name === "string"
+      );
+
+    }
+  );
+
+}
+
+
+/* ============================================================
+   CATALOG INITIALIZATION
+   ============================================================ */
 
 function initStorage() {
 
-    /* ---------- Products ---------- */
-
-    if (localStorage.getItem(STORAGE_KEYS.PRODUCTS) === null) {
-
-        const defaultProducts = normalizeProducts(
-            DEFAULT_PRODUCTS
-        );
-
-        setToStorage(
-            STORAGE_KEYS.PRODUCTS,
-            defaultProducts
-        );
-
-    } else {
-
-        /*
-           Normalize existing stored products.
-
-           This safely upgrades products created by older versions
-           without deleting user-created products.
-        */
-
-        const storedProducts = getFromStorage(
-            STORAGE_KEYS.PRODUCTS,
-            []
-        );
-
-        const normalizedProducts = normalizeProducts(
-            storedProducts
-        );
-
-        setToStorage(
-            STORAGE_KEYS.PRODUCTS,
-            normalizedProducts
-        );
-    }
+  const storedProducts =
+    getFromStorage(
+      STORAGE_KEYS.PRODUCTS,
+      null
+    );
 
 
-    /* ---------- Cart ---------- */
+  /* ----------------------------------------------------------
+     RECOVERY RULE
 
-    if (localStorage.getItem(STORAGE_KEYS.CART) === null) {
+     Restore official products if storage is:
+     - missing
+     - invalid
+     - empty
+     ---------------------------------------------------------- */
 
-        setToStorage(
-            STORAGE_KEYS.CART,
-            []
-        );
-    }
+  if (
+    !isValidProductList(
+      storedProducts
+    )
+  ) {
+
+    setToStorage(
+      STORAGE_KEYS.PRODUCTS,
+      DEFAULT_PRODUCTS
+    );
+
+    localStorage.setItem(
+      STORAGE_KEYS.CATALOG_VERSION,
+      CATALOG_VERSION
+    );
+
+    return;
+  }
 
 
-    /* ---------- Orders ---------- */
+  /* ----------------------------------------------------------
+     VERSION INITIALIZATION
 
-    if (localStorage.getItem(STORAGE_KEYS.ORDERS) === null) {
+     If an existing valid catalog does not yet have a version,
+     keep it instead of destroying local products.
 
-        setToStorage(
-            STORAGE_KEYS.ORDERS,
-            []
-        );
-    }
+     This prevents unnecessary product loss.
+     ---------------------------------------------------------- */
+
+  const storedVersion =
+    localStorage.getItem(
+      STORAGE_KEYS.CATALOG_VERSION
+    );
+
+  if (
+    !storedVersion
+  ) {
+
+    localStorage.setItem(
+      STORAGE_KEYS.CATALOG_VERSION,
+      CATALOG_VERSION
+    );
+
+  }
+
 }
 
 
 /* ============================================================
-   PRODUCT HELPERS
-============================================================ */
+   PRODUCT ACCESS
+   ============================================================ */
 
 function getProducts() {
 
-    const products = getFromStorage(
-        STORAGE_KEYS.PRODUCTS,
-        DEFAULT_PRODUCTS
+  initStorage();
+
+  const products =
+    getFromStorage(
+      STORAGE_KEYS.PRODUCTS,
+      DEFAULT_PRODUCTS
     );
 
-    return normalizeProducts(products);
-}
-
-
-function saveProducts(products) {
-
-    const normalizedProducts = normalizeProducts(
-        products
-    );
+  if (
+    !isValidProductList(
+      products
+    )
+  ) {
 
     setToStorage(
-        STORAGE_KEYS.PRODUCTS,
-        normalizedProducts
+      STORAGE_KEYS.PRODUCTS,
+      DEFAULT_PRODUCTS
     );
+
+    return DEFAULT_PRODUCTS.slice();
+
+  }
+
+  return products;
+
 }
 
 
-function getProductById(id) {
+function saveProducts(
+  products
+) {
 
-    const products = getProducts();
+  if (
+    !Array.isArray(products)
+  ) {
+    return;
+  }
 
-    return products.find(function (product) {
+  setToStorage(
+    STORAGE_KEYS.PRODUCTS,
+    products
+  );
 
-        return product.id === id;
-
-    });
 }
 
+
+function getProductById(
+  productId
+) {
+
+  const products =
+    getProducts();
+
+  return (
+    products.find(
+      function (product) {
+
+        return (
+          product.id ===
+          productId
+        );
+
+      }
+    ) ||
+    null
+  );
+
+}
+
+
+/* ============================================================
+   CATEGORY HELPERS
+   ============================================================ */
 
 function getAllCategories() {
 
-    const products = getProducts();
+  const products =
+    getProducts();
 
-    const categories = [];
+  const categories =
+    products
+      .map(
+        function (product) {
 
-    products.forEach(function (product) {
-
-        const category = product.category;
-
-        if (
-            category &&
-            categories.indexOf(category) === -1
-        ) {
-
-            categories.push(category);
+          return product.category;
 
         }
+      )
+      .filter(
+        function (category) {
 
-    });
+          return (
+            typeof category === "string" &&
+            category.trim() !== ""
+          );
 
-    return categories;
-}
-
-
-/* ============================================================
-   PRODUCT ID HELPER
-
-   Used by Admin when creating new products.
-============================================================ */
-
-function generateProductId() {
-
-    const products = getProducts();
-
-    let highestNumber = 0;
-
-    products.forEach(function (product) {
-
-        const match = String(product.id).match(
-            /^p(\d+)$/
-        );
-
-        if (match) {
-
-            const number = Number(match[1]);
-
-            if (number > highestNumber) {
-                highestNumber = number;
-            }
         }
+      );
 
-    });
 
-    return "p" + (highestNumber + 1);
+  return [
+    ...new Set(categories)
+  ];
+
 }
 
 
 /* ============================================================
-   PRICING HELPERS
-============================================================ */
+   PRICE HELPERS
+   ============================================================ */
 
-/*
-   A discount is valid only when:
+function getEffectivePrice(
+  product
+) {
 
-   - discountPrice is a valid number
-   - discountPrice is greater than zero
-   - discountPrice is lower than the regular price
-*/
+  if (
+    !product
+  ) {
+    return 0;
+  }
 
-function hasValidDiscount(product) {
 
-    if (!product) {
-        return false;
-    }
-
-    const regularPrice = Number(
-        product.price
+  const discountPrice =
+    Number(
+      product.discountPrice
     );
 
-    const discountPrice = Number(
-        product.discountPrice
-    );
 
-    return (
-        product.discountPrice !== null &&
-        product.discountPrice !== undefined &&
-        product.discountPrice !== "" &&
-        Number.isFinite(discountPrice) &&
-        discountPrice > 0 &&
-        discountPrice < regularPrice
-    );
+  if (
+    product.discountPrice !== null &&
+    product.discountPrice !== undefined &&
+    product.discountPrice !== "" &&
+    Number.isFinite(
+      discountPrice
+    ) &&
+    discountPrice >= 0 &&
+    discountPrice < Number(product.price)
+  ) {
+
+    return discountPrice;
+
+  }
+
+
+  return (
+    Number(product.price) ||
+    0
+  );
+
 }
 
 
-/*
-   Returns the price customers should actually pay.
+/* ============================================================
+   PRODUCT CREATION
+   ============================================================ */
 
-   Cart and storefront should use this helper.
-*/
+function createProduct(
+  productData
+) {
 
-function getEffectivePrice(product) {
+  const products =
+    getProducts();
 
-    if (hasValidDiscount(product)) {
 
-        return Number(
-            product.discountPrice
+  const product = {
+
+    id:
+      productData.id ||
+      (
+        "p" +
+        Date.now()
+      ),
+
+    name:
+      productData.name ||
+      "",
+
+    category:
+      productData.category ||
+      "",
+
+    price:
+      Number(
+        productData.price
+      ) ||
+      0,
+
+    discountPrice:
+
+      productData.discountPrice !==
+        undefined &&
+      productData.discountPrice !==
+        null &&
+      productData.discountPrice !==
+        ""
+
+        ? Number(
+            productData.discountPrice
+          )
+
+        : null,
+
+    stock:
+      Number(
+        productData.stock
+      ) ||
+      0,
+
+    image:
+      productData.image ||
+      "",
+
+    description:
+
+      productData.description ||
+      "No description provided yet.",
+
+    badge:
+      productData.badge ||
+      "",
+
+    previousBadge:
+      productData.previousBadge ||
+      ""
+
+  };
+
+
+  products.push(
+    product
+  );
+
+
+  saveProducts(
+    products
+  );
+
+
+  return product;
+
+}
+
+
+/* ============================================================
+   PRODUCT UPDATE
+   ============================================================ */
+
+function updateProduct(
+  productId,
+  updates
+) {
+
+  const products =
+    getProducts();
+
+
+  const productIndex =
+    products.findIndex(
+      function (product) {
+
+        return (
+          product.id ===
+          productId
         );
-    }
 
-    return Number(
-        product.price
+      }
     );
+
+
+  if (
+    productIndex === -1
+  ) {
+    return null;
+  }
+
+
+  products[
+    productIndex
+  ] = {
+
+    ...products[
+      productIndex
+    ],
+
+    ...updates
+
+  };
+
+
+  saveProducts(
+    products
+  );
+
+
+  return products[
+    productIndex
+  ];
+
 }
 
 
 /* ============================================================
-   PRICE FORMATTING
-============================================================ */
+   PRODUCT DELETION
+   ============================================================ */
 
-function formatPrice(price) {
+function deleteProduct(
+  productId
+) {
 
-    const numericPrice = Number(price);
+  const products =
+    getProducts();
 
-    if (!Number.isFinite(numericPrice)) {
-        return "$0.00";
-    }
 
-    return "$" + numericPrice.toFixed(2);
+  const updatedProducts =
+    products.filter(
+      function (product) {
+
+        return (
+          product.id !==
+          productId
+        );
+
+      }
+    );
+
+
+  saveProducts(
+    updatedProducts
+  );
+
+
+  return updatedProducts;
+
+}
+
+
+/* ============================================================
+   CATALOG RESET
+   ============================================================ */
+
+function resetProductsToDefault() {
+
+  setToStorage(
+    STORAGE_KEYS.PRODUCTS,
+    DEFAULT_PRODUCTS
+  );
+
+
+  localStorage.setItem(
+    STORAGE_KEYS.CATALOG_VERSION,
+    CATALOG_VERSION
+  );
+
 }
