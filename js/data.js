@@ -1,31 +1,16 @@
 /* ============================================================
    data.js
-
    Responsibility:
-   - Official HobbyForge product catalog
-   - Product storage
+   - Official default HobbyForge product catalog
+   - localStorage initialization
    - Product CRUD helpers
-   - Product pricing helpers
-   - Category helpers
-   - Catalog recovery / initialization
-
-   IMPORTANT:
-   DEFAULT_PRODUCTS is the official starter catalog.
-
-   If localStorage is:
-   - missing
-   - invalid
-   - empty
-
-   the website automatically restores DEFAULT_PRODUCTS.
-
-   Admin changes are still local to each device because there is
-   currently no shared backend/database.
+   - Catalog version management
+   - Shared pricing helpers
    ============================================================ */
 
 
 /* ============================================================
-   STORAGE KEYS
+   Storage keys
    ============================================================ */
 
 const STORAGE_KEYS = {
@@ -36,22 +21,25 @@ const STORAGE_KEYS = {
 
 
 /* ============================================================
-   CATALOG VERSION
+   Catalog version
+
+   Increase this value whenever the official default catalog is
+   intentionally updated.
+
+   When the version changes, existing local product data is
+   replaced with the latest official catalog.
    ============================================================ */
 
-const CATALOG_VERSION = "2.0";
+const CATALOG_VERSION = "1.1";
 
 
 /* ============================================================
-   OFFICIAL PRODUCT CATALOG
+   Official default product catalog
    ============================================================ */
 
 const DEFAULT_PRODUCTS = [
 
-  /* ==========================================================
-     TRADING CARDS
-     ========================================================== */
-
+  /* ---------- Trading Cards ---------- */
   {
     id: "p1",
     name: "Charizard Holo Card",
@@ -81,10 +69,7 @@ const DEFAULT_PRODUCTS = [
   },
 
 
-  /* ==========================================================
-     BUILDING SETS
-     ========================================================== */
-
+  /* ---------- Building Sets ---------- */
   {
     id: "p3",
     name: "Classic Castle Building Set",
@@ -114,10 +99,7 @@ const DEFAULT_PRODUCTS = [
   },
 
 
-  /* ==========================================================
-     DIE-CAST
-     ========================================================== */
-
+  /* ---------- Die-Cast ---------- */
   {
     id: "p5",
     name: "Hot Wheels Speed Racer Pack",
@@ -147,10 +129,7 @@ const DEFAULT_PRODUCTS = [
   },
 
 
-  /* ==========================================================
-     MODEL KITS
-     ========================================================== */
-
+  /* ---------- Model Kits ---------- */
   {
     id: "p7",
     name: "Gundam RX-78-2 Model Kit",
@@ -180,7 +159,7 @@ const DEFAULT_PRODUCTS = [
   },
 
   {
-    id: "p1788076144320",
+    id: "p19",
     name: "RG Hi-Nu Gundam 1/144 Scale",
     category: "Model Kits",
     price: 60.99,
@@ -188,13 +167,13 @@ const DEFAULT_PRODUCTS = [
     stock: 2,
     image: "assets/image/Hi-nu.jpg",
     description:
-      "Real Grade Gundam Hi-nu 1/144 scale Bandai",
+      "Real Grade Gundam Hi-Nu 1/144 scale Bandai model kit.",
     badge: "",
     previousBadge: ""
   },
 
   {
-    id: "p1788076144322",
+    id: "p18",
     name: "HGGTO Rx-78-02 Gundam",
     category: "Model Kits",
     price: 31.00,
@@ -202,16 +181,13 @@ const DEFAULT_PRODUCTS = [
     stock: 4,
     image: "assets/image/Rx-78.jpeg",
     description:
-      "High Grade Gundam origins of the iconic Rx-78-02",
+      "High Grade Gundam Origins version of the iconic RX-78-02.",
     badge: "Hot",
     previousBadge: ""
   },
 
 
-  /* ==========================================================
-     COLLECTIBLES
-     ========================================================== */
-
+  /* ---------- Collectibles ---------- */
   {
     id: "p9",
     name: "Limited Edition Collector Figure",
@@ -227,10 +203,7 @@ const DEFAULT_PRODUCTS = [
   },
 
 
-  /* ==========================================================
-     HOBBY ACCESSORIES
-     ========================================================== */
-
+  /* ---------- Hobby Accessories ---------- */
   {
     id: "p11",
     name: "Warhammer Hobby Paint & Tool Set",
@@ -260,12 +233,9 @@ const DEFAULT_PRODUCTS = [
   },
 
 
-  /* ==========================================================
-     SPECIAL
-     ========================================================== */
-
+  /* ---------- Special / Life Aspect ---------- */
   {
-    id: "p1788076107983",
+    id: "p17",
     name: "Pagmamahal",
     category: "Life aspect",
     price: 10000000,
@@ -282,44 +252,92 @@ const DEFAULT_PRODUCTS = [
 
 
 /* ============================================================
-   STORAGE HELPERS
+   Shared pricing helpers
+   ============================================================ */
+
+/*
+   Returns the currently active price.
+
+   If a valid discount price exists and is lower than the regular
+   price, use the discount price. Otherwise use the regular price.
+*/
+
+function getEffectivePrice(product) {
+
+  if (!product) {
+    return 0;
+  }
+
+  const regularPrice = Number(product.price);
+  const discountPrice = Number(product.discountPrice);
+
+  if (
+    product.discountPrice !== null &&
+    product.discountPrice !== undefined &&
+    product.discountPrice !== "" &&
+    Number.isFinite(discountPrice) &&
+    discountPrice >= 0 &&
+    discountPrice < regularPrice
+  ) {
+
+    return discountPrice;
+
+  }
+
+  return Number.isFinite(regularPrice)
+    ? regularPrice
+    : 0;
+}
+
+
+/*
+   Formats prices consistently throughout the website.
+*/
+
+function formatPrice(price) {
+
+  const numericPrice = Number(price);
+
+  if (!Number.isFinite(numericPrice)) {
+    return "$0.00";
+  }
+
+  return "$" + numericPrice.toFixed(2);
+}
+
+
+/* ============================================================
+   Storage helpers
    ============================================================ */
 
 function getFromStorage(key, fallbackValue) {
 
   try {
 
-    const storedValue =
-      localStorage.getItem(key);
+    const storedValue = localStorage.getItem(key);
 
-    if (
-      storedValue === null
-    ) {
+    if (storedValue === null) {
       return fallbackValue;
     }
 
-    return JSON.parse(
-      storedValue
-    );
+    return JSON.parse(storedValue);
 
   } catch (error) {
 
     console.warn(
-      "Could not read localStorage:",
+      "Could not read localStorage key:",
       key,
       error
     );
 
     return fallbackValue;
+
   }
 
 }
 
 
-function setToStorage(
-  key,
-  value
-) {
+function setToStorage(key, value) {
 
   try {
 
@@ -331,7 +349,7 @@ function setToStorage(
   } catch (error) {
 
     console.warn(
-      "Could not save localStorage:",
+      "Could not save localStorage key:",
       key,
       error
     );
@@ -342,47 +360,20 @@ function setToStorage(
 
 
 /* ============================================================
-   PRODUCT VALIDATION
-   ============================================================ */
+   Catalog initialization
 
-function isValidProductList(
-  products
-) {
-
-  if (
-    !Array.isArray(products)
-  ) {
-    return false;
-  }
-
-  if (
-    products.length === 0
-  ) {
-    return false;
-  }
-
-  return products.every(
-    function (product) {
-
-      return (
-        product &&
-        typeof product === "object" &&
-        typeof product.id === "string" &&
-        product.id !== "" &&
-        typeof product.name === "string"
-      );
-
-    }
-  );
-
-}
-
-
-/* ============================================================
-   CATALOG INITIALIZATION
+   Rules:
+   - First visit → load official catalog.
+   - Older catalog version → replace with official catalog.
+   - Same catalog version → preserve local Admin changes.
    ============================================================ */
 
 function initStorage() {
+
+  const storedCatalogVersion =
+    localStorage.getItem(
+      STORAGE_KEYS.CATALOG_VERSION
+    );
 
   const storedProducts =
     getFromStorage(
@@ -391,20 +382,9 @@ function initStorage() {
     );
 
 
-  /* ----------------------------------------------------------
-     RECOVERY RULE
+  /* First visit */
 
-     Restore official products if storage is:
-     - missing
-     - invalid
-     - empty
-     ---------------------------------------------------------- */
-
-  if (
-    !isValidProductList(
-      storedProducts
-    )
-  ) {
+  if (!storedProducts) {
 
     setToStorage(
       STORAGE_KEYS.PRODUCTS,
@@ -417,26 +397,21 @@ function initStorage() {
     );
 
     return;
+
   }
 
 
-  /* ----------------------------------------------------------
-     VERSION INITIALIZATION
-
-     If an existing valid catalog does not yet have a version,
-     keep it instead of destroying local products.
-
-     This prevents unnecessary product loss.
-     ---------------------------------------------------------- */
-
-  const storedVersion =
-    localStorage.getItem(
-      STORAGE_KEYS.CATALOG_VERSION
-    );
+  /* Official catalog has been updated */
 
   if (
-    !storedVersion
+    storedCatalogVersion !==
+    CATALOG_VERSION
   ) {
+
+    setToStorage(
+      STORAGE_KEYS.PRODUCTS,
+      DEFAULT_PRODUCTS
+    );
 
     localStorage.setItem(
       STORAGE_KEYS.CATALOG_VERSION,
@@ -449,48 +424,22 @@ function initStorage() {
 
 
 /* ============================================================
-   PRODUCT ACCESS
+   Product access
    ============================================================ */
 
 function getProducts() {
 
   initStorage();
 
-  const products =
-    getFromStorage(
-      STORAGE_KEYS.PRODUCTS,
-      DEFAULT_PRODUCTS
-    );
-
-  if (
-    !isValidProductList(
-      products
-    )
-  ) {
-
-    setToStorage(
-      STORAGE_KEYS.PRODUCTS,
-      DEFAULT_PRODUCTS
-    );
-
-    return DEFAULT_PRODUCTS.slice();
-
-  }
-
-  return products;
+  return getFromStorage(
+    STORAGE_KEYS.PRODUCTS,
+    DEFAULT_PRODUCTS
+  );
 
 }
 
 
-function saveProducts(
-  products
-) {
-
-  if (
-    !Array.isArray(products)
-  ) {
-    return;
-  }
+function saveProducts(products) {
 
   setToStorage(
     STORAGE_KEYS.PRODUCTS,
@@ -500,32 +449,27 @@ function saveProducts(
 }
 
 
-function getProductById(
-  productId
-) {
+function getProductById(productId) {
 
   const products =
     getProducts();
 
-  return (
-    products.find(
-      function (product) {
+  return products.find(
+    function (product) {
 
-        return (
-          product.id ===
-          productId
-        );
+      return (
+        product.id ===
+        productId
+      );
 
-      }
-    ) ||
-    null
-  );
+    }
+  ) || null;
 
 }
 
 
 /* ============================================================
-   CATEGORY HELPERS
+   Category helpers
    ============================================================ */
 
 function getAllCategories() {
@@ -534,25 +478,13 @@ function getAllCategories() {
     getProducts();
 
   const categories =
-    products
-      .map(
-        function (product) {
+    products.map(
+      function (product) {
 
-          return product.category;
+        return product.category;
 
-        }
-      )
-      .filter(
-        function (category) {
-
-          return (
-            typeof category === "string" &&
-            category.trim() !== ""
-          );
-
-        }
-      );
-
+      }
+    );
 
   return [
     ...new Set(categories)
@@ -562,93 +494,38 @@ function getAllCategories() {
 
 
 /* ============================================================
-   PRICE HELPERS
+   Product creation
    ============================================================ */
 
-function getEffectivePrice(
-  product
-) {
-
-  if (
-    !product
-  ) {
-    return 0;
-  }
-
-
-  const discountPrice =
-    Number(
-      product.discountPrice
-    );
-
-
-  if (
-    product.discountPrice !== null &&
-    product.discountPrice !== undefined &&
-    product.discountPrice !== "" &&
-    Number.isFinite(
-      discountPrice
-    ) &&
-    discountPrice >= 0 &&
-    discountPrice < Number(product.price)
-  ) {
-
-    return discountPrice;
-
-  }
-
-
-  return (
-    Number(product.price) ||
-    0
-  );
-
-}
-
-
-/* ============================================================
-   PRODUCT CREATION
-   ============================================================ */
-
-function createProduct(
-  productData
-) {
+function createProduct(productData) {
 
   const products =
     getProducts();
-
 
   const product = {
 
     id:
       productData.id ||
-      (
-        "p" +
-        Date.now()
-      ),
+      ("p" + Date.now()),
 
     name:
-      productData.name ||
-      "",
+      productData.name || "",
 
     category:
-      productData.category ||
-      "",
+      productData.category || "",
 
     price:
-      Number(
-        productData.price
-      ) ||
-      0,
+      Number(productData.price) || 0,
 
     discountPrice:
 
       productData.discountPrice !==
         undefined &&
+
       productData.discountPrice !==
         null &&
-      productData.discountPrice !==
-        ""
+
+      productData.discountPrice !== ""
 
         ? Number(
             productData.discountPrice
@@ -657,40 +534,29 @@ function createProduct(
         : null,
 
     stock:
-      Number(
-        productData.stock
-      ) ||
-      0,
+      Number(productData.stock) || 0,
 
     image:
-      productData.image ||
-      "",
+      productData.image || "",
 
     description:
 
       productData.description ||
+
       "No description provided yet.",
 
     badge:
-      productData.badge ||
-      "",
+      productData.badge || "",
 
     previousBadge:
-      productData.previousBadge ||
-      ""
+      productData.previousBadge || ""
 
   };
 
 
-  products.push(
-    product
-  );
+  products.push(product);
 
-
-  saveProducts(
-    products
-  );
-
+  saveProducts(products);
 
   return product;
 
@@ -698,7 +564,7 @@ function createProduct(
 
 
 /* ============================================================
-   PRODUCT UPDATE
+   Product update
    ============================================================ */
 
 function updateProduct(
@@ -708,7 +574,6 @@ function updateProduct(
 
   const products =
     getProducts();
-
 
   const productIndex =
     products.findIndex(
@@ -726,27 +591,22 @@ function updateProduct(
   if (
     productIndex === -1
   ) {
+
     return null;
+
   }
 
 
-  products[
-    productIndex
-  ] = {
+  products[productIndex] = {
 
-    ...products[
-      productIndex
-    ],
+    ...products[productIndex],
 
     ...updates
 
   };
 
 
-  saveProducts(
-    products
-  );
-
+  saveProducts(products);
 
   return products[
     productIndex
@@ -756,16 +616,13 @@ function updateProduct(
 
 
 /* ============================================================
-   PRODUCT DELETION
+   Product deletion
    ============================================================ */
 
-function deleteProduct(
-  productId
-) {
+function deleteProduct(productId) {
 
   const products =
     getProducts();
-
 
   const updatedProducts =
     products.filter(
@@ -784,14 +641,17 @@ function deleteProduct(
     updatedProducts
   );
 
-
   return updatedProducts;
 
 }
 
 
 /* ============================================================
-   CATALOG RESET
+   Optional development utility
+
+   This resets the current device back to the official catalog.
+
+   It is intentionally not called automatically.
    ============================================================ */
 
 function resetProductsToDefault() {
@@ -800,7 +660,6 @@ function resetProductsToDefault() {
     STORAGE_KEYS.PRODUCTS,
     DEFAULT_PRODUCTS
   );
-
 
   localStorage.setItem(
     STORAGE_KEYS.CATALOG_VERSION,
