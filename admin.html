@@ -1,442 +1,720 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
 
-<title>HobbyForge | Admin</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/responsive.css">
+  <title>HobbyForge | Admin</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
+
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
-<header class="navbar">
-  <div class="container">
+  <!-- ================= NAVBAR ================= -->
 
-    <a href="index.html" class="nav-brand">
-      HobbyForge
-      <span style="color:#888; font-weight:400; font-size:14px;">
-        Admin
-      </span>
-    </a>
+  <header class="navbar">
 
-    <ul class="nav-links" id="nav-links">
-      <li><a href="index.html">View Store</a></li>
-      <li><a href="admin.html">Dashboard</a></li>
-    </ul>
+    <div class="container">
 
-    <div class="nav-right">
-      <button
-        class="mobile-menu-toggle"
-        id="mobile-menu-toggle"
-        aria-label="Toggle menu"
+      <a
+        href="index.html"
+        class="nav-brand"
       >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
+        HobbyForge
 
-  </div>
-</header>
-
-
-<!-- ================= ADMIN HEADER ================= -->
-<section class="admin-header">
-  <div class="container">
-
-    <h1 style="font-size:26px; margin-bottom:4px;">
-      Admin Dashboard
-    </h1>
-
-    <p style="color:#6b6b6b; margin:0;">
-      Manage products, stock, descriptions, badges, images, and discounts.
-    </p>
-
-  </div>
-</section>
+        <span
+          style="
+            color:#888;
+            font-weight:400;
+            font-size:14px;
+          "
+        >
+          Admin
+        </span>
+      </a>
 
 
-<!-- ================= ADMIN CONTENT ================= -->
-<section class="admin-section">
+      <ul
+        class="nav-links"
+        id="nav-links"
+      >
 
-  <div class="container">
+        <li>
+          <a href="index.html">
+            View Store
+          </a>
+        </li>
+
+        <li>
+          <a href="admin.html">
+            Dashboard
+          </a>
+        </li>
+
+      </ul>
 
 
-    <!-- ================= STATS ================= -->
-    <div class="stats-grid">
+      <div class="nav-right">
 
-      <div class="stat-card">
-        <div class="stat-value" id="stat-total-products">0</div>
-        <div class="stat-label">Total Products</div>
-      </div>
+        <button
+          class="mobile-menu-toggle"
+          id="mobile-menu-toggle"
+          aria-label="Toggle menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
 
-      <div class="stat-card">
-        <div class="stat-value" id="stat-low-stock">0</div>
-        <div class="stat-label">Low Stock Products</div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-value" id="stat-out-of-stock">0</div>
-        <div class="stat-label">Out of Stock Products</div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-value" id="stat-cart-items">0</div>
-        <div class="stat-label">Items Currently in Cart</div>
       </div>
 
     </div>
 
+  </header>
 
-    <!-- ================= PRODUCT TABLE ================= -->
-    <div class="admin-table-wrap">
 
-      <table class="admin-table">
+  <!-- ================= ADMIN HEADER ================= -->
 
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Image</th>
-            <th>Product</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Stock</th>
-            <th>Badge</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+  <section class="admin-header">
 
-        <tbody id="admin-product-table-body">
-          <!-- Rendered dynamically -->
-        </tbody>
+    <div class="container">
 
-      </table>
+      <h1
+        style="
+          font-size:26px;
+          margin-bottom:4px;
+        "
+      >
+        Admin Dashboard
+      </h1>
+
+
+      <p
+        style="
+          color:#6b6b6b;
+          margin:0;
+        "
+      >
+        Manage products, stock, descriptions, badges, images,
+        and discounts.
+      </p>
 
     </div>
 
+  </section>
 
-    <!-- ================= ADD PRODUCT ================= -->
-    <h3 style="margin-top:36px;">
-      Add Product
+
+  <!-- ================= ADMIN CONTENT ================= -->
+
+  <section class="admin-section">
+
+    <div class="container">
+
+
+      <!-- ================= STATS ================= -->
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+
+          <div
+            class="stat-value"
+            id="stat-total-products"
+          >
+            0
+          </div>
+
+          <div class="stat-label">
+            Total Products
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div
+            class="stat-value"
+            id="stat-low-stock"
+          >
+            0
+          </div>
+
+          <div class="stat-label">
+            Low Stock Products
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div
+            class="stat-value"
+            id="stat-out-of-stock"
+          >
+            0
+          </div>
+
+          <div class="stat-label">
+            Out of Stock Products
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div
+            class="stat-value"
+            id="stat-cart-items"
+          >
+            0
+          </div>
+
+          <div class="stat-label">
+            Items Currently in Cart
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= PRODUCT TABLE ================= -->
+
+      <div class="admin-table-wrap">
+
+        <table class="admin-table">
+
+          <thead>
+
+            <tr>
+
+              <th>ID</th>
+
+              <th>Image</th>
+
+              <th>Product</th>
+
+              <th>Category</th>
+
+              <th>Price</th>
+
+              <th>Stock</th>
+
+              <th>Badge</th>
+
+              <th>Actions</th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody
+            id="admin-product-table-body"
+          >
+            <!-- Rendered dynamically -->
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- ================= ADD PRODUCT ================= -->
+
+      <h3
+        style="
+          margin-top:36px;
+        "
+      >
+        Add Product
+      </h3>
+
+
+      <form
+        class="add-product-form"
+        id="add-product-form"
+      >
+
+
+        <!-- PRODUCT NAME -->
+
+        <div class="form-group">
+
+          <label for="new-product-name">
+            Product Name
+          </label>
+
+          <input
+            type="text"
+            id="new-product-name"
+            placeholder="Product Name"
+            required
+          >
+
+        </div>
+
+
+        <!-- CATEGORY -->
+
+        <div class="form-group">
+
+          <label for="new-product-category">
+            Category
+          </label>
+
+          <input
+            type="text"
+            id="new-product-category"
+            placeholder="Example: Trading Cards"
+            required
+          >
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="form-group">
+
+          <label for="new-product-description">
+            Product Description
+          </label>
+
+          <textarea
+            id="new-product-description"
+            placeholder="Enter product description"
+            required
+          ></textarea>
+
+        </div>
+
+
+        <!-- REGULAR PRICE -->
+
+        <div class="form-group">
+
+          <label for="new-product-price">
+            Regular Price
+          </label>
+
+          <input
+            type="number"
+            id="new-product-price"
+            placeholder="0.00"
+            step="0.01"
+            min="0"
+            required
+          >
+
+        </div>
+
+
+        <!-- STOCK -->
+
+        <div class="form-group">
+
+          <label for="new-product-stock">
+            Stock Quantity
+          </label>
+
+          <input
+            type="number"
+            id="new-product-stock"
+            placeholder="0"
+            min="0"
+            required
+          >
+
+        </div>
+
+
+        <!-- BADGE -->
+
+        <div class="form-group">
+
+          <label for="new-product-badge">
+            Product Badge
+          </label>
+
+          <select id="new-product-badge">
+
+            <option value="">
+              No Badge
+            </option>
+
+            <option value="New">
+              New
+            </option>
+
+            <option value="Hot">
+              Hot
+            </option>
+
+            <option value="Limited">
+              Limited
+            </option>
+
+            <option value="Rare">
+              Rare
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- IMAGE PATH -->
+
+        <div class="form-group">
+
+          <label for="new-product-image">
+            Product Image Path
+          </label>
+
+          <input
+            type="text"
+            id="new-product-image"
+            placeholder="assets/images/products/product-image.jpg"
+            required
+          >
+
+          <small>
+            Place the product image in
+            assets/images/products/
+            and enter its relative file path.
+          </small>
+
+        </div>
+
+
+        <!-- ADD PRODUCT -->
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+        >
+          Add Product
+        </button>
+
+
+      </form>
+
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= EDIT PRODUCT MODAL ================= -->
+
+  <div
+    class="modal"
+    id="edit-product-modal"
+  >
+
+
+    <!-- CLOSE -->
+
+    <button
+      class="modal-close-btn"
+      id="edit-modal-close-btn"
+      type="button"
+      aria-label="Close"
+    >
+      &times;
+    </button>
+
+
+    <!-- TITLE -->
+
+    <h3 id="edit-product-name">
+      Edit Product
     </h3>
 
 
-    <form
-      class="add-product-form"
-      id="add-product-form"
-    >
+    <!-- PRODUCT NAME -->
+
+    <div class="form-group">
+
+      <label for="edit-name-input">
+        Product Name
+      </label>
 
       <input
         type="text"
-        id="new-product-name"
-        placeholder="Product Name"
-        required
+        id="edit-name-input"
       >
 
+    </div>
+
+
+    <!-- CATEGORY -->
+
+    <div class="form-group">
+
+      <label for="edit-category-input">
+        Category
+      </label>
 
       <input
         type="text"
-        id="new-product-category"
-        placeholder="Category"
-        required
+        id="edit-category-input"
       >
 
+    </div>
+
+
+    <!-- DESCRIPTION -->
+
+    <div class="form-group">
+
+      <label for="edit-description-input">
+        Description
+      </label>
 
       <textarea
-        id="new-product-description"
-        placeholder="Product Description"
-        required
+        id="edit-description-input"
       ></textarea>
 
+    </div>
+
+
+    <!-- REGULAR PRICE -->
+
+    <div class="form-group">
+
+      <label for="edit-price-input">
+        Regular Price
+      </label>
 
       <input
         type="number"
-        id="new-product-price"
-        placeholder="Regular Price"
+        id="edit-price-input"
         step="0.01"
         min="0"
-        required
       >
 
+    </div>
+
+
+    <!-- STOCK -->
+
+    <div class="form-group">
+
+      <label for="edit-stock-input">
+        Stock
+      </label>
 
       <input
         type="number"
-        id="new-product-stock"
-        placeholder="Stock"
+        id="edit-stock-input"
         min="0"
-        required
       >
 
+    </div>
 
-      <select id="new-product-badge">
 
-        <option value="">No Badge</option>
-        <option value="New">New</option>
-        <option value="Hot">Hot</option>
-        <option value="Limited">Limited</option>
-        <option value="Rare">Rare</option>
+    <!-- BADGE -->
+
+    <div class="form-group">
+
+      <label for="edit-badge-input">
+        Product Badge
+      </label>
+
+      <select id="edit-badge-input">
+
+        <option value="">
+          No Badge
+        </option>
+
+        <option value="New">
+          New
+        </option>
+
+        <option value="Hot">
+          Hot
+        </option>
+
+        <option value="Limited">
+          Limited
+        </option>
+
+        <option value="Rare">
+          Rare
+        </option>
 
       </select>
 
-
-      <div class="image-upload-field">
-
-        <label for="new-product-image">
-          Product Image
-        </label>
-
-        <input
-          type="file"
-          id="new-product-image"
-          accept="image/png,image/jpeg,image/webp"
-        >
-
-        <img
-          id="new-product-image-preview"
-          src="assets/images/placeholder.png"
-          alt="Product preview"
-          style="display:block; width:120px; height:120px; object-fit:cover; margin-top:10px;"
-        >
-
-      </div>
+    </div>
 
 
-      <button
-        type="submit"
-        class="btn btn-primary"
+    <!-- IMAGE PATH -->
+
+    <div class="form-group">
+
+      <label for="edit-image-input">
+        Product Image Path
+      </label>
+
+      <input
+        type="text"
+        id="edit-image-input"
+        placeholder="assets/images/products/product-image.jpg"
       >
-        Add Product
-      </button>
 
-    </form>
+    </div>
+
+
+    <!-- IMAGE PREVIEW -->
+
+    <div class="form-group">
+
+      <label>
+        Image Preview
+      </label>
+
+      <img
+        id="edit-product-image-preview"
+        src="assets/images/placeholder.png"
+        alt="Product preview"
+        style="
+          display:block;
+          width:150px;
+          height:150px;
+          object-fit:cover;
+          margin-top:10px;
+        "
+      >
+
+    </div>
+
+
+    <!-- SAVE -->
+
+    <button
+      class="btn btn-primary btn-full"
+      id="edit-modal-save-btn"
+      type="button"
+    >
+      Save Changes
+    </button>
 
 
   </div>
 
-</section>
+
+  <!-- EDIT MODAL OVERLAY -->
+
+  <div
+    class="modal-overlay"
+    id="edit-modal-overlay"
+  ></div>
 
 
-<!-- ================= EDIT PRODUCT MODAL ================= -->
+  <!-- ================= DISCOUNT MODAL ================= -->
 
-<div
-  class="modal"
-  id="edit-product-modal"
->
-
-  <button
-    class="modal-close-btn"
-    id="edit-modal-close-btn"
+  <div
+    class="modal"
+    id="discount-modal"
   >
-    &times;
-  </button>
 
 
-  <h3 id="edit-product-name">
-    Edit Product
-  </h3>
+    <!-- CLOSE -->
 
-
-  <div class="form-group">
-
-    <label for="edit-name-input">
-      Product Name
-    </label>
-
-    <input
-      type="text"
-      id="edit-name-input"
+    <button
+      class="modal-close-btn"
+      id="discount-modal-close-btn"
+      type="button"
+      aria-label="Close"
     >
+      &times;
+    </button>
 
-  </div>
+
+    <h3>
+      Apply Discount
+    </h3>
 
 
-  <div class="form-group">
+    <!-- PRODUCT NAME -->
 
-    <label for="edit-category-input">
-      Category
-    </label>
+    <p
+      id="discount-product-name"
+    ></p>
 
-    <input
-      type="text"
-      id="edit-category-input"
+
+    <!-- REGULAR PRICE -->
+
+    <p>
+
+      Regular Price:
+
+      <strong
+        id="discount-original-price"
+      ></strong>
+
+    </p>
+
+
+    <!-- DISCOUNT PRICE -->
+
+    <div class="form-group">
+
+      <label for="discount-price-input">
+        Discounted Price
+      </label>
+
+      <input
+        type="number"
+        id="discount-price-input"
+        placeholder="Enter discounted price"
+        step="0.01"
+        min="0"
+      >
+
+    </div>
+
+
+    <!-- APPLY -->
+
+    <button
+      class="btn btn-primary btn-full"
+      id="discount-modal-save-btn"
+      type="button"
     >
+      Apply Discount
+    </button>
+
 
   </div>
 
 
-  <div class="form-group">
+  <!-- DISCOUNT MODAL OVERLAY -->
 
-    <label for="edit-description-input">
-      Description
-    </label>
-
-    <textarea
-      id="edit-description-input"
-    ></textarea>
-
-  </div>
+  <div
+    class="modal-overlay"
+    id="discount-modal-overlay"
+  ></div>
 
 
-  <div class="form-group">
+  <!-- ================= SCRIPTS ================= -->
 
-    <label for="edit-price-input">
-      Regular Price
-    </label>
-
-    <input
-      type="number"
-      id="edit-price-input"
-      step="0.01"
-      min="0"
-    >
-
-  </div>
-
-
-  <div class="form-group">
-
-    <label for="edit-stock-input">
-      Stock
-    </label>
-
-    <input
-      type="number"
-      id="edit-stock-input"
-      min="0"
-    >
-
-  </div>
-
-
-  <div class="form-group">
-
-    <label for="edit-badge-input">
-      Badge
-    </label>
-
-    <select id="edit-badge-input">
-
-      <option value="">No Badge</option>
-      <option value="New">New</option>
-      <option value="Hot">Hot</option>
-      <option value="Limited">Limited</option>
-      <option value="Rare">Rare</option>
-
-    </select>
-
-  </div>
-
-
-  <div class="form-group">
-
-    <label>
-      Current Product Image
-    </label>
-
-    <img
-      id="edit-product-image-preview"
-      src="assets/images/placeholder.png"
-      alt="Product preview"
-      style="display:block; width:150px; height:150px; object-fit:cover; margin-bottom:10px;"
-    >
-
-    <label for="edit-product-image">
-      Replace Image
-    </label>
-
-    <input
-      type="file"
-      id="edit-product-image"
-      accept="image/png,image/jpeg,image/webp"
-    >
-
-  </div>
-
-
-  <button
-    class="btn btn-primary btn-full"
-    id="edit-modal-save-btn"
-  >
-    Save Changes
-  </button>
-
-</div>
-
-<div
-  class="modal-overlay"
-  id="edit-modal-overlay"
-></div>
-
-
-<!-- ================= DISCOUNT MODAL ================= -->
-
-<div
-  class="modal"
-  id="discount-modal"
->
-
-  <button
-    class="modal-close-btn"
-    id="discount-modal-close-btn"
-  >
-    &times;
-  </button>
-
-
-  <h3>
-    Apply Discount
-  </h3>
-
-
-  <p id="discount-product-name"></p>
-
-  <p>
-    Regular Price:
-    <strong id="discount-original-price"></strong>
-  </p>
-
-
-  <div class="form-group">
-
-    <label for="discount-price-input">
-      Discounted Price
-    </label>
-
-    <input
-      type="number"
-      id="discount-price-input"
-      step="0.01"
-      min="0"
-    >
-
-  </div>
-
-
-  <button
-    class="btn btn-primary btn-full"
-    id="discount-modal-save-btn"
-  >
-    Apply Discount
-  </button>
-
-</div>
-
-<div
-  class="modal-overlay"
-  id="discount-modal-overlay"
-></div>
-
-
-<!-- ================= SCRIPTS ================= -->
-
-<script src="js/data.js"></script>
-<script src="js/cart.js"></script>
-<script src="js/admin.js"></script>
-<script src="js/app.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/app.js"></script>
 
 </body>
 </html>
