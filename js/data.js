@@ -169,7 +169,7 @@ const DEFAULT_PRODUCTS = [
   },
 
   {
-    id: "p1788076144320",
+    id: "p19",
     name: "RG Hi-Nu Gundam 1/144 Scale",
     category: "Model Kits",
     price: 60.99,
@@ -183,7 +183,7 @@ const DEFAULT_PRODUCTS = [
   },
 
   {
-    id: "p1788076144322",
+    id: "p18",
     name: "HGGTO Rx-78-02 Gundam",
     category: "Model Kits",
     price: 31.00,
@@ -248,7 +248,7 @@ const DEFAULT_PRODUCTS = [
   /* ---------- Special / Life Aspect ---------- */
 
   {
-    id: "p1788076107983",
+    id: "p17",
     name: "Pagmamahal",
     category: "Life aspect",
     price: 10000000,
