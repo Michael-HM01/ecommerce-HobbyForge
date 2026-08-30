@@ -1,21 +1,17 @@
 /* ============================================================
    cart.js
-
    Responsibility:
    - Cart storage
    - Cart reconciliation
-   - Add/remove products
+   - Add/remove items
    - Quantity controls
-   - Current price synchronization
-   - Discount-aware totals
+   - Cart totals
    - Cart drawer rendering
    - Cart count badge
-============================================================ */
+   ============================================================ */
 
 
-/* ============================================================
-   CART STORAGE
-============================================================ */
+/* ---------- Cart storage ---------- */
 
 function getCart() {
 
@@ -32,124 +28,6 @@ function saveCart(cart) {
   setToStorage(
     STORAGE_KEYS.CART,
     cart
-  );
-
-}
-
-
-/* ============================================================
-   PRICE HELPERS
-
-   The catalog remains the source of truth.
-
-   Cart items only store:
-   - Product ID
-   - Quantity
-
-   Prices are always retrieved from the
-   current product data.
-============================================================ */
-
-function getCartEffectivePrice(product) {
-
-  if (
-    typeof getEffectivePrice ===
-    "function"
-  ) {
-
-    return Number(
-      getEffectivePrice(
-        product
-      )
-    );
-
-  }
-
-
-  const regularPrice =
-    Number(
-      product.price
-    );
-
-
-  const discountPrice =
-    Number(
-      product.discountPrice
-    );
-
-
-  if (
-
-    product.discountPrice !==
-      null &&
-
-    product.discountPrice !==
-      undefined &&
-
-    Number.isFinite(
-      discountPrice
-    ) &&
-
-    discountPrice > 0 &&
-
-    discountPrice <
-      regularPrice
-
-  ) {
-
-    return discountPrice;
-
-  }
-
-
-  return regularPrice;
-
-}
-
-
-function cartProductHasDiscount(product) {
-
-  if (
-    typeof hasValidDiscount ===
-    "function"
-  ) {
-
-    return hasValidDiscount(
-      product
-    );
-
-  }
-
-
-  const regularPrice =
-    Number(
-      product.price
-    );
-
-
-  const discountPrice =
-    Number(
-      product.discountPrice
-    );
-
-
-  return (
-
-    product.discountPrice !==
-      null &&
-
-    product.discountPrice !==
-      undefined &&
-
-    Number.isFinite(
-      discountPrice
-    ) &&
-
-    discountPrice > 0 &&
-
-    discountPrice <
-      regularPrice
-
   );
 
 }
@@ -178,6 +56,7 @@ function reconcileCart() {
       item
     ) {
 
+
       if (
         !item ||
         !item.id
@@ -203,7 +82,9 @@ function reconcileCart() {
         );
 
 
-      /* Product no longer exists */
+      /*
+         Product no longer exists.
+      */
 
       if (
         !product
@@ -214,15 +95,16 @@ function reconcileCart() {
       }
 
 
-      /* Product is out of stock */
+      /*
+         Product out of stock.
+      */
 
       if (
-
         typeof product.stock !==
-          "number" ||
+        "number" ||
 
-        product.stock <= 0
-
+        product.stock <=
+        0
       ) {
 
         return;
@@ -236,16 +118,17 @@ function reconcileCart() {
         );
 
 
-      /* Invalid quantity */
+      /*
+         Invalid quantity.
+      */
 
       if (
-
         !Number.isFinite(
           quantity
         ) ||
 
-        quantity <= 0
-
+        quantity <=
+        0
       ) {
 
         return;
@@ -260,8 +143,7 @@ function reconcileCart() {
 
 
       /*
-         Quantity cannot exceed
-         current stock.
+         Quantity cannot exceed stock.
       */
 
       quantity =
@@ -272,18 +154,14 @@ function reconcileCart() {
 
 
       if (
-        quantity <= 0
+        quantity <=
+        0
       ) {
 
         return;
 
       }
 
-
-      /*
-         Only ID and quantity are
-         retained in the cart.
-      */
 
       cleanedCart.push({
 
@@ -294,6 +172,7 @@ function reconcileCart() {
           quantity
 
       });
+
 
     }
   );
@@ -313,13 +192,14 @@ function reconcileCart() {
 
 
 /* ============================================================
-   ADD TO CART
+   CART OPERATIONS
 ============================================================ */
 
 function addToCart(
   productId,
   quantity
 ) {
+
 
   const product =
     getProductById(
@@ -337,7 +217,8 @@ function addToCart(
 
 
   if (
-    product.stock <= 0
+    product.stock <=
+    0
   ) {
 
     return;
@@ -345,23 +226,13 @@ function addToCart(
   }
 
 
-  const requestedQuantity =
-    Number(
-      quantity
-    );
-
-
   const qtyToAdd =
 
-    Number.isFinite(
-      requestedQuantity
-    ) &&
+    quantity &&
+    quantity >
+    0
 
-    requestedQuantity > 0
-
-      ? Math.floor(
-          requestedQuantity
-        )
+      ? quantity
 
       : 1;
 
@@ -389,18 +260,22 @@ function addToCart(
     existingItem
   ) {
 
-    const newQuantity =
+
+    const newQty =
+
       existingItem.quantity +
       qtyToAdd;
 
 
     existingItem.quantity =
       Math.min(
-        newQuantity,
+        newQty,
         product.stock
       );
 
+
   } else {
+
 
     cart.push({
 
@@ -414,6 +289,7 @@ function addToCart(
         )
 
     });
+
 
   }
 
@@ -431,13 +307,10 @@ function addToCart(
 }
 
 
-/* ============================================================
-   REMOVE FROM CART
-============================================================ */
-
 function removeFromCart(
   productId
 ) {
+
 
   let cart =
     getCart();
@@ -471,14 +344,11 @@ function removeFromCart(
 }
 
 
-/* ============================================================
-   UPDATE CART QUANTITY
-============================================================ */
-
 function updateCartItemQuantity(
   productId,
   newQuantity
 ) {
+
 
   const product =
     getProductById(
@@ -487,21 +357,20 @@ function updateCartItemQuantity(
 
 
   /*
-     Product may have been deleted
-     or gone out of stock.
+     Product deleted or unavailable.
   */
 
   if (
-
     !product ||
 
-    product.stock <= 0
-
+    product.stock <=
+    0
   ) {
 
     removeFromCart(
       productId
     );
+
 
     return;
 
@@ -560,16 +429,9 @@ function updateCartItemQuantity(
     );
 
 
-  /*
-     Quantity lower than 1
-     remains at 1.
-
-     The remove button handles
-     actual deletion.
-  */
-
   if (
-    quantity < 1
+    quantity <
+    1
   ) {
 
     quantity =
@@ -607,10 +469,11 @@ function updateCartItemQuantity(
 
 
 /* ============================================================
-   CART ITEM COUNT
+   TOTALS
 ============================================================ */
 
 function getCartItemCount() {
+
 
   const cart =
     reconcileCart();
@@ -634,14 +497,8 @@ function getCartItemCount() {
 }
 
 
-/* ============================================================
-   CART TOTAL
-
-   Always uses the CURRENT
-   effective catalog price.
-============================================================ */
-
 function getCartTotal() {
+
 
   const cart =
     reconcileCart();
@@ -656,6 +513,7 @@ function getCartTotal() {
       item
     ) {
 
+
       const product =
         getProductById(
           item.id
@@ -663,25 +521,18 @@ function getCartTotal() {
 
 
       if (
-        !product
+        product
       ) {
 
-        return;
+
+        total +=
+
+          product.price *
+          item.quantity;
+
 
       }
 
-
-      const effectivePrice =
-        getCartEffectivePrice(
-          product
-        );
-
-
-      total +=
-
-        effectivePrice *
-
-        item.quantity;
 
     }
   );
@@ -693,10 +544,11 @@ function getCartTotal() {
 
 
 /* ============================================================
-   CART COUNT BADGE
+   CART COUNT
 ============================================================ */
 
 function updateCartCount() {
+
 
   const countEls =
     document.querySelectorAll(
@@ -726,13 +578,8 @@ function updateCartCount() {
       ) {
 
         return (
-
           sum +
-
-          Number(
-            item.quantity
-          )
-
+          item.quantity
         );
 
       },
@@ -742,78 +589,13 @@ function updateCartCount() {
 
   countEls.forEach(
     function (
-      element
+      el
     ) {
 
-      element.textContent =
+      el.textContent =
         count;
 
     }
-  );
-
-}
-
-
-/* ============================================================
-   CART PRICE DISPLAY
-============================================================ */
-
-function buildCartPriceHTML(
-  product
-) {
-
-  const effectivePrice =
-    getCartEffectivePrice(
-      product
-    );
-
-
-  if (
-    cartProductHasDiscount(
-      product
-    )
-  ) {
-
-    return `
-
-      <span
-        class="
-          cart-item-original-price
-        "
-        style="
-          text-decoration:
-          line-through;
-
-          opacity:0.6;
-
-          font-size:0.85em;
-
-          margin-right:6px;
-        "
-      >
-        ${formatPrice(
-          product.price
-        )}
-      </span>
-
-
-      <span
-        class="
-          cart-item-discount-price
-        "
-      >
-        ${formatPrice(
-          effectivePrice
-        )}
-      </span>
-
-    `;
-
-  }
-
-
-  return formatPrice(
-    effectivePrice
   );
 
 }
@@ -824,6 +606,7 @@ function buildCartPriceHTML(
 ============================================================ */
 
 function renderCartDrawer() {
+
 
   const cartItemsEl =
     document.getElementById(
@@ -854,10 +637,15 @@ function renderCartDrawer() {
     "";
 
 
+  /*
+     Empty cart.
+  */
+
   if (
     cart.length ===
     0
   ) {
+
 
     const emptyMessage =
       document.createElement(
@@ -881,12 +669,15 @@ function renderCartDrawer() {
       emptyMessage
     );
 
+
   } else {
+
 
     cart.forEach(
       function (
         item
       ) {
+
 
         const product =
           getProductById(
@@ -913,28 +704,12 @@ function renderCartDrawer() {
           "cart-item";
 
 
-        const imagePath =
-          product.image ||
-          "assets/images/placeholder.png";
-
-
         row.innerHTML =
 
           '<img ' +
-
-            'src="' +
-            escapeCartAttribute(
-              imagePath
-            ) +
-            '" ' +
-
-            'alt="' +
-            escapeCartAttribute(
-              product.name
-            ) +
-            '" ' +
-
-            'class="cart-item-img">' +
+          'src="' + product.image + '" ' +
+          'alt="' + product.name + '" ' +
+          'class="cart-item-img">' +
 
 
           '<div class="cart-item-info">' +
@@ -942,17 +717,15 @@ function renderCartDrawer() {
 
             '<p class="cart-item-name">' +
 
-              escapeCartHTML(
-                product.name
-              ) +
+              product.name +
 
             '</p>' +
 
 
             '<p class="cart-item-price">' +
 
-              buildCartPriceHTML(
-                product
+              formatPrice(
+                product.price
               ) +
 
             '</p>' +
@@ -962,16 +735,8 @@ function renderCartDrawer() {
 
 
               '<button ' +
-
-                'class="qty-btn js-cart-decrease" ' +
-
-                'data-id="' +
-
-                  escapeCartAttribute(
-                    product.id
-                  ) +
-
-                '">' +
+              'class="qty-btn js-cart-decrease" ' +
+              'data-id="' + product.id + '">' +
 
                 '-' +
 
@@ -986,16 +751,8 @@ function renderCartDrawer() {
 
 
               '<button ' +
-
-                'class="qty-btn js-cart-increase" ' +
-
-                'data-id="' +
-
-                  escapeCartAttribute(
-                    product.id
-                  ) +
-
-                '">' +
+              'class="qty-btn js-cart-increase" ' +
+              'data-id="' + product.id + '">' +
 
                 '+' +
 
@@ -1009,71 +766,23 @@ function renderCartDrawer() {
 
 
           '<button ' +
-
-            'class="cart-remove-btn js-cart-remove" ' +
-
-            'data-id="' +
-
-              escapeCartAttribute(
-                product.id
-              ) +
-
-            '" ' +
-
-            'aria-label="Remove item">' +
+          'class="cart-remove-btn js-cart-remove" ' +
+          'data-id="' + product.id + '" ' +
+          'aria-label="Remove item">' +
 
             '&times;' +
 
           '</button>';
 
 
-        const productImage =
-          row.querySelector(
-            ".cart-item-img"
-          );
-
-
-        if (
-          productImage
-        ) {
-
-          productImage.addEventListener(
-            "error",
-            function () {
-
-              if (
-
-                this.dataset
-                  .fallbackApplied ===
-                "true"
-
-              ) {
-
-                return;
-
-              }
-
-
-              this.dataset
-                .fallbackApplied =
-                "true";
-
-
-              this.src =
-                "assets/images/placeholder.png";
-
-            }
-          );
-
-        }
-
-
         cartItemsEl.appendChild(
           row
         );
 
+
       }
     );
+
 
   }
 
@@ -1101,21 +810,25 @@ function renderCartDrawer() {
 
 function attachCartItemListeners() {
 
+
   document
     .querySelectorAll(
       ".js-cart-increase"
     )
     .forEach(
       function (
-        button
+        btn
       ) {
 
-        button.addEventListener(
+
+        btn.addEventListener(
           "click",
+
           function () {
 
+
             const id =
-              button.getAttribute(
+              btn.getAttribute(
                 "data-id"
               );
 
@@ -1143,15 +856,20 @@ function attachCartItemListeners() {
               item
             ) {
 
+
               updateCartItemQuantity(
                 id,
-                item.quantity + 1
+                item.quantity +
+                1
               );
+
 
             }
 
+
           }
         );
+
 
       }
     );
@@ -1163,15 +881,18 @@ function attachCartItemListeners() {
     )
     .forEach(
       function (
-        button
+        btn
       ) {
 
-        button.addEventListener(
+
+        btn.addEventListener(
           "click",
+
           function () {
 
+
             const id =
-              button.getAttribute(
+              btn.getAttribute(
                 "data-id"
               );
 
@@ -1199,15 +920,20 @@ function attachCartItemListeners() {
               item
             ) {
 
+
               updateCartItemQuantity(
                 id,
-                item.quantity - 1
+                item.quantity -
+                1
               );
+
 
             }
 
+
           }
         );
+
 
       }
     );
@@ -1219,15 +945,18 @@ function attachCartItemListeners() {
     )
     .forEach(
       function (
-        button
+        btn
       ) {
 
-        button.addEventListener(
+
+        btn.addEventListener(
           "click",
+
           function () {
 
+
             const id =
-              button.getAttribute(
+              btn.getAttribute(
                 "data-id"
               );
 
@@ -1236,8 +965,10 @@ function attachCartItemListeners() {
               id
             );
 
+
           }
         );
+
 
       }
     );
@@ -1246,10 +977,11 @@ function attachCartItemListeners() {
 
 
 /* ============================================================
-   CART DRAWER OPEN
+   CART DRAWER OPEN/CLOSE
 ============================================================ */
 
 function openCartDrawer() {
+
 
   const drawer =
     document.getElementById(
@@ -1293,11 +1025,8 @@ function openCartDrawer() {
 }
 
 
-/* ============================================================
-   CART DRAWER CLOSE
-============================================================ */
-
 function closeCartDrawer() {
+
 
   const drawer =
     document.getElementById(
@@ -1339,61 +1068,11 @@ function closeCartDrawer() {
 
 
 /* ============================================================
-   HTML SAFETY HELPERS
-============================================================ */
-
-function escapeCartHTML(
-  value
-) {
-
-  const div =
-    document.createElement(
-      "div"
-    );
-
-
-  div.textContent =
-
-    value === null ||
-
-    value === undefined
-
-      ? ""
-
-      : String(
-          value
-        );
-
-
-  return div.innerHTML;
-
-}
-
-
-function escapeCartAttribute(
-  value
-) {
-
-  return escapeCartHTML(
-    value
-  )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
-
-
-/* ============================================================
    INITIALIZATION
 ============================================================ */
 
 function initCart() {
+
 
   initStorage();
 
@@ -1415,13 +1094,15 @@ function initCart() {
 
   cartButtons.forEach(
     function (
-      button
+      btn
     ) {
 
-      button.addEventListener(
+
+      btn.addEventListener(
         "click",
         openCartDrawer
       );
+
 
     }
   );
@@ -1437,10 +1118,12 @@ function initCart() {
     closeBtn
   ) {
 
+
     closeBtn.addEventListener(
       "click",
       closeCartDrawer
     );
+
 
   }
 
@@ -1455,18 +1138,15 @@ function initCart() {
     overlay
   ) {
 
+
     overlay.addEventListener(
       "click",
       closeCartDrawer
     );
 
+
   }
 
-
-  /*
-     Checkout implementation
-     belongs to the next stage.
-  */
 
   const checkoutBtn =
     document.getElementById(
@@ -1478,24 +1158,50 @@ function initCart() {
     checkoutBtn
   ) {
 
+
     checkoutBtn.addEventListener(
       "click",
+
       function () {
 
-        alert(
-          "Checkout functionality will be implemented in the next phase."
-        );
+
+        /*
+           Do not allow navigation
+           to checkout with an
+           empty cart.
+        */
+
+        const cart =
+          reconcileCart();
+
+
+        if (
+          cart.length ===
+          0
+        ) {
+
+          return;
+
+        }
+
+
+        window.location.href =
+          "checkout.html";
+
 
       }
     );
 
+
   }
+
 
 }
 
 
 document.addEventListener(
   "DOMContentLoaded",
+
   function () {
 
     initCart();
