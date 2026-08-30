@@ -23,14 +23,13 @@ const STORAGE_KEYS = {
 /* ============================================================
    Catalog version
 
-   Increase this value whenever the official default catalog is
-   intentionally updated.
+   Increase this whenever the official hard-coded catalog changes.
 
-   When the version changes, existing local product data is
-   replaced with the latest official catalog.
+   Version 1.2 forces devices with old/broken product data to
+   receive the current official catalog.
    ============================================================ */
 
-const CATALOG_VERSION = "1.1";
+const CATALOG_VERSION = "1.2";
 
 
 /* ============================================================
@@ -39,7 +38,6 @@ const CATALOG_VERSION = "1.1";
 
 const DEFAULT_PRODUCTS = [
 
-  /* ---------- Trading Cards ---------- */
   {
     id: "p1",
     name: "Charizard Holo Card",
@@ -68,8 +66,6 @@ const DEFAULT_PRODUCTS = [
     previousBadge: ""
   },
 
-
-  /* ---------- Building Sets ---------- */
   {
     id: "p3",
     name: "Classic Castle Building Set",
@@ -98,8 +94,6 @@ const DEFAULT_PRODUCTS = [
     previousBadge: ""
   },
 
-
-  /* ---------- Die-Cast ---------- */
   {
     id: "p5",
     name: "Hot Wheels Speed Racer Pack",
@@ -128,8 +122,6 @@ const DEFAULT_PRODUCTS = [
     previousBadge: ""
   },
 
-
-  /* ---------- Model Kits ---------- */
   {
     id: "p7",
     name: "Gundam RX-78-2 Model Kit",
@@ -186,8 +178,6 @@ const DEFAULT_PRODUCTS = [
     previousBadge: ""
   },
 
-
-  /* ---------- Collectibles ---------- */
   {
     id: "p9",
     name: "Limited Edition Collector Figure",
@@ -202,8 +192,6 @@ const DEFAULT_PRODUCTS = [
     previousBadge: ""
   },
 
-
-  /* ---------- Hobby Accessories ---------- */
   {
     id: "p11",
     name: "Warhammer Hobby Paint & Tool Set",
@@ -232,8 +220,6 @@ const DEFAULT_PRODUCTS = [
     previousBadge: ""
   },
 
-
-  /* ---------- Special / Life Aspect ---------- */
   {
     id: "p17",
     name: "Pagmamahal",
@@ -255,13 +241,6 @@ const DEFAULT_PRODUCTS = [
    Shared pricing helpers
    ============================================================ */
 
-/*
-   Returns the currently active price.
-
-   If a valid discount price exists and is lower than the regular
-   price, use the discount price. Otherwise use the regular price.
-*/
-
 function getEffectivePrice(product) {
 
   if (!product) {
@@ -279,9 +258,7 @@ function getEffectivePrice(product) {
     discountPrice >= 0 &&
     discountPrice < regularPrice
   ) {
-
     return discountPrice;
-
   }
 
   return Number.isFinite(regularPrice)
@@ -289,10 +266,6 @@ function getEffectivePrice(product) {
     : 0;
 }
 
-
-/*
-   Formats prices consistently throughout the website.
-*/
 
 function formatPrice(price) {
 
@@ -331,7 +304,6 @@ function getFromStorage(key, fallbackValue) {
     );
 
     return fallbackValue;
-
   }
 
 }
@@ -353,7 +325,6 @@ function setToStorage(key, value) {
       key,
       error
     );
-
   }
 
 }
@@ -361,11 +332,6 @@ function setToStorage(key, value) {
 
 /* ============================================================
    Catalog initialization
-
-   Rules:
-   - First visit → load official catalog.
-   - Older catalog version → replace with official catalog.
-   - Same catalog version → preserve local Admin changes.
    ============================================================ */
 
 function initStorage() {
@@ -382,30 +348,28 @@ function initStorage() {
     );
 
 
-  /* First visit */
+  /*
+     Reset when:
 
-  if (!storedProducts) {
+     - No product data exists
+     - Stored data is not an array
+     - Stored array is empty
+     - Catalog version is outdated
+  */
 
-    setToStorage(
-      STORAGE_KEYS.PRODUCTS,
-      DEFAULT_PRODUCTS
-    );
-
-    localStorage.setItem(
-      STORAGE_KEYS.CATALOG_VERSION,
-      CATALOG_VERSION
-    );
-
-    return;
-
-  }
+  const hasInvalidProducts =
+    !Array.isArray(storedProducts) ||
+    storedProducts.length === 0;
 
 
-  /* Official catalog has been updated */
+  const needsCatalogUpdate =
+    storedCatalogVersion !==
+    CATALOG_VERSION;
+
 
   if (
-    storedCatalogVersion !==
-    CATALOG_VERSION
+    hasInvalidProducts ||
+    needsCatalogUpdate
   ) {
 
     setToStorage(
@@ -456,12 +420,7 @@ function getProductById(productId) {
 
   return products.find(
     function (product) {
-
-      return (
-        product.id ===
-        productId
-      );
-
+      return product.id === productId;
     }
   ) || null;
 
@@ -480,9 +439,7 @@ function getAllCategories() {
   const categories =
     products.map(
       function (product) {
-
         return product.category;
-
       }
     );
 
@@ -519,12 +476,8 @@ function createProduct(productData) {
 
     discountPrice:
 
-      productData.discountPrice !==
-        undefined &&
-
-      productData.discountPrice !==
-        null &&
-
+      productData.discountPrice !== undefined &&
+      productData.discountPrice !== null &&
       productData.discountPrice !== ""
 
         ? Number(
@@ -540,9 +493,7 @@ function createProduct(productData) {
       productData.image || "",
 
     description:
-
       productData.description ||
-
       "No description provided yet.",
 
     badge:
@@ -578,12 +529,7 @@ function updateProduct(
   const productIndex =
     products.findIndex(
       function (product) {
-
-        return (
-          product.id ===
-          productId
-        );
-
+        return product.id === productId;
       }
     );
 
@@ -591,9 +537,7 @@ function updateProduct(
   if (
     productIndex === -1
   ) {
-
     return null;
-
   }
 
 
@@ -627,12 +571,10 @@ function deleteProduct(productId) {
   const updatedProducts =
     products.filter(
       function (product) {
-
         return (
           product.id !==
           productId
         );
-
       }
     );
 
@@ -647,11 +589,7 @@ function deleteProduct(productId) {
 
 
 /* ============================================================
-   Optional development utility
-
-   This resets the current device back to the official catalog.
-
-   It is intentionally not called automatically.
+   Reset utility
    ============================================================ */
 
 function resetProductsToDefault() {
