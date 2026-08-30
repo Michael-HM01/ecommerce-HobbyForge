@@ -1610,24 +1610,37 @@ function removeDiscount(
 
 function updateEditImagePreview() {
 
-    if (
-        !editProductImagePreview
-    ) {
-
+    if (!editProductImagePreview) {
         return;
-
     }
 
 
     const imagePath =
-        editImageInput
-            .value
-            .trim();
+        editImageInput.value.trim();
+
+
+    /*
+       Reset fallback state whenever
+       the administrator enters a
+       new image path.
+    */
+
+    editProductImagePreview.dataset
+        .fallbackApplied =
+        "false";
+
+
+    if (!imagePath) {
+
+        editProductImagePreview.src =
+            "assets/images/placeholder.png";
+
+        return;
+    }
 
 
     editProductImagePreview.src =
-        imagePath ||
-        "assets/images/placeholder.png";
+        imagePath;
 }
 
 
@@ -1840,24 +1853,35 @@ function initializeAdminEvents() {
     }
 
 
-    if (
-        editProductImagePreview
-    ) {
+    if (editProductImagePreview) {
 
-        editProductImagePreview.addEventListener(
-            "error",
-            function () {
+    editProductImagePreview.addEventListener(
+        "error",
+        function () {
 
-                this.onerror =
-                    null;
+            /*
+               Prevent repeated fallback attempts.
+            */
 
-                this.src =
-                    "assets/images/placeholder.png";
-
+            if (
+                this.dataset.fallbackApplied ===
+                "true"
+            ) {
+                return;
             }
-        );
 
-    }
+
+            this.dataset.fallbackApplied =
+                "true";
+
+
+            this.src =
+                "assets/images/placeholder.png";
+
+        }
+    );
+
+}
 
 
     if (
