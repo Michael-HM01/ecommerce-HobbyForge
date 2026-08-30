@@ -1,1 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>HobbyForge | Checkout</title>
+
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/responsive.css"
+  >
+</head>
+
+
+<body>
+
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+
+<header class="navbar">
+
+  <div class="container">
+
+
+    <a
+      href="index.html"
+      class="checkout-brand"
+      aria-label="HobbyForge Home"
+    >
+
+      <img
+        src="assets/images/Logo.png"
+        alt="HobbyForge"
+        class="checkout-brand-logo"
+      >
+
+      <div class="checkout-brand-text">
+
+        <span class="checkout-brand-name">
+          HobbyForge
+        </span>
+
+        <span class="checkout-brand-tagline">
+          Craft • Build • Optimize • Enhance
+        </span>
+
+      </div>
+
+    </a>
+
+
+    <div class="checkout-nav-actions">
+
+      <a
+        href="products.html"
+        class="btn btn-outline btn-small"
+      >
+        Continue Shopping
+      </a>
+
+
+      <button
+        class="cart-btn js-open-cart"
+        aria-label="Open cart"
+      >
+
+        Cart
+
+        <span class="cart-count js-cart-count">
+          0
+        </span>
+
+      </button>
+
+    </div>
+
+
+  </div>
+
+</header>
+
+
+<!-- ============================================================
+     CHECKOUT HEADER
+============================================================ -->
+
+<section class="checkout-hero">
+
+  <div class="container">
+
+    <div class="checkout-hero-content">
+
+      <p class="checkout-eyebrow">
+        SECURE CHECKOUT
+      </p>
+
+      <h1>
+        Complete Your Order
+      </h1>
+
+      <p>
+        Review your order and provide your information
+        to complete your purchase.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ============================================================
+     CHECKOUT CONTENT
+============================================================ -->
+
+<main class="checkout-section">
+
+  <div class="container">
+
+
+    <!-- Empty checkout message -->
+
+    <div
+      class="checkout-empty"
+      id="checkout-empty"
+    >
+
+      <h2>
+        Your cart is empty
+      </h2>
+
+      <p>
+        Add some products before proceeding to checkout.
+      </p>
+
+      <a
+        href="products.html"
+        class="btn btn-primary"
+      >
+        Browse Products
+      </a>
+
+    </div>
+
+
+    <!-- Main checkout layout -->
+
+    <div
+      class="checkout-layout"
+      id="checkout-layout"
+    >
+
+
+      <!-- ======================================================
+           CUSTOMER INFORMATION
+      ======================================================= -->
+
+      <section class="checkout-card checkout-customer-card">
+
+        <div class="checkout-card-header">
+
+          <div>
+
+            <p class="checkout-step">
+              STEP 1
+            </p>
+
+            <h2>
+              Customer Information
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <form
+          id="checkout-form"
+          novalidate
+        >
+
+
+          <!-- Full name -->
+
+          <div class="form-group">
+
+            <label for="checkout-name">
+              Full Name
+            </label>
+
+            <input
+              type="text"
+              id="checkout-name"
+              name="name"
+              placeholder="Enter your full name"
+              autocomplete="name"
+            >
+
+          </div>
+
+
+          <!-- Email -->
+
+          <div class="form-group">
+
+            <label for="checkout-email">
+              Email Address
+            </label>
+
+            <input
+              type="email"
+              id="checkout-email"
+              name="email"
+              placeholder="Enter your email address"
+              autocomplete="email"
+            >
+
+          </div>
+
+
+          <!-- Phone -->
+
+          <div class="form-group">
+
+            <label for="checkout-phone">
+              Phone Number
+            </label>
+
+            <input
+              type="tel"
+              id="checkout-phone"
+              name="phone"
+              placeholder="Enter your phone number"
+              autocomplete="tel"
+            >
+
+          </div>
+
+
+          <!-- Address -->
+
+          <div class="form-group">
+
+            <label for="checkout-address">
+              Delivery Address
+            </label>
+
+            <textarea
+              id="checkout-address"
+              name="address"
+              placeholder="Enter your complete delivery address"
+              autocomplete="street-address"
+            ></textarea>
+
+          </div>
+
+
+          <div
+            class="checkout-form-message"
+            id="checkout-form-message"
+          ></div>
+
+
+          <!-- Button intentionally UI-only in Step 7.2 -->
+
+          <button
+            type="submit"
+            class="btn btn-primary btn-full checkout-submit-btn"
+            id="place-order-btn"
+          >
+
+            Continue to Review
+
+          </button>
+
+
+        </form>
+
+      </section>
+
+
+      <!-- ======================================================
+           ORDER SUMMARY
+      ======================================================= -->
+
+      <aside class="checkout-card checkout-summary-card">
+
+
+        <div class="checkout-card-header">
+
+          <div>
+
+            <p class="checkout-step">
+              STEP 2
+            </p>
+
+            <h2>
+              Order Summary
+            </h2>
+
+          </div>
+
+          <span
+            class="checkout-item-count"
+            id="checkout-item-count"
+          >
+            0 Items
+          </span>
+
+        </div>
+
+
+        <!-- Order items -->
+
+        <div
+          class="checkout-items"
+          id="checkout-items"
+        >
+        </div>
+
+
+        <!-- Summary totals -->
+
+        <div class="checkout-summary-totals">
+
+
+          <div class="checkout-summary-row">
+
+            <span>
+              Subtotal
+            </span>
+
+            <span id="checkout-subtotal">
+              $0.00
+            </span>
+
+          </div>
+
+
+          <div class="checkout-summary-row checkout-summary-total">
+
+            <span>
+              Total
+            </span>
+
+            <span id="checkout-total">
+              $0.00
+            </span>
+
+          </div>
+
+
+        </div>
+
+
+        <p class="checkout-summary-note">
+
+          Final order confirmation will be completed
+          in the next checkout step.
+
+        </p>
+
+
+      </aside>
+
+
+    </div>
+
+
+  </div>
+
+</main>
+
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+
+<footer class="footer">
+
+  <div class="container">
+
+    <div class="footer-bottom">
+
+      &copy; 2026 HobbyForge. All rights reserved.
+
+      <br>
+
+      MH-Millares | BSIE-41M1 | Information Systems
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+<!-- ============================================================
+     CART DRAWER
+============================================================ -->
+
+<div
+  class="cart-drawer"
+  id="cart-drawer"
+>
+
+
+  <div class="cart-drawer-header">
+
+    <h3>
+      Your Cart
+    </h3>
+
+
+    <button
+      class="modal-close-btn"
+      id="cart-close-btn"
+      style="position:static;"
+    >
+
+      &times;
+
+    </button>
+
+
+  </div>
+
+
+  <div
+    class="cart-items"
+    id="cart-items"
+  >
+
+    <p
+      class="cart-empty"
+      id="cart-empty"
+    >
+      Your cart is empty.
+    </p>
+
+  </div>
+
+
+  <div class="cart-drawer-footer">
+
+
+    <div class="cart-total-row">
+
+      <span>
+        Total
+      </span>
+
+      <span id="cart-total">
+        $0.00
+      </span>
+
+    </div>
+
+
+    <button
+      class="btn btn-primary btn-full"
+      id="checkout-btn"
+    >
+      Checkout
+    </button>
+
+
+  </div>
+
+
+</div>
+
+
+<div
+  class="cart-overlay"
+  id="cart-overlay"
+></div>
+
+
+<!-- ============================================================
+     SCRIPTS
+============================================================ -->
+
+<script src="js/data.js"></script>
+
+<script src="js/cart.js"></script>
+
+<script src="js/orders.js"></script>
+
+<script src="js/checkout.js"></script>
+
+
+</body>
+
+</html>
