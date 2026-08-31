@@ -1,196 +1,966 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HobbyForge | Home</title>
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/responsive.css">
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>HobbyForge | Home</title>
+
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/responsive.css"
+  >
+
 </head>
+
+
 <body>
 
-<!-- ================= NAVBAR ================= -->
-<header class="navbar">
-  <div class="container">
-    <a href="index.html" class="nav-brand">HobbyForge</a>
 
-    <ul class="nav-links" id="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="products.html">Shop</a></li>
-      <li><a href="#about" class="js-scroll-link">About</a></li>
-      <li><a href="#contact" class="js-scroll-link">Contact</a></li>
-    </ul>
+  <!-- ========================================================
+       NAVBAR
+  ========================================================= -->
 
-    <div class="nav-right">
-      <button class="cart-btn js-open-cart" aria-label="Open cart">
-        Cart <span class="cart-count js-cart-count">0</span>
-      </button>
-      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-</header>
+  <header class="navbar">
 
-<!-- ================= HERO ================= -->
-<section class="hero">
-  <div class="container">
-    <p class="hero-brand">HobbyForge</p>
-    <h1>Your one-stop shop for cards, kits, and collectibles</h1>
-    <p>Trading cards, building sets, die-cast cars, model kits, and more — all in one place. Placeholder headline and copy for phase 1.</p>
-    <a href="products.html" class="btn btn-primary">Shop Now</a>
-  </div>
-</section>
+    <div class="container">
 
-<!-- ================= FEATURED PRODUCTS ================= -->
-<section class="featured-section">
-  <div class="container">
-    <div class="section-header">
-      <h2>Featured Products</h2>
-      <p>A quick look at some items from our catalog</p>
-    </div>
-    <div class="product-grid" id="featured-products">
-      <!-- Rendered dynamically by products.js from js/data.js -->
-    </div>
-  </div>
-</section>
 
-<!-- ================= CATEGORIES ================= -->
-<section class="categories-section">
-  <div class="container">
-    <div class="section-header">
-      <h2>Shop by Category</h2>
-      <p>Browse our hobby categories</p>
-    </div>
-    <div class="category-grid">
-      <div class="category-card js-category-card" data-category="Trading Cards">Trading Cards</div>
-      <div class="category-card js-category-card" data-category="Building Sets">Building Sets</div>
-      <div class="category-card js-category-card" data-category="Die-Cast">Die-Cast</div>
-      <div class="category-card js-category-card" data-category="Model Kits">Model Kits</div>
-      <div class="category-card js-category-card" data-category="Collectibles">Collectibles</div>
-    </div>
-  </div>
-</section>
+      <!-- Desktop Brand -->
 
-<!-- ================= ABOUT ================= -->
-<section class="about-section" id="about">
-  <div class="container">
-    <div class="section-header">
-      <h2>About Us</h2>
+      <a
+        href="index.html"
+        class="nav-brand nav-brand-wide"
+        aria-label="HobbyForge Home"
+      >
+
+        <img
+          src="assets/image/Header-Logo.png"
+          alt="HobbyForge"
+          class="header-logo"
+        >
+
+      </a>
+
+
+      <!-- Mobile Brand -->
+
+      <a
+        href="index.html"
+        class="nav-brand nav-brand-mobile"
+        aria-label="HobbyForge Home"
+      >
+
+        <img
+          src="assets/image/Logo.png"
+          alt="HobbyForge"
+          class="mobile-logo"
+        >
+
+      </a>
+
+
+      <!-- Navigation -->
+
+      <ul
+        class="nav-links"
+        id="nav-links"
+      >
+
+        <li>
+          <a
+            href="index.html"
+            class="active"
+          >
+            Home
+          </a>
+        </li>
+
+
+        <li>
+          <a href="products.html">
+            Shop
+          </a>
+        </li>
+
+
+        <li>
+          <a
+            href="#about"
+            class="js-scroll-link"
+          >
+            About
+          </a>
+        </li>
+
+
+        <li>
+          <a
+            href="#contact"
+            class="js-scroll-link"
+          >
+            Contact
+          </a>
+        </li>
+
+      </ul>
+
+
+      <!-- Right Controls -->
+
+      <div class="nav-right">
+
+        <button
+          class="cart-btn js-open-cart"
+          aria-label="Open cart"
+        >
+
+          <span class="cart-label">
+            Cart
+          </span>
+
+          <span
+            class="cart-count js-cart-count"
+          >
+            0
+          </span>
+
+        </button>
+
+
+        <button
+          class="mobile-menu-toggle"
+          id="mobile-menu-toggle"
+          aria-label="Toggle menu"
+        >
+
+          <span></span>
+          <span></span>
+          <span></span>
+
+        </button>
+
+      </div>
+
     </div>
-    <div class="about-content">
-      <p>HobbyForge is a fictional multi-brand hobby store built for this school project.
-        A Imaginary e-commerce website for a task, Output of the Group:
-          <ul>
-            <li>Michael Harold G. Millares</li>
-            <li>Russel  Roy Adrian Lasala</li>
-            <li>Princess Mae Llose</li>
-            <li>Rekaela Claor</li>
-          </ul>
-        HobbyForge is a Imaginary Shop where all different hobbies cross paths and every hobbyist can satisfy their 
-        hobby needs.
+
+  </header>
+
+
+  <!-- ========================================================
+       HERO
+  ========================================================= -->
+
+  <section class="hero">
+
+    <div class="hero-overlay"></div>
+
+
+    <div class="container hero-content">
+
+
+      <p class="hero-brand">
+
+        <span class="hero-brand-line"></span>
+
+        CRAFT • BUILD • OPTIMIZE • ENHANCE
+
       </p>
-    </div>
-  </div>
-</section>
 
-<!-- ================= CONTACT ================= -->
-<section class="contact-section" id="contact">
-  <div class="container">
-    <div class="section-header">
-      <h2>Contact Us</h2>
-      <p>Send us a message — we'll get back to you</p>
-    </div>
-    <form class="contact-form" id="contact-form" novalidate>
-      <input type="text" id="contact-name" placeholder="Your Name" required>
-      <input type="email" id="contact-email" placeholder="Your Email" required>
-      <input type="text" id="contact-subject" placeholder="Subject" required>
-      <textarea id="contact-message" placeholder="Your Message" required></textarea>
-      <div class="form-message" id="contact-success"></div>
-      <button type="submit" class="btn btn-primary">Send Message</button>
-    </form>
-  </div>
-</section>
 
-<!-- ================= FOOTER ================= -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <h4>HobbyForge</h4>
-        <p> Craft • Build • Optimize • Enhance<br>
-          A Imaginary e-commerce website for a task.
+      <h1>
+
+        Where Every Hobby
+        <span>Comes to Life.</span>
+
+      </h1>
+
+
+      <p class="hero-description">
+
+        Discover trading cards, model kits, building sets,
+        die-cast collectibles, and more — brought together
+        for every kind of hobbyist.
+
+      </p>
+
+
+      <div class="hero-actions">
+
+        <a
+          href="products.html"
+          class="btn btn-primary"
+        >
+          Explore the Forge
+        </a>
+
+
+        <a
+          href="#featured-products-section"
+          class="btn btn-hero-secondary js-scroll-link"
+        >
+          View Featured
+        </a>
+
+      </div>
+
+
+      <div class="hero-forge-mark">
+
+        <span></span>
+
+        BUILT FOR HOBBYISTS
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================================================
+       FEATURED PRODUCTS
+  ========================================================= -->
+
+  <section
+    class="featured-section"
+    id="featured-products-section"
+  >
+
+    <div class="container">
+
+
+      <div class="section-header">
+
+        <p class="section-eyebrow">
+          DISCOVER THE COLLECTION
         </p>
-      </div>
-      <div>
-        <h4>Quick Links</h4>
-        <ul class="footer-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="products.html">Shop</a></li>
-          <li><a href="#about" class="js-scroll-link">About</a></li>
-          <li><a href="#contact" class="js-scroll-link">Contact</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Follow Us</h4>
-        <ul class="footer-links">
-          <li><a href="#">Facebook</a></li>
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">Twitter / X</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      &copy; 2026 HobbyForge. All rights reserved. 
-      MH-Millares | BSIE-41M1 |Information Systems
-    </div>
-  </div>
-</footer>
 
-<!-- ================= PRODUCT DETAILS MODAL (shared) ================= -->
-<div class="modal" id="product-modal">
-  <button class="modal-close-btn" id="modal-close-btn">&times;</button>
-  <div class="modal-body">
-    <img src="" alt="" class="modal-img" id="modal-img">
-    <div class="modal-details">
-      <p class="product-category" id="modal-category"></p>
-      <h3 id="modal-name"></h3>
-      <p class="product-price" id="modal-price"></p>
-      <p class="stock-status" id="modal-stock"></p>
-      <p id="modal-description"></p>
-      <div class="modal-qty-controls">
-        <button class="qty-btn" id="modal-qty-decrease">-</button>
-        <span id="modal-qty-value">1</span>
-        <button class="qty-btn" id="modal-qty-increase">+</button>
+
+        <h2>
+          Featured Products
+        </h2>
+
+
+        <p>
+          A selection of hobby essentials, collectibles,
+          and projects waiting for their next owner.
+        </p>
+
       </div>
-      <button class="btn btn-primary btn-full" id="modal-add-to-cart">Add to Cart</button>
-    </div>
-  </div>
-</div>
-<div class="modal-overlay" id="modal-overlay"></div>
 
-<!-- ================= CART DRAWER (shared) ================= -->
-<div class="cart-drawer" id="cart-drawer">
-  <div class="cart-drawer-header">
-    <h3>Your Cart</h3>
-    <button class="modal-close-btn" id="cart-close-btn" style="position:static;">&times;</button>
-  </div>
-  <div class="cart-items" id="cart-items">
-    <p class="cart-empty" id="cart-empty">Your cart is empty.</p>
-  </div>
-  <div class="cart-drawer-footer">
-    <div class="cart-total-row">
-      <span>Total</span>
-      <span id="cart-total">$0.00</span>
-    </div>
-    <button class="btn btn-primary btn-full" id="checkout-btn">Checkout</button>
-  </div>
-</div>
-<div class="cart-overlay" id="cart-overlay"></div>
 
-<script src="js/data.js"></script>
-<script src="js/products.js"></script>
-<script src="js/cart.js"></script>
-<script src="js/app.js"></script>
+      <div
+        class="product-grid"
+        id="featured-products"
+      >
+        <!-- Rendered dynamically by products.js -->
+      </div>
+
+
+      <div class="section-action">
+
+        <a
+          href="products.html"
+          class="btn btn-outline"
+        >
+          View All Products
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================================================
+       CATEGORIES
+  ========================================================= -->
+
+  <section class="categories-section">
+
+    <div class="container">
+
+
+      <div class="section-header">
+
+        <p class="section-eyebrow">
+          FIND YOUR CRAFT
+        </p>
+
+
+        <h2>
+          Shop by Category
+        </h2>
+
+
+        <p>
+          Different hobbies. One place to explore them.
+        </p>
+
+      </div>
+
+
+      <div class="category-grid">
+
+
+        <div
+          class="category-card js-category-card"
+          data-category="Trading Cards"
+        >
+
+          <span class="category-number">
+            01
+          </span>
+
+          <span class="category-name">
+            Trading Cards
+          </span>
+
+          <span class="category-arrow">
+            →
+          </span>
+
+        </div>
+
+
+        <div
+          class="category-card js-category-card"
+          data-category="Building Sets"
+        >
+
+          <span class="category-number">
+            02
+          </span>
+
+          <span class="category-name">
+            Building Sets
+          </span>
+
+          <span class="category-arrow">
+            →
+          </span>
+
+        </div>
+
+
+        <div
+          class="category-card js-category-card"
+          data-category="Die-Cast"
+        >
+
+          <span class="category-number">
+            03
+          </span>
+
+          <span class="category-name">
+            Die-Cast
+          </span>
+
+          <span class="category-arrow">
+            →
+          </span>
+
+        </div>
+
+
+        <div
+          class="category-card js-category-card"
+          data-category="Model Kits"
+        >
+
+          <span class="category-number">
+            04
+          </span>
+
+          <span class="category-name">
+            Model Kits
+          </span>
+
+          <span class="category-arrow">
+            →
+          </span>
+
+        </div>
+
+
+        <div
+          class="category-card js-category-card"
+          data-category="Collectibles"
+        >
+
+          <span class="category-number">
+            05
+          </span>
+
+          <span class="category-name">
+            Collectibles
+          </span>
+
+          <span class="category-arrow">
+            →
+          </span>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================================================
+       ABOUT
+  ========================================================= -->
+
+  <section
+    class="about-section"
+    id="about"
+  >
+
+    <div class="container">
+
+
+      <div class="about-layout">
+
+
+        <div class="about-brand-panel">
+
+          <div class="about-logo-frame">
+
+            <img
+              src="assets/image/Logo.png"
+              alt="HobbyForge HF Logo"
+              class="about-logo"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="about-content">
+
+
+          <p class="section-eyebrow">
+            ABOUT HOBBYFORGE
+          </p>
+
+
+          <h2>
+            Different Hobbies.
+            <span>One Forge.</span>
+          </h2>
+
+
+          <p>
+
+            HobbyForge is an imaginary multi-brand hobby
+            e-commerce store created as an academic project.
+
+          </p>
+
+
+          <p>
+
+            The concept brings together collectors, builders,
+            modelers, and enthusiasts in one place where
+            different hobbies can cross paths and hobbyists
+            can explore products that match their interests.
+
+          </p>
+
+
+          <div class="project-team">
+
+            <h3>
+              Project Team
+            </h3>
+
+
+            <ul>
+
+              <li>
+                Michael Harold G. Millares
+              </li>
+
+              <li>
+                Russel Roy Adrian Lasala
+              </li>
+
+              <li>
+                Princess Mae Llose
+              </li>
+
+              <li>
+                Rekaela Claor
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================================================
+       CONTACT
+  ========================================================= -->
+
+  <section
+    class="contact-section"
+    id="contact"
+  >
+
+    <div class="contact-background"></div>
+
+
+    <div class="container contact-container">
+
+
+      <div class="section-header">
+
+        <p class="section-eyebrow">
+          GET IN TOUCH
+        </p>
+
+
+        <h2>
+          Let's Talk Hobbies.
+        </h2>
+
+
+        <p>
+          Have a question, suggestion, or something you'd
+          like to share? Send us a message.
+        </p>
+
+      </div>
+
+
+      <form
+        class="contact-form"
+        id="contact-form"
+        novalidate
+      >
+
+
+        <input
+          type="text"
+          id="contact-name"
+          placeholder="Your Name"
+          required
+        >
+
+
+        <input
+          type="email"
+          id="contact-email"
+          placeholder="Your Email"
+          required
+        >
+
+
+        <input
+          type="text"
+          id="contact-subject"
+          placeholder="Subject"
+          required
+        >
+
+
+        <textarea
+          id="contact-message"
+          placeholder="Your Message"
+          required
+        ></textarea>
+
+
+        <div
+          class="form-message"
+          id="contact-success"
+        ></div>
+
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+        >
+          Send Message
+        </button>
+
+
+      </form>
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================================================
+       FOOTER
+  ========================================================= -->
+
+  <footer class="footer">
+
+    <div class="container">
+
+
+      <div class="footer-grid">
+
+
+        <!-- Brand -->
+
+        <div class="footer-brand">
+
+          <img
+            src="assets/image/Header-Logo.png"
+            alt="HobbyForge"
+            class="footer-logo"
+          >
+
+
+          <p>
+
+            Craft • Build • Optimize • Enhance
+
+          </p>
+
+
+          <p class="footer-project-text">
+
+            An imaginary e-commerce website created
+            for an academic project.
+
+          </p>
+
+        </div>
+
+
+        <!-- Links -->
+
+        <div>
+
+          <h4>
+            Explore
+          </h4>
+
+
+          <ul class="footer-links">
+
+            <li>
+              <a href="index.html">
+                Home
+              </a>
+            </li>
+
+
+            <li>
+              <a href="products.html">
+                Shop
+              </a>
+            </li>
+
+
+            <li>
+              <a
+                href="#about"
+                class="js-scroll-link"
+              >
+                About
+              </a>
+            </li>
+
+
+            <li>
+              <a
+                href="#contact"
+                class="js-scroll-link"
+              >
+                Contact
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+
+        <!-- Social -->
+
+        <div>
+
+          <h4>
+            Follow Us
+          </h4>
+
+
+          <ul class="footer-links">
+
+            <li>
+              <a href="#">
+                Facebook
+              </a>
+            </li>
+
+
+            <li>
+              <a href="#">
+                Instagram
+              </a>
+            </li>
+
+
+            <li>
+              <a href="#">
+                Twitter / X
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+
+      </div>
+
+
+      <div class="footer-bottom">
+
+        <span>
+          &copy; 2026 HobbyForge.
+          All rights reserved.
+        </span>
+
+
+        <span>
+          MH-Millares | BSIE-41M1 |
+          Information Systems
+        </span>
+
+      </div>
+
+
+    </div>
+
+  </footer>
+
+
+  <!-- ========================================================
+       PRODUCT DETAILS MODAL
+  ========================================================= -->
+
+  <div
+    class="modal"
+    id="product-modal"
+  >
+
+    <button
+      class="modal-close-btn"
+      id="modal-close-btn"
+      type="button"
+      aria-label="Close"
+    >
+      &times;
+    </button>
+
+
+    <div class="modal-body">
+
+      <img
+        src=""
+        alt=""
+        class="modal-img"
+        id="modal-img"
+      >
+
+
+      <div class="modal-details">
+
+        <p
+          class="product-category"
+          id="modal-category"
+        ></p>
+
+
+        <h3 id="modal-name"></h3>
+
+
+        <p
+          class="product-price"
+          id="modal-price"
+        ></p>
+
+
+        <p
+          class="stock-status"
+          id="modal-stock"
+        ></p>
+
+
+        <p id="modal-description"></p>
+
+
+        <div class="modal-qty-controls">
+
+          <button
+            class="qty-btn"
+            id="modal-qty-decrease"
+            type="button"
+          >
+            -
+          </button>
+
+
+          <span id="modal-qty-value">
+            1
+          </span>
+
+
+          <button
+            class="qty-btn"
+            id="modal-qty-increase"
+            type="button"
+          >
+            +
+          </button>
+
+        </div>
+
+
+        <button
+          class="btn btn-primary btn-full"
+          id="modal-add-to-cart"
+          type="button"
+        >
+          Add to Cart
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="modal-overlay"
+    id="modal-overlay"
+  ></div>
+
+
+  <!-- ========================================================
+       CART DRAWER
+  ========================================================= -->
+
+  <div
+    class="cart-drawer"
+    id="cart-drawer"
+  >
+
+
+    <div class="cart-drawer-header">
+
+      <h3>
+        Your Cart
+      </h3>
+
+
+      <button
+        class="modal-close-btn"
+        id="cart-close-btn"
+        type="button"
+        style="position:static;"
+      >
+        &times;
+      </button>
+
+    </div>
+
+
+    <div
+      class="cart-items"
+      id="cart-items"
+    >
+
+      <p
+        class="cart-empty"
+        id="cart-empty"
+      >
+        Your cart is empty.
+      </p>
+
+    </div>
+
+
+    <div class="cart-drawer-footer">
+
+
+      <div class="cart-total-row">
+
+        <span>
+          Total
+        </span>
+
+
+        <span id="cart-total">
+          $0.00
+        </span>
+
+      </div>
+
+
+      <button
+        class="btn btn-primary btn-full"
+        id="checkout-btn"
+        type="button"
+      >
+        Checkout
+      </button>
+
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="cart-overlay"
+    id="cart-overlay"
+  ></div>
+
+
+  <!-- ========================================================
+       SCRIPTS
+  ========================================================= -->
+
+  <script src="js/data.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/app.js"></script>
+
+
 </body>
+
 </html>
