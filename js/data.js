@@ -235,43 +235,7 @@ const DEFAULT_PRODUCTS = [
   }
 
 ];
-function generateProductId() {
 
-  const products =
-    getProducts();
-
-  let highestNumber = 0;
-
-  products.forEach(
-    function (product) {
-
-      const match =
-        String(product.id)
-          .match(/^p(\d+)$/i);
-
-      if (match) {
-
-        const number =
-          Number(match[1]);
-
-        if (
-          Number.isFinite(number) &&
-          number > highestNumber
-        ) {
-          highestNumber =
-            number;
-        }
-
-      }
-
-    }
-  );
-
-  return (
-    "p" +
-    (highestNumber + 1)
-  );
-}
 
 /* ============================================================
    Shared pricing helpers
@@ -507,7 +471,43 @@ function getAllCategories() {
 
 }
 
+function generateProductId() {
 
+  const products =
+    getProducts();
+
+  let highestNumber = 0;
+
+  products.forEach(
+    function (product) {
+
+      const match =
+        String(product.id)
+          .match(/^p(\d+)$/i);
+
+      if (match) {
+
+        const number =
+          Number(match[1]);
+
+        if (
+          Number.isFinite(number) &&
+          number > highestNumber
+        ) {
+          highestNumber =
+            number;
+        }
+
+      }
+
+    }
+  );
+
+  return (
+    "p" +
+    (highestNumber + 1)
+  );
+}
 /* ============================================================
    Product creation
    ============================================================ */
