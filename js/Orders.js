@@ -17,7 +17,7 @@ ORDER STATUS
 
 const ORDER_STATUS = {
 
-```
+
 PENDING:
     "Pending",
 
@@ -29,7 +29,7 @@ COMPLETED:
 
 CANCELLED:
     "Cancelled"
-```
+
 
 };
 
@@ -39,23 +39,23 @@ ORDER STORAGE
 
 function getOrders() {
 
-```
+
 return getFromStorage(
     STORAGE_KEYS.ORDERS,
     []
 );
-```
+
 
 }
 
 function saveOrders(orders) {
 
-```
+
 setToStorage(
     STORAGE_KEYS.ORDERS,
     orders
 );
-```
+
 
 }
 
@@ -71,7 +71,7 @@ ORD-000003
 
 function generateOrderId() {
 
-```
+
 const orders =
     getOrders();
 
@@ -147,7 +147,7 @@ return (
         "0"
     )
 );
-```
+
 
 }
 
@@ -162,7 +162,7 @@ function normalizeCustomer(
 customer
 ) {
 
-```
+
 customer =
     customer || {};
 
@@ -205,7 +205,7 @@ return {
             : ""
 
 };
-```
+
 
 }
 
@@ -224,7 +224,7 @@ function normalizeCheckoutDetails(
 checkoutDetails
 ) {
 
-```
+
 checkoutDetails =
     checkoutDetails || {};
 
@@ -286,7 +286,7 @@ return {
         paymentMethod
 
 };
-```
+
 
 }
 
@@ -322,7 +322,7 @@ message: "..."
 
 function validateCheckoutCart() {
 
-```
+
 /*
    Reconcile first.
 
@@ -497,7 +497,7 @@ return {
         validatedItems
 
 };
-```
+
 
 }
 
@@ -515,7 +515,7 @@ product,
 quantity
 ) {
 
-```
+
 const unitPrice =
     Number(
         getEffectivePrice(
@@ -559,7 +559,7 @@ return {
         subtotal
 
 };
-```
+
 
 }
 
@@ -585,7 +585,7 @@ validatedItems,
 checkoutDetails
 ) {
 
-```
+
 const orderItems =
     [];
 
@@ -681,7 +681,7 @@ return {
         ORDER_STATUS.PENDING
 
 };
-```
+
 
 }
 
@@ -697,7 +697,7 @@ function deductOrderStock(
 validatedItems
 ) {
 
-```
+
 const products =
     getProducts();
 
@@ -775,7 +775,7 @@ validatedItems.forEach(
 saveProducts(
     products
 );
-```
+
 
 }
 
@@ -810,7 +810,7 @@ customer,
 checkoutDetails
 ) {
 
-```
+
 /*
    STEP 1
 
@@ -917,7 +917,7 @@ return {
         order
 
 };
-```
+
 
 }
 
@@ -934,7 +934,7 @@ function getOrderById(
 orderId
 ) {
 
-```
+
 const orders =
     getOrders();
 
@@ -951,7 +951,7 @@ return orders.find(
 
     }
 );
-```
+
 
 }
 
