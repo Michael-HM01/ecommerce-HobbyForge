@@ -23,10 +23,10 @@ function getCheckoutEffectivePrice(product) {
 The project already uses getEffectivePrice()
 for products and order snapshots.
 
-```
+
  This fallback prevents the checkout page from
  breaking if the pricing helper is unavailable.
-```
+
 
 */
 
@@ -34,11 +34,11 @@ if (
 typeof getEffectivePrice === "function"
 ) {
 
-```
+
 return Number(
   getEffectivePrice(product)
 );
-```
+
 
 }
 
@@ -60,7 +60,7 @@ total,
 item
 ) {
 
-```
+
   return (
     total +
     Number(item.quantity)
@@ -68,7 +68,7 @@ item
 
 },
 0
-```
+
 
 );
 
@@ -95,7 +95,7 @@ if (
 !selectedOption
 ) {
 
-```
+
 return {
 
   value:
@@ -108,7 +108,7 @@ return {
     100
 
 };
-```
+
 
 }
 
@@ -122,7 +122,7 @@ selectedOption.dataset.fee
 
 return {
 
-```
+
 value:
   value,
 
@@ -145,7 +145,7 @@ fee:
     ? fee
 
     : 100
-```
+
 
 };
 
@@ -171,11 +171,11 @@ getSelectedPaymentOption();
 const value =
 selectedOption
 
-```
+
   ? selectedOption.value
 
   : "cod";
-```
+
 
 let method =
 "Cash on Delivery";
@@ -184,10 +184,10 @@ if (
 value === "gcash"
 ) {
 
-```
+
 method =
   "GCash";
-```
+
 
 }
 
@@ -195,10 +195,10 @@ else if (
 value === "maya"
 ) {
 
-```
+
 method =
   "Maya";
-```
+
 
 }
 
@@ -206,22 +206,22 @@ else if (
 value === "mari"
 ) {
 
-```
+
 method =
   "Mari";
-```
+
 
 }
 
 return {
 
-```
+
 value:
   value,
 
 method:
   method
-```
+
 
 };
 
@@ -242,9 +242,9 @@ if (
 !placeholder
 ) {
 
-```
+
 return;
-```
+
 
 }
 
@@ -256,19 +256,19 @@ payment.value ===
 "cod"
 ) {
 
-```
+
 placeholder.style.display =
   "none";
-```
+
 
 }
 
 else {
 
-```
+
 placeholder.style.display =
   "block";
-```
+
 
 }
 
@@ -313,22 +313,22 @@ Number(
 subtotal
 ) +
 
-```
+
 Number(
   delivery.fee
 );
-```
+
 
 if (
 deliveryFeeEl
 ) {
 
-```
+
 deliveryFeeEl.textContent =
   formatPrice(
     delivery.fee
   );
-```
+
 
 }
 
@@ -336,10 +336,10 @@ if (
 deliveryMethodEl
 ) {
 
-```
+
 deliveryMethodEl.textContent =
   delivery.method;
-```
+
 
 }
 
@@ -347,12 +347,12 @@ if (
 totalEl
 ) {
 
-```
+
 totalEl.textContent =
   formatPrice(
     total
   );
-```
+
 
 }
 
@@ -374,7 +374,7 @@ function (
 option
 ) {
 
-```
+
   option.addEventListener(
     "change",
 
@@ -387,7 +387,7 @@ option
   );
 
 }
-```
+
 
 );
 
@@ -409,7 +409,7 @@ function (
 option
 ) {
 
-```
+
   option.addEventListener(
     "change",
 
@@ -422,7 +422,7 @@ option
   );
 
 }
-```
+
 
 );
 
@@ -467,9 +467,9 @@ if (
 !itemsContainer
 ) {
 
-```
+
 return;
-```
+
 
 }
 
@@ -490,14 +490,14 @@ if (
 cart
 ) ||
 
-```
+
 cart.length ===
 0
-```
+
 
 ) {
 
-```
+
 layout.style.display =
   "none";
 
@@ -507,7 +507,7 @@ emptyState.style.display =
 
 
 return;
-```
+
 
 }
 
@@ -532,7 +532,7 @@ function (
 cartItem
 ) {
 
-```
+
   const product =
     getProductById(
       cartItem.id
@@ -663,7 +663,7 @@ cartItem
 
 
 }
-```
+
 
 );
 
@@ -675,22 +675,22 @@ if (
 subtotalEl
 ) {
 
-```
+
 subtotalEl.textContent =
   formatPrice(
     subtotal
   );
-```
+
 
 }
 
 /*
 Update final total.
 
-```
+
  This includes the currently
  selected delivery fee.
-```
+
 
 */
 
@@ -706,7 +706,7 @@ if (
 itemCountEl
 ) {
 
-```
+
 const itemCount =
   getCheckoutItemCount(
     cart
@@ -722,7 +722,7 @@ itemCountEl.textContent =
 
       : " Items"
   );
-```
+
 
 }
 
@@ -756,7 +756,7 @@ document.getElementById(
 
 return {
 
-```
+
 name:
 
   nameInput
@@ -791,7 +791,7 @@ address:
     ? addressInput.value.trim()
 
     : ""
-```
+
 
 };
 
@@ -805,12 +805,12 @@ if (
 !customer.name
 ) {
 
-```
+
 return {
   valid: false,
   message: "Please enter your full name."
 };
-```
+
 
 }
 
@@ -818,23 +818,23 @@ if (
 !customer.email
 ) {
 
-```
+
 return {
   valid: false,
   message: "Please enter your email address."
 };
-```
+
 
 }
 
 /*
 Basic email validation.
 
-```
+
  This is intentionally simple
  because this project does not
  use real account verification.
-```
+
 
 */
 
@@ -847,12 +847,12 @@ customer.email
 )
 ) {
 
-```
+
 return {
   valid: false,
   message: "Please enter a valid email address."
 };
-```
+
 
 }
 
@@ -860,12 +860,12 @@ if (
 !customer.phone
 ) {
 
-```
+
 return {
   valid: false,
   message: "Please enter your phone number."
 };
-```
+
 
 }
 
@@ -873,12 +873,12 @@ if (
 !customer.address
 ) {
 
-```
+
 return {
   valid: false,
   message: "Please enter your delivery address."
 };
-```
+
 
 }
 
@@ -906,9 +906,9 @@ if (
 !messageEl
 ) {
 
-```
+
 return;
-```
+
 
 }
 
@@ -935,9 +935,9 @@ if (
 !messageEl
 ) {
 
-```
+
 return;
-```
+
 
 }
 
@@ -968,7 +968,7 @@ paymentMethod ===
 "GCash"
 ) {
 
-```
+
 return {
 
   label:
@@ -981,7 +981,7 @@ return {
     "Payment simulation selected"
 
 };
-```
+
 
 }
 
@@ -990,7 +990,7 @@ paymentMethod ===
 "Maya"
 ) {
 
-```
+
 return {
 
   label:
@@ -1003,7 +1003,7 @@ return {
     "Payment simulation selected"
 
 };
-```
+
 
 }
 
@@ -1012,7 +1012,7 @@ paymentMethod ===
 "Mari"
 ) {
 
-```
+
 return {
 
   label:
@@ -1025,13 +1025,13 @@ return {
     "Payment simulation selected"
 
 };
-```
+
 
 }
 
 return {
 
-```
+
 label:
   "Payment Status",
 
@@ -1040,7 +1040,7 @@ value:
 
 status:
   "Pay upon delivery"
-```
+
 
 };
 
@@ -1065,9 +1065,9 @@ date.getTime()
 )
 ) {
 
-```
+
 return "";
-```
+
 
 }
 
@@ -1075,7 +1075,7 @@ return date.toLocaleString(
 "en-PH",
 {
 
-```
+
   year:
     "numeric",
 
@@ -1092,7 +1092,7 @@ return date.toLocaleString(
     "2-digit"
 
 }
-```
+
 
 );
 
@@ -1120,9 +1120,9 @@ if (
 !checkoutLayout
 ) {
 
-```
+
 return;
-```
+
 
 }
 
@@ -1134,10 +1134,10 @@ if (
 emptyState
 ) {
 
-```
+
 emptyState.style.display =
   "none";
-```
+
 
 }
 
@@ -1154,7 +1154,7 @@ function (
 item
 ) {
 
-```
+
   itemsHtml +=
 
     '<div class="receipt-item">' +
@@ -1190,7 +1190,7 @@ item
     '</div>';
 
 }
-```
+
 
 );
 
@@ -1199,7 +1199,7 @@ checkoutLayout.style.display =
 
 checkoutLayout.innerHTML =
 
-```
+
 '<div class="order-receipt">' +
 
 
@@ -1356,7 +1356,7 @@ checkoutLayout.innerHTML =
 
 
 '</div>';
-```
+
 
 /*
 Move the user to the receipt.
@@ -1386,16 +1386,16 @@ if (
 !form
 ) {
 
-```
+
 return;
-```
+
 
 }
 
 form.addEventListener(
 "submit",
 
-```
+
 function (
   event
 ) {
@@ -1588,7 +1588,7 @@ function (
 
 
 }
-```
+
 
 );
 
@@ -1617,9 +1617,9 @@ document.addEventListener(
 
 function () {
 
-```
+
 initCheckout();
-```
+
 
 }
 
