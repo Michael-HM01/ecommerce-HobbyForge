@@ -57,25 +57,205 @@ section{padding:90px 0}
 .btn-small{min-height:34px;padding:6px 12px;font-size:12px}
 .btn-full{width:100%}
 
-/* NAVIGATION */
-.navbar{position:sticky;top:0;z-index:500;height:var(--nav-height);background:rgba(15,17,21,.97);border-bottom:1px solid rgba(255,255,255,.08);box-shadow:0 6px 24px rgba(0,0,0,.14)}
-.navbar .container{height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px;position:relative}
-.nav-brand{text-decoration:none;flex-shrink:0}
-.nav-brand-wide{display:flex;align-items:center}
-.header-logo{width:auto;height:48px;max-width:min(420px,32vw);object-fit:contain}
-.nav-brand-mobile{display:none}
-.mobile-logo{width:46px;height:46px;object-fit:contain}
-.nav-links{display:flex;align-items:center;justify-content:center;gap:28px;list-style:none;margin:0;padding:0}
-.nav-links a{position:relative;color:#d6d9de;text-decoration:none;font-size:14px;font-weight:600;transition:color .2s ease}
-.nav-links a::after{content:"";position:absolute;left:0;bottom:-10px;width:0;height:2px;background:var(--color-primary);transition:width .2s ease}
-.nav-links a:hover,.nav-links a.active{color:#fff}
-.nav-links a:hover::after,.nav-links a.active::after{width:100%}
-.nav-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
-.cart-btn{display:flex;align-items:center;gap:8px;min-height:42px;padding:7px 10px 7px 14px;border:1px solid rgba(255,255,255,.14);border-radius:var(--radius-sm);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;font-size:13px;font-weight:700;transition:background .2s ease,border-color .2s ease}
-.cart-btn:hover{border-color:rgba(242,106,33,.7);background:rgba(242,106,33,.12)}
-.cart-count{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:linear-gradient(135deg,var(--color-primary),var(--color-gold));color:#fff;font-size:11px;font-weight:800}
-.mobile-menu-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;padding:0;border:1px solid rgba(255,255,255,.14);border-radius:var(--radius-sm);background:transparent;cursor:pointer}
-.mobile-menu-toggle span{width:21px;height:2px;margin:0 auto;background:#fff}
+/* ============================================================
+   NAVIGATION
+============================================================ */
+
+.navbar{
+  position:sticky;
+  top:0;
+  z-index:500;
+  height:var(--nav-height);
+  background:rgba(15,17,21,.97);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  box-shadow:0 6px 24px rgba(0,0,0,.14);
+}
+
+.navbar .container{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:28px;
+  position:relative;
+}
+
+/* ============================================================
+   BRAND
+============================================================ */
+
+.nav-brand{
+  display:flex;
+  align-items:center;
+  text-decoration:none;
+  flex-shrink:0;
+}
+
+/* Desktop Header Logo */
+
+.nav-brand-wide{
+  display:flex;
+  align-items:center;
+}
+
+.header-logo{
+  width:auto;
+  height:56px;
+  max-width:min(460px,34vw);
+  object-fit:contain;
+}
+
+/* Mobile Brand */
+
+.nav-brand-mobile{
+  display:none;
+  align-items:center;
+  gap:10px;
+}
+
+.mobile-logo{
+  width:46px;
+  height:46px;
+  object-fit:contain;
+}
+
+.mobile-brand-name{
+  color:#ffffff;
+  font-size:19px;
+  font-weight:800;
+  letter-spacing:-.02em;
+  white-space:nowrap;
+}
+
+.mobile-brand-name span{
+  color:var(--color-primary);
+}
+
+/* ============================================================
+   NAVIGATION LINKS
+============================================================ */
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:32px;
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+
+.nav-links a{
+  position:relative;
+  color:#d6d9de;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:600;
+  transition:color .2s ease;
+}
+
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-10px;
+  width:0;
+  height:2px;
+  background:var(--color-primary);
+  transition:width .2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+  color:#ffffff;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after{
+  width:100%;
+}
+
+/* ============================================================
+   NAVIGATION RIGHT
+============================================================ */
+
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-shrink:0;
+}
+
+/* ============================================================
+   CART
+============================================================ */
+
+.cart-btn{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-height:46px;
+  padding:8px 12px 8px 16px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--radius-sm);
+  background:rgba(255,255,255,.04);
+  color:#ffffff;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:700;
+  transition:
+    background .2s ease,
+    border-color .2s ease;
+}
+
+.cart-btn:hover{
+  border-color:rgba(242,106,33,.7);
+  background:rgba(242,106,33,.12);
+}
+
+.cart-count{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:22px;
+  height:22px;
+  padding:0 6px;
+  border-radius:999px;
+  background:
+    linear-gradient(
+      135deg,
+      var(--color-primary),
+      var(--color-gold)
+    );
+  color:#ffffff;
+  font-size:11px;
+  font-weight:800;
+}
+
+/* ============================================================
+   MOBILE MENU BUTTON
+============================================================ */
+
+.mobile-menu-toggle{
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  gap:5px;
+  width:46px;
+  height:46px;
+  padding:0;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--radius-sm);
+  background:transparent;
+  cursor:pointer;
+}
+
+.mobile-menu-toggle span{
+  width:21px;
+  height:2px;
+  margin:0 auto;
+  background:#ffffff;
+}
 
 /* HERO / BANNER */
 .hero{position:relative;overflow:hidden;min-height:650px;display:flex;align-items:center;background-image:linear-gradient(90deg,rgba(10,12,15,.91) 0%,rgba(10,12,15,.78) 43%,rgba(10,12,15,.52) 100%),url("../assets/image/Banner.jpg");background-size:cover;background-position:center}
