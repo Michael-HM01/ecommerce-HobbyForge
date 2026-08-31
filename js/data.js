@@ -236,7 +236,29 @@ const DEFAULT_PRODUCTS = [
 
 ];
 
+function hasValidDiscount(product) {
 
+  if (!product) {
+    return false;
+  }
+
+  const regularPrice =
+    Number(product.price);
+
+  const discountPrice =
+    Number(product.discountPrice);
+
+  return (
+    product.discountPrice !== null &&
+    product.discountPrice !== undefined &&
+    product.discountPrice !== "" &&
+    Number.isFinite(regularPrice) &&
+    Number.isFinite(discountPrice) &&
+    regularPrice > 0 &&
+    discountPrice > 0 &&
+    discountPrice < regularPrice
+  );
+}
 /* ============================================================
    Shared pricing helpers
    ============================================================ */
