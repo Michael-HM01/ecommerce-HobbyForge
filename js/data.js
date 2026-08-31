@@ -229,7 +229,7 @@ const DEFAULT_PRODUCTS = [
     stock: 1,
     image: "assets/image/Love.jpg",
     description:
-      "No description provided yet.",
+      "Love life, your soulmate the one..",
     badge: "Rare",
     previousBadge: ""
   }
