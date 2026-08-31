@@ -236,6 +236,10 @@ const DEFAULT_PRODUCTS = [
 
 ];
 
+
+/* ============================================================
+   Shared pricing helpers
+   ============================================================ */
 function hasValidDiscount(product) {
 
   if (!product) {
@@ -259,10 +263,6 @@ function hasValidDiscount(product) {
     discountPrice < regularPrice
   );
 }
-/* ============================================================
-   Shared pricing helpers
-   ============================================================ */
-
 function getEffectivePrice(product) {
 
   if (!product) {
