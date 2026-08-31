@@ -1,14 +1,16 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
   <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+
+>
 
   <title>HobbyForge | Checkout</title>
 
@@ -24,80 +26,79 @@
 
 </head>
 
-
 <body>
-
 
   <!-- ================= NAVBAR ================= -->
 
   <header class="navbar">
 
-    <div class="container">
+```
+<div class="container">
 
-      <a
-        href="index.html"
-        class="nav-brand"
-      >
-        HobbyForge
+  <a
+    href="index.html"
+    class="nav-brand"
+  >
+    HobbyForge
+  </a>
+
+
+  <ul
+    class="nav-links"
+    id="nav-links"
+  >
+
+    <li>
+      <a href="index.html">
+        Home
       </a>
+    </li>
+
+    <li>
+      <a href="products.html">
+        Shop
+      </a>
+    </li>
+
+  </ul>
 
 
-      <ul
-        class="nav-links"
-        id="nav-links"
+  <div class="nav-right">
+
+    <button
+      class="cart-btn js-open-cart"
+      aria-label="Open cart"
+    >
+
+      Cart
+
+      <span
+        class="cart-count js-cart-count"
       >
+        0
+      </span>
 
-        <li>
-          <a href="index.html">
-            Home
-          </a>
-        </li>
-
-        <li>
-          <a href="products.html">
-            Shop
-          </a>
-        </li>
-
-      </ul>
+    </button>
 
 
-      <div class="nav-right">
+    <button
+      class="mobile-menu-toggle"
+      id="mobile-menu-toggle"
+      aria-label="Toggle menu"
+    >
 
-        <button
-          class="cart-btn js-open-cart"
-          aria-label="Open cart"
-        >
+      <span></span>
+      <span></span>
+      <span></span>
 
-          Cart
+    </button>
 
-          <span
-            class="cart-count js-cart-count"
-          >
-            0
-          </span>
+  </div>
 
-        </button>
-
-
-        <button
-          class="mobile-menu-toggle"
-          id="mobile-menu-toggle"
-          aria-label="Toggle menu"
-        >
-
-          <span></span>
-          <span></span>
-          <span></span>
-
-        </button>
-
-      </div>
-
-    </div>
+</div>
+```
 
   </header>
-
 
   <!-- ================= CHECKOUT HEADER ================= -->
 
@@ -106,238 +107,490 @@
     style="padding:40px 0;"
   >
 
-    <div class="container">
+```
+<div class="container">
 
-      <h1
-        style="font-size:28px;"
-      >
-        Checkout
-      </h1>
+  <h1
+    style="font-size:28px;"
+  >
+    Checkout
+  </h1>
 
-      <p>
-        Review your order and provide your information.
-      </p>
+  <p>
+    Review your order and provide your information.
+  </p>
 
-    </div>
+</div>
+```
 
   </section>
-
 
   <!-- ================= CHECKOUT ================= -->
 
   <section>
 
-    <div class="container">
+```
+<div class="container">
 
 
-      <!-- EMPTY CART -->
+  <!-- EMPTY CART -->
 
-      <div
-        id="checkout-empty"
-        style="display:none; text-align:center;"
+  <div
+    id="checkout-empty"
+    style="display:none; text-align:center;"
+  >
+
+    <h2>
+      Your cart is empty
+    </h2>
+
+    <p>
+      Add products before proceeding to checkout.
+    </p>
+
+    <a
+      href="products.html"
+      class="btn btn-primary"
+    >
+      Continue Shopping
+    </a>
+
+  </div>
+
+
+  <!-- CHECKOUT CONTENT -->
+
+  <div
+    id="checkout-layout"
+  >
+
+
+    <!-- CUSTOMER + CHECKOUT FORM -->
+
+    <div
+      class="checkout-customer-section"
+    >
+
+      <h2>
+        Customer Information
+      </h2>
+
+
+      <form
+        id="checkout-form"
+        novalidate
       >
 
-        <h2>
-          Your cart is empty
-        </h2>
 
-        <p>
-          Add products before proceeding to checkout.
-        </p>
+        <!-- CUSTOMER INFORMATION -->
 
-        <a
-          href="products.html"
-          class="btn btn-primary"
-        >
-          Continue Shopping
-        </a>
+        <div class="form-group">
 
-      </div>
+          <label
+            for="checkout-name"
+          >
+            Full Name
+          </label>
 
+          <input
+            type="text"
+            id="checkout-name"
+            required
+          >
 
-      <!-- CHECKOUT CONTENT -->
-
-      <div
-        id="checkout-layout"
-      >
+        </div>
 
 
-        <!-- CUSTOMER FORM -->
+        <div class="form-group">
+
+          <label
+            for="checkout-email"
+          >
+            Email Address
+          </label>
+
+          <input
+            type="email"
+            id="checkout-email"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label
+            for="checkout-phone"
+          >
+            Phone Number
+          </label>
+
+          <input
+            type="tel"
+            id="checkout-phone"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label
+            for="checkout-address"
+          >
+            Delivery Address
+          </label>
+
+          <textarea
+            id="checkout-address"
+            required
+          ></textarea>
+
+        </div>
+
+
+        <!-- ================= DELIVERY METHOD ================= -->
 
         <div
-          class="checkout-customer-section"
+          class="checkout-option-section"
         >
 
-          <h2>
-            Customer Information
-          </h2>
+          <h3>
+            Delivery Method
+          </h3>
 
 
-          <form
-            id="checkout-form"
-            novalidate
+          <label
+            class="checkout-option"
+          >
+
+            <input
+              type="radio"
+              name="delivery-method"
+              value="standard"
+              data-fee="5"
+              checked
+            >
+
+            <span>
+              Standard Delivery
+            </span>
+
+            <strong>
+              ₱100.00
+            </strong>
+
+          </label>
+
+
+          <label
+            class="checkout-option"
+          >
+
+            <input
+              type="radio"
+              name="delivery-method"
+              value="express"
+              data-fee="200"
+            >
+
+            <span>
+              Express Delivery
+            </span>
+
+            <strong>
+              ₱200.00
+            </strong>
+
+          </label>
+
+        </div>
+
+
+        <!-- ================= PAYMENT METHOD ================= -->
+
+        <div
+          class="checkout-option-section"
+        >
+
+          <h3>
+            Payment Method
+          </h3>
+
+
+          <!-- CASH ON DELIVERY -->
+
+          <label
+            class="checkout-payment-option"
+          >
+
+            <input
+              type="radio"
+              name="payment-method"
+              value="cod"
+              checked
+            >
+
+            <span
+              class="payment-method-text"
+            >
+              Cash on Delivery
+            </span>
+
+          </label>
+
+
+          <!-- GCASH -->
+
+          <label
+            class="checkout-payment-option"
+          >
+
+            <input
+              type="radio"
+              name="payment-method"
+              value="gcash"
+            >
+
+            <img
+              src="assets/payments/gcash.png"
+              alt="GCash"
+              class="payment-logo"
+            >
+
+            <span
+              class="payment-method-text"
+            >
+              GCash
+            </span>
+
+          </label>
+
+
+          <!-- MAYA -->
+
+          <label
+            class="checkout-payment-option"
+          >
+
+            <input
+              type="radio"
+              name="payment-method"
+              value="maya"
+            >
+
+            <img
+              src="assets/payments/maya.png"
+              alt="Maya"
+              class="payment-logo"
+            >
+
+            <span
+              class="payment-method-text"
+            >
+              Maya
+            </span>
+
+          </label>
+
+
+          <!-- MARI / BANK -->
+
+          <label
+            class="checkout-payment-option"
+          >
+
+            <input
+              type="radio"
+              name="payment-method"
+              value="mari"
+            >
+
+            <img
+              src="assets/payments/mari.png"
+              alt="Mari"
+              class="payment-logo"
+            >
+
+            <span
+              class="payment-method-text"
+            >
+              Mari
+            </span>
+
+          </label>
+
+
+          <!-- ================= PAYMENT PLACEHOLDER ================= -->
+
+          <div
+            id="payment-placeholder"
+            style="display:none;"
           >
 
             <div class="form-group">
 
               <label
-                for="checkout-name"
+                for="payment-reference"
               >
-                Full Name
+                Payment Reference
               </label>
 
               <input
                 type="text"
-                id="checkout-name"
-                required
+                id="payment-reference"
+                placeholder="Optional - for demonstration purposes only"
               >
+
+              <small>
+                This is a simulated payment field. Entering information is optional and will not affect your order.
+              </small>
 
             </div>
 
+          </div>
 
-            <div class="form-group">
-
-              <label
-                for="checkout-email"
-              >
-                Email Address
-              </label>
-
-              <input
-                type="email"
-                id="checkout-email"
-                required
-              >
-
-            </div>
-
-
-            <div class="form-group">
-
-              <label
-                for="checkout-phone"
-              >
-                Phone Number
-              </label>
-
-              <input
-                type="tel"
-                id="checkout-phone"
-                required
-              >
-
-            </div>
-
-
-            <div class="form-group">
-
-              <label
-                for="checkout-address"
-              >
-                Delivery Address
-              </label>
-
-              <textarea
-                id="checkout-address"
-                required
-              ></textarea>
-
-            </div>
-
-
-            <div
-              id="checkout-form-message"
-              class="checkout-form-message"
-            ></div>
-
-
-            <button
-              type="submit"
-              class="btn btn-primary btn-full"
-            >
-              Continue
-            </button>
-
-          </form>
 
         </div>
 
 
-        <!-- ORDER SUMMARY -->
+        <!-- FORM MESSAGE -->
 
         <div
-          class="checkout-summary"
+          id="checkout-form-message"
+          class="checkout-form-message"
+        ></div>
+
+
+        <!-- SUBMIT -->
+
+        <button
+          type="submit"
+          class="btn btn-primary btn-full"
+          id="place-order-btn"
         >
-
-          <div
-            class="checkout-summary-header"
-          >
-
-            <h2>
-              Order Summary
-            </h2>
-
-            <span
-              id="checkout-item-count"
-            >
-              0 Items
-            </span>
-
-          </div>
+          Place Order
+        </button>
 
 
-          <div
-            id="checkout-items"
-          ></div>
+      </form>
+
+    </div>
 
 
-          <div
-            class="checkout-totals"
-          >
+    <!-- ================= ORDER SUMMARY ================= -->
 
-            <div>
+    <div
+      class="checkout-summary"
+    >
 
-              <span>
-                Subtotal
-              </span>
+      <div
+        class="checkout-summary-header"
+      >
 
-              <span
-                id="checkout-subtotal"
-              >
-                $0.00
-              </span>
+        <h2>
+          Order Summary
+        </h2>
 
-            </div>
-
-
-            <div
-              class="checkout-total-row"
-            >
-
-              <strong>
-                Total
-              </strong>
-
-              <strong
-                id="checkout-total"
-              >
-                $0.00
-              </strong>
-
-            </div>
-
-          </div>
-
-        </div>
-
+        <span
+          id="checkout-item-count"
+        >
+          0 Items
+        </span>
 
       </div>
 
 
+      <div
+        id="checkout-items"
+      ></div>
+
+
+      <div
+        class="checkout-totals"
+      >
+
+        <div>
+
+          <span>
+            Subtotal
+          </span>
+
+          <span
+            id="checkout-subtotal"
+          >
+            ₱0.00
+          </span>
+
+        </div>
+
+
+        <!-- DELIVERY FEE -->
+
+        <div>
+
+          <span>
+            Delivery Fee
+          </span>
+
+          <span
+            id="checkout-delivery-fee"
+          >
+            ₱100.00
+          </span>
+
+        </div>
+
+
+        <!-- DELIVERY METHOD -->
+
+        <div>
+
+          <span>
+            Delivery Method
+          </span>
+
+          <span
+            id="checkout-delivery-method"
+          >
+            Standard Delivery
+          </span>
+
+        </div>
+
+
+        <!-- TOTAL -->
+
+        <div
+          class="checkout-total-row"
+        >
+
+          <strong>
+            Total
+          </strong>
+
+          <strong
+            id="checkout-total"
+          >
+            ₱0.00
+          </strong>
+
+        </div>
+
+      </div>
+
     </div>
 
-  </section>
 
+  </div>
+
+
+</div>
+```
+
+  </section>
 
   <!-- ================= CART DRAWER ================= -->
 
@@ -346,70 +599,70 @@
     id="cart-drawer"
   >
 
-    <div
-      class="cart-drawer-header"
+```
+<div
+  class="cart-drawer-header"
+>
+
+  <h3>
+    Your Cart
+  </h3>
+
+
+  <button
+    class="modal-close-btn"
+    id="cart-close-btn"
+    style="position:static;"
+  >
+    &times;
+  </button>
+
+</div>
+
+
+<div
+  class="cart-items"
+  id="cart-items"
+></div>
+
+
+<div
+  class="cart-drawer-footer"
+>
+
+  <div
+    class="cart-total-row"
+  >
+
+    <span>
+      Total
+    </span>
+
+    <span
+      id="cart-total"
     >
-
-      <h3>
-        Your Cart
-      </h3>
-
-
-      <button
-        class="modal-close-btn"
-        id="cart-close-btn"
-        style="position:static;"
-      >
-        &times;
-      </button>
-
-    </div>
-
-
-    <div
-      class="cart-items"
-      id="cart-items"
-    ></div>
-
-
-    <div
-      class="cart-drawer-footer"
-    >
-
-      <div
-        class="cart-total-row"
-      >
-
-        <span>
-          Total
-        </span>
-
-        <span
-          id="cart-total"
-        >
-          $0.00
-        </span>
-
-      </div>
-
-
-      <button
-        class="btn btn-primary btn-full"
-        id="checkout-btn"
-      >
-        Checkout
-      </button>
-
-    </div>
+      ₱0.00
+    </span>
 
   </div>
 
+
+  <button
+    class="btn btn-primary btn-full"
+    id="checkout-btn"
+  >
+    Checkout
+  </button>
+
+</div>
+```
+
+  </div>
 
   <div
     class="cart-overlay"
     id="cart-overlay"
   ></div>
-
 
   <!-- ================= SCRIPTS ================= -->
 
@@ -422,7 +675,6 @@
   <script src="js/checkout.js"></script>
 
   <script src="js/app.js"></script>
-
 
 </body>
 
