@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -12,6 +14,7 @@
 
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/responsive.css">
+
 </head>
 
 
@@ -23,23 +26,58 @@
 
     <div class="container">
 
+
+      <!-- BRAND -->
+
       <a
         href="index.html"
-        class="nav-brand"
+        class="nav-brand nav-brand-admin"
+        aria-label="HobbyForge Home"
       >
-        HobbyForge
 
-        <span
-          style="
-            color:#888;
-            font-weight:400;
-            font-size:14px;
-          "
-        >
-          Admin
+
+        <!-- Desktop -->
+
+        <span class="nav-brand-wide">
+
+          <img
+            src="assets/image/Header-Logo.png"
+            alt="HobbyForge"
+            class="header-logo"
+          >
+
+          <span class="admin-brand-label">
+            Admin
+          </span>
+
         </span>
+
+
+        <!-- Mobile -->
+
+        <span class="nav-brand-mobile">
+
+          <img
+            src="assets/image/Logo.png"
+            alt="HobbyForge"
+            class="mobile-logo"
+          >
+
+          <span class="mobile-brand-name">
+            HobbyForge
+          </span>
+
+          <span class="admin-brand-label mobile-admin-label">
+            Admin
+          </span>
+
+        </span>
+
+
       </a>
 
+
+      <!-- NAVIGATION -->
 
       <ul
         class="nav-links"
@@ -53,13 +91,18 @@
         </li>
 
         <li>
-          <a href="admin.html">
+          <a
+            href="admin.html"
+            class="active"
+          >
             Dashboard
           </a>
         </li>
 
       </ul>
 
+
+      <!-- MOBILE CONTROL -->
 
       <div class="nav-right">
 
@@ -74,6 +117,7 @@
         </button>
 
       </div>
+
 
     </div>
 
@@ -121,6 +165,7 @@
       <!-- ================= STATS ================= -->
 
       <div class="stats-grid">
+
 
         <div class="stat-card">
 
@@ -185,6 +230,7 @@
 
         </div>
 
+
       </div>
 
 
@@ -199,19 +245,12 @@
             <tr>
 
               <th>ID</th>
-
               <th>Image</th>
-
               <th>Product</th>
-
               <th>Category</th>
-
               <th>Price</th>
-
               <th>Stock</th>
-
               <th>Badge</th>
-
               <th>Actions</th>
 
             </tr>
@@ -219,10 +258,10 @@
           </thead>
 
 
-          <tbody
-            id="admin-product-table-body"
-          >
+          <tbody id="admin-product-table-body">
+
             <!-- Rendered dynamically -->
+
           </tbody>
 
         </table>
@@ -233,9 +272,7 @@
       <!-- ================= ADD PRODUCT ================= -->
 
       <h3
-        style="
-          margin-top:36px;
-        "
+        style="margin-top:36px;"
       >
         Add Product
       </h3>
@@ -246,8 +283,6 @@
         id="add-product-form"
       >
 
-
-        <!-- PRODUCT NAME -->
 
         <div class="form-group">
 
@@ -265,8 +300,6 @@
         </div>
 
 
-        <!-- CATEGORY -->
-
         <div class="form-group">
 
           <label for="new-product-category">
@@ -283,8 +316,6 @@
         </div>
 
 
-        <!-- DESCRIPTION -->
-
         <div class="form-group">
 
           <label for="new-product-description">
@@ -299,8 +330,6 @@
 
         </div>
 
-
-        <!-- REGULAR PRICE -->
 
         <div class="form-group">
 
@@ -320,8 +349,6 @@
         </div>
 
 
-        <!-- STOCK -->
-
         <div class="form-group">
 
           <label for="new-product-stock">
@@ -338,8 +365,6 @@
 
         </div>
 
-
-        <!-- BADGE -->
 
         <div class="form-group">
 
@@ -374,8 +399,6 @@
         </div>
 
 
-        <!-- IMAGE PATH -->
-
         <div class="form-group">
 
           <label for="new-product-image">
@@ -390,15 +413,12 @@
           >
 
           <small>
-            Place the product image in
-            assets/images/products/
+            Place the product image in assets/images/products/
             and enter its relative file path.
           </small>
 
         </div>
 
-
-        <!-- ADD PRODUCT -->
 
         <button
           type="submit"
@@ -423,9 +443,6 @@
     id="edit-product-modal"
   >
 
-
-    <!-- CLOSE -->
-
     <button
       class="modal-close-btn"
       id="edit-modal-close-btn"
@@ -436,14 +453,10 @@
     </button>
 
 
-    <!-- TITLE -->
-
     <h3 id="edit-product-name">
       Edit Product
     </h3>
 
-
-    <!-- PRODUCT NAME -->
 
     <div class="form-group">
 
@@ -459,8 +472,6 @@
     </div>
 
 
-    <!-- CATEGORY -->
-
     <div class="form-group">
 
       <label for="edit-category-input">
@@ -475,8 +486,6 @@
     </div>
 
 
-    <!-- DESCRIPTION -->
-
     <div class="form-group">
 
       <label for="edit-description-input">
@@ -489,8 +498,6 @@
 
     </div>
 
-
-    <!-- REGULAR PRICE -->
 
     <div class="form-group">
 
@@ -508,8 +515,6 @@
     </div>
 
 
-    <!-- STOCK -->
-
     <div class="form-group">
 
       <label for="edit-stock-input">
@@ -524,8 +529,6 @@
 
     </div>
 
-
-    <!-- BADGE -->
 
     <div class="form-group">
 
@@ -560,8 +563,6 @@
     </div>
 
 
-    <!-- IMAGE PATH -->
-
     <div class="form-group">
 
       <label for="edit-image-input">
@@ -576,8 +577,6 @@
 
     </div>
 
-
-    <!-- IMAGE PREVIEW -->
 
     <div class="form-group">
 
@@ -601,8 +600,6 @@
     </div>
 
 
-    <!-- SAVE -->
-
     <button
       class="btn btn-primary btn-full"
       id="edit-modal-save-btn"
@@ -611,11 +608,8 @@
       Save Changes
     </button>
 
-
   </div>
 
-
-  <!-- EDIT MODAL OVERLAY -->
 
   <div
     class="modal-overlay"
@@ -629,9 +623,6 @@
     class="modal"
     id="discount-modal"
   >
-
-
-    <!-- CLOSE -->
 
     <button
       class="modal-close-btn"
@@ -648,27 +639,17 @@
     </h3>
 
 
-    <!-- PRODUCT NAME -->
+    <p id="discount-product-name"></p>
 
-    <p
-      id="discount-product-name"
-    ></p>
-
-
-    <!-- REGULAR PRICE -->
 
     <p>
 
       Regular Price:
 
-      <strong
-        id="discount-original-price"
-      ></strong>
+      <strong id="discount-original-price"></strong>
 
     </p>
 
-
-    <!-- DISCOUNT PRICE -->
 
     <div class="form-group">
 
@@ -687,8 +668,6 @@
     </div>
 
 
-    <!-- APPLY -->
-
     <button
       class="btn btn-primary btn-full"
       id="discount-modal-save-btn"
@@ -697,11 +676,8 @@
       Apply Discount
     </button>
 
-
   </div>
 
-
-  <!-- DISCOUNT MODAL OVERLAY -->
 
   <div
     class="modal-overlay"
@@ -717,4 +693,5 @@
   <script src="js/app.js"></script>
 
 </body>
+
 </html>
