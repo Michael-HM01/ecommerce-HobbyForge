@@ -600,7 +600,7 @@ function initializeTableImages() {
 
 
                         this.src =
-                            "assets/images/placeholder.png";
+                            "asset/image/Logo.png";
 
                     },
                     {
@@ -1633,7 +1633,7 @@ function updateEditImagePreview() {
     if (!imagePath) {
 
         editProductImagePreview.src =
-            "assets/images/placeholder.png";
+            "assets/image/Logo.png";
 
         return;
     }
@@ -1753,7 +1753,7 @@ function closeEditModal() {
 
 
     editProductImagePreview.src =
-        "assets/images/placeholder.png";
+        "assets/image/Logo.png";
 }
 
 
@@ -1876,7 +1876,7 @@ function initializeAdminEvents() {
 
 
             this.src =
-                "assets/images/placeholder.png";
+                "assets/image/Logo.png";
 
         }
     );
