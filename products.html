@@ -1,153 +1,553 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HobbyForge | Shop</title>
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/responsive.css">
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>HobbyForge | Shop</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
+
+
 <body>
 
-<!-- ================= NAVBAR ================= -->
-<header class="navbar">
-  <div class="container">
-    <a href="index.html" class="nav-brand">HobbyForge</a>
+  <!-- ================= NAVBAR ================= -->
 
-    <ul class="nav-links" id="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="products.html">Shop</a></li>
-      <li><a href="index.html#about" class="js-scroll-link">About</a></li>
-      <li><a href="index.html#contact" class="js-scroll-link">Contact</a></li>
-    </ul>
+  <header class="navbar">
 
-    <div class="nav-right">
-      <button class="cart-btn js-open-cart" aria-label="Open cart">
-        Cart <span class="cart-count js-cart-count">0</span>
+    <div class="container">
+
+      <!-- BRAND -->
+
+      <a
+        href="index.html"
+        class="nav-brand"
+        aria-label="HobbyForge Home"
+      >
+
+        <!-- Desktop Header Logo -->
+
+        <span class="nav-brand-wide">
+
+          <img
+            src="assets/image/Header-Logo.png"
+            alt="HobbyForge"
+            class="header-logo"
+          >
+
+        </span>
+
+
+        <!-- Mobile Logo + Brand Name -->
+
+        <span class="nav-brand-mobile">
+
+          <img
+            src="assets/image/Logo.png"
+            alt="HobbyForge"
+            class="mobile-logo"
+          >
+
+          <span class="mobile-brand-name">
+            HobbyForge
+          </span>
+
+        </span>
+
+      </a>
+
+
+      <!-- NAVIGATION -->
+
+      <ul
+        class="nav-links"
+        id="nav-links"
+      >
+
+        <li>
+          <a href="index.html">
+            Home
+          </a>
+        </li>
+
+        <li>
+          <a
+            href="products.html"
+            class="active"
+          >
+            Shop
+          </a>
+        </li>
+
+        <li>
+          <a
+            href="index.html#about"
+            class="js-scroll-link"
+          >
+            About
+          </a>
+        </li>
+
+        <li>
+          <a
+            href="index.html#contact"
+            class="js-scroll-link"
+          >
+            Contact
+          </a>
+        </li>
+
+      </ul>
+
+
+      <!-- RIGHT CONTROLS -->
+
+      <div class="nav-right">
+
+        <button
+          class="cart-btn js-open-cart"
+          aria-label="Open cart"
+        >
+          Cart
+          <span class="cart-count js-cart-count">
+            0
+          </span>
+        </button>
+
+
+        <button
+          class="mobile-menu-toggle"
+          id="mobile-menu-toggle"
+          aria-label="Toggle menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- ================= PAGE HEADER ================= -->
+
+  <section
+    class="hero"
+    style="padding: 40px 0;"
+  >
+
+    <div class="container">
+
+      <h1
+        style="font-size:28px;"
+      >
+        Shop All Products
+      </h1>
+
+      <p>
+        Browse trading cards, building sets, die-cast, model kits,
+        collectibles and more.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= PRODUCTS ================= -->
+
+  <section>
+
+    <div class="container">
+
+
+      <!-- CONTROLS -->
+
+      <div class="controls-bar">
+
+        <div class="search-box">
+
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search by name or category..."
+          >
+
+        </div>
+
+
+        <div class="sort-box">
+
+          <select id="sort-select">
+
+            <option value="default">
+              Sort: Default
+            </option>
+
+            <option value="price-asc">
+              Price: Low to High
+            </option>
+
+            <option value="price-desc">
+              Price: High to Low
+            </option>
+
+            <option value="name-asc">
+              Name: A to Z
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <!-- CATEGORY FILTERS -->
+
+      <div
+        class="filter-bar"
+        id="category-filters"
+      >
+        <!-- Rendered dynamically by products.js -->
+      </div>
+
+
+      <!-- PRODUCT GRID -->
+
+      <div
+        class="product-grid"
+        id="product-grid"
+      >
+        <!-- Rendered dynamically by products.js from js/data.js -->
+      </div>
+
+
+      <!-- NO RESULTS -->
+
+      <p
+        class="no-results"
+        id="no-results"
+      >
+        No products match your search or filters.
+      </p>
+
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer class="footer">
+
+    <div class="container">
+
+      <div class="footer-grid">
+
+
+        <!-- BRAND -->
+
+        <div class="footer-brand">
+
+          <img
+            src="assets/image/Header-Logo.png"
+            alt="HobbyForge"
+            class="footer-logo"
+          >
+
+          <p>
+            Craft • Build • Optimize • Enhance.
+          </p>
+
+          <p class="footer-project-text">
+            An imaginary e-commerce website created as a school project.
+          </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+
+        <div>
+
+          <h4>
+            Quick Links
+          </h4>
+
+          <ul class="footer-links">
+
+            <li>
+              <a href="index.html">
+                Home
+              </a>
+            </li>
+
+            <li>
+              <a href="products.html">
+                Shop
+              </a>
+            </li>
+
+            <li>
+              <a href="index.html#about">
+                About
+              </a>
+            </li>
+
+            <li>
+              <a href="index.html#contact">
+                Contact
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+
+        <!-- SOCIALS -->
+
+        <div>
+
+          <h4>
+            Follow Us
+          </h4>
+
+          <ul class="footer-links">
+
+            <li>
+              <a href="#">
+                Facebook
+              </a>
+            </li>
+
+            <li>
+              <a href="#">
+                Instagram
+              </a>
+            </li>
+
+            <li>
+              <a href="#">
+                Twitter / X
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+
+      </div>
+
+
+      <!-- FOOTER BOTTOM -->
+
+      <div class="footer-bottom">
+
+        <span>
+          &copy; 2026 HobbyForge. All rights reserved.
+        </span>
+
+        <span>
+          MH-Millares | BSIE-41M1 | Information Systems
+        </span>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- ================= PRODUCT DETAILS MODAL ================= -->
+
+  <div
+    class="modal"
+    id="product-modal"
+  >
+
+    <button
+      class="modal-close-btn"
+      id="modal-close-btn"
+    >
+      &times;
+    </button>
+
+
+    <div class="modal-body">
+
+      <img
+        src=""
+        alt=""
+        class="modal-img"
+        id="modal-img"
+      >
+
+
+      <div class="modal-details">
+
+        <p
+          class="product-category"
+          id="modal-category"
+        ></p>
+
+
+        <h3 id="modal-name"></h3>
+
+
+        <p
+          class="product-price"
+          id="modal-price"
+        ></p>
+
+
+        <p
+          class="stock-status"
+          id="modal-stock"
+        ></p>
+
+
+        <p id="modal-description"></p>
+
+
+        <div class="modal-qty-controls">
+
+          <button
+            class="qty-btn"
+            id="modal-qty-decrease"
+          >
+            -
+          </button>
+
+
+          <span id="modal-qty-value">
+            1
+          </span>
+
+
+          <button
+            class="qty-btn"
+            id="modal-qty-increase"
+          >
+            +
+          </button>
+
+        </div>
+
+
+        <button
+          class="btn btn-primary btn-full"
+          id="modal-add-to-cart"
+        >
+          Add to Cart
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="modal-overlay"
+    id="modal-overlay"
+  ></div>
+
+
+  <!-- ================= CART DRAWER ================= -->
+
+  <div
+    class="cart-drawer"
+    id="cart-drawer"
+  >
+
+    <div class="cart-drawer-header">
+
+      <h3>
+        Your Cart
+      </h3>
+
+
+      <button
+        class="modal-close-btn"
+        id="cart-close-btn"
+        style="position:static;"
+      >
+        &times;
       </button>
-      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
+
+    </div>
+
+
+    <div
+      class="cart-items"
+      id="cart-items"
+    >
+
+      <p
+        class="cart-empty"
+        id="cart-empty"
+      >
+        Your cart is empty.
+      </p>
+
+    </div>
+
+
+    <div class="cart-drawer-footer">
+
+      <div class="cart-total-row">
+
+        <span>
+          Total
+        </span>
+
+        <span id="cart-total">
+          $0.00
+        </span>
+
+      </div>
+
+
+      <button
+        class="btn btn-primary btn-full"
+        id="checkout-btn"
+      >
+        Checkout
       </button>
-    </div>
-  </div>
-</header>
 
-<!-- ================= PAGE HEADER ================= -->
-<section class="hero" style="padding: 40px 0;">
-  <div class="container">
-    <h1 style="font-size:28px;">Shop All Products</h1>
-    <p>Browse trading cards, building sets, die-cast, model kits, collectibles and more.</p>
-  </div>
-</section>
-
-<!-- ================= PRODUCTS ================= -->
-<section>
-  <div class="container">
-
-    <div class="controls-bar">
-      <div class="search-box">
-        <input type="text" id="search-input" placeholder="Search by name or category...">
-      </div>
-      <div class="sort-box">
-        <select id="sort-select">
-          <option value="default">Sort: Default</option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-          <option value="name-asc">Name: A to Z</option>
-        </select>
-      </div>
     </div>
 
-    <div class="filter-bar" id="category-filters">
-      <!-- Rendered dynamically by products.js -->
-    </div>
-
-    <div class="product-grid" id="product-grid">
-      <!-- Rendered dynamically by products.js from js/data.js -->
-    </div>
-
-    <p class="no-results" id="no-results">No products match your search or filters.</p>
-
   </div>
-</section>
 
-<!-- ================= FOOTER ================= -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <h4>HobbyForge</h4>
-        <p>Craft • Build • Optimize • Enhance.</p>
-      </div>
-      <div>
-        <h4>Quick Links</h4>
-        <ul class="footer-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="products.html">Shop</a></li>
-          <li><a href="index.html#about">About</a></li>
-          <li><a href="index.html#contact">Contact</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Follow Us</h4>
-        <ul class="footer-links">
-          <li><a href="#">Facebook</a></li>
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">Twitter / X</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      &copy; 2026 HobbyForge. All rights reserved. 
-      MH-Millares | BSIE-41M1 |Information Systems
-    </div>
-  </div>
-</footer>
 
-<!-- ================= PRODUCT DETAILS MODAL (shared) ================= -->
-<div class="modal" id="product-modal">
-  <button class="modal-close-btn" id="modal-close-btn">&times;</button>
-  <div class="modal-body">
-    <img src="" alt="" class="modal-img" id="modal-img">
-    <div class="modal-details">
-      <p class="product-category" id="modal-category"></p>
-      <h3 id="modal-name"></h3>
-      <p class="product-price" id="modal-price"></p>
-      <p class="stock-status" id="modal-stock"></p>
-      <p id="modal-description"></p>
-      <div class="modal-qty-controls">
-        <button class="qty-btn" id="modal-qty-decrease">-</button>
-        <span id="modal-qty-value">1</span>
-        <button class="qty-btn" id="modal-qty-increase">+</button>
-      </div>
-      <button class="btn btn-primary btn-full" id="modal-add-to-cart">Add to Cart</button>
-    </div>
-  </div>
-</div>
-<div class="modal-overlay" id="modal-overlay"></div>
+  <div
+    class="cart-overlay"
+    id="cart-overlay"
+  ></div>
 
-<!-- ================= CART DRAWER (shared) ================= -->
-<div class="cart-drawer" id="cart-drawer">
-  <div class="cart-drawer-header">
-    <h3>Your Cart</h3>
-    <button class="modal-close-btn" id="cart-close-btn" style="position:static;">&times;</button>
-  </div>
-  <div class="cart-items" id="cart-items">
-    <p class="cart-empty" id="cart-empty">Your cart is empty.</p>
-  </div>
-  <div class="cart-drawer-footer">
-    <div class="cart-total-row">
-      <span>Total</span>
-      <span id="cart-total">$0.00</span>
-    </div>
-    <button class="btn btn-primary btn-full" id="checkout-btn">Checkout</button>
-  </div>
-</div>
-<div class="cart-overlay" id="cart-overlay"></div>
 
-<script src="js/data.js"></script>
-<script src="js/products.js"></script>
-<script src="js/cart.js"></script>
-<script src="js/app.js"></script>
+  <!-- ================= SCRIPTS ================= -->
+
+  <script src="js/data.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/app.js"></script>
+
 </body>
+
 </html>
