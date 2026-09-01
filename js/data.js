@@ -171,7 +171,7 @@ const DEFAULT_PRODUCTS = [
     price: 31.00,
     discountPrice: null,
     stock: 4,
-    image: "assets/image/Rx-78.jpeg",
+    image: "assets/image/Lolo.png",
     description:
       "High Grade Gundam Origins version of the iconic RX-78-02.",
     badge: "Hot",
